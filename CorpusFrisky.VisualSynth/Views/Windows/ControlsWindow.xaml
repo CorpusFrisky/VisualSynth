@@ -1,0 +1,30 @@
+﻿<Window x:Class="CorpusFrisky.VisualSynth.Views.Windows.ControlsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:regions="http://www.codeplex.com/CompositeWPF"
+        Title="ControlsWindow" Height="700" Width="500"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        
+        <ContentControl x:Name="LeftControlRegion" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                        regions:RegionManager.RegionName="LeftControlRegion" />
+
+        <ContentControl x:Name="RightControlRegion" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2"
+                        regions:RegionManager.RegionName="RightControlRegion" />
+
+        <ContentControl x:Name="UpperControlRegion" Grid.Row="0" Grid.Column="1" 
+                        regions:RegionManager.RegionName="UpperControlRegion" />
+
+        <ContentControl x:Name="LowerControlRegion" Grid.Row="1" Grid.Column="1"
+                        regions:RegionManager.RegionName="LowerControlRegion" />
+    </Grid>
+</Window>

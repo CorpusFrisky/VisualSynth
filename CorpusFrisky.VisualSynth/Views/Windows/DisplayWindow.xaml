@@ -1,0 +1,13 @@
+﻿<Window x:Class="CorpusFrisky.VisualSynth.Views.Windows.DisplayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:int="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+        xmlns:openTkControl="clr-namespace:OpenTK;assembly=OpenTK.GlControl"
+        Title="DisplayWindow" Height="700" Width="500"
+        WindowStyle="None">
+    <int:WindowsFormsHost x:Name="WinFormHost"
+                          Background="Black">
+        <openTkControl:GLControl x:Name="GlControl1" Paint="Control_OnPaint"/>
+    </int:WindowsFormsHost>
+    
+</Window>
