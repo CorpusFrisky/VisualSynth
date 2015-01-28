@@ -43,7 +43,7 @@ namespace CorpusFrisky.VisualSynth.Views.Windows
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             foreach(var shape in _designViewModel.Shapes)
             {
-                shape.Draw();
+                shape.Render();
             }
             GlControl1.SwapBuffers();
         }
