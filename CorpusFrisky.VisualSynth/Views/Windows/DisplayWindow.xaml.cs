@@ -41,9 +41,9 @@ namespace CorpusFrisky.VisualSynth.Views.Windows
         {
             GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            foreach(var shape in _designViewModel.Shapes)
+            foreach(var component in _designViewModel.SynthComponents)
             {
-                shape.Render();
+                component.Module.Render();
             }
             GlControl1.SwapBuffers();
         }

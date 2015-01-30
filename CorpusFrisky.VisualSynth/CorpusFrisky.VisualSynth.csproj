@@ -99,6 +99,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Constants.cs" />
+    <Compile Include="CustomControls\CanvasItemsControl.cs" />
+    <Compile Include="Models\SynthComponentModel.cs" />
     <Compile Include="ViewModels\DesignViewModel.cs" />
     <Compile Include="Views\ControlViews\DesignView.xaml.cs">
       <DependentUpon>DesignView.xaml</DependentUpon>
@@ -163,9 +165,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CorpusFrisky.VisualSynth.SynthModules\CorpusFrisky.VisualSynth.SynthModules.csproj">
       <Project>{4d3b9bdb-69c4-4e4a-a4fc-c0a8766cf621}</Project>

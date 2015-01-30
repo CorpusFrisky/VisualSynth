@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics;
 
-namespace CorpusFrisky.VisualSynth.Modules.ShapeGenerators
+namespace CorpusFrisky.VisualSynth.SynthModules.ShapeGenerators
 {
     public class ShapeGeneratorBase : ISynthModule
     {

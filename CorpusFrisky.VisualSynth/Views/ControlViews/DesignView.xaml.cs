@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Drawing;
+using System.Windows.Controls;
+using System.Windows.Input;
 using CorpusFrisky.VisualSynth.ViewModels;
 
 namespace CorpusFrisky.VisualSynth.Views.ControlViews
@@ -18,6 +20,16 @@ namespace CorpusFrisky.VisualSynth.Views.ControlViews
         {
             InitializeComponent();
             ViewModel = viewModel;
+        }
+
+        private void SetDesignPos(object sender, MouseButtonEventArgs e)
+        {
+            Canvas canvas = sender as Canvas;
+            if (canvas != null)
+            {
+                var point = e.GetPosition(canvas);
+                ViewModel.CurrentDesignPos = new Point((int)point.X, (int)point.Y);
+            }
         }
     }
 }

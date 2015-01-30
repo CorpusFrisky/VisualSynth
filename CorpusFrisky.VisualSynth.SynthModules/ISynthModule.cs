@@ -1,4 +1,7 @@
-﻿namespace CorpusFrisky.VisualSynth.Modules
+﻿using System.Drawing;
+using OpenTK;
+
+namespace CorpusFrisky.VisualSynth.SynthModules
 {
     public interface ISynthModule
     {

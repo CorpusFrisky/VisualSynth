@@ -1,6 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL;
 
-namespace CorpusFrisky.VisualSynth.Modules.ShapeGenerators
+namespace CorpusFrisky.VisualSynth.SynthModules.ShapeGenerators
 {
     public class RectangleGenerator : ShapeGeneratorBase
     {

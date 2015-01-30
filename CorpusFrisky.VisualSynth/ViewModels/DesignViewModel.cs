@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using CorpusFrisky.VisualSynth.Models;
 using CorpusFrisky.VisualSynth.Modules;
-using CorpusFrisky.VisualSynth.Modules.ShapeGenerators;
+using CorpusFrisky.VisualSynth.SynthModules;
+using CorpusFrisky.VisualSynth.SynthModules.ShapeGenerators;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -30,12 +33,14 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         {
             _eventAggregator = eventAggregator;
 
-            Shapes = new List<ISynthModule>();
+            SynthComponents = new ObservableCollection<SynthComponentModel>();
         }
 
         #region Properties
 
-        public List<ISynthModule> Shapes { get; set; }
+        public ObservableCollection<SynthComponentModel> SynthComponents { get; set; }
+
+        public Point CurrentDesignPos { get; set; }
 
         #endregion
 
@@ -47,7 +52,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             {
                 if (_addTriangleCommand == null)
                 {
-                    _addTriangleCommand = new DelegateCommand<Canvas>(AddTriangle);
+                    _addTriangleCommand = new DelegateCommand(AddTriangle);
                 }
 
                 return _addTriangleCommand;
@@ -60,7 +65,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             {
                 if (_addRectangleCommand == null)
                 {
-                    _addRectangleCommand = new DelegateCommand<Canvas>(AddRectangle);
+                    _addRectangleCommand = new DelegateCommand(AddRectangle);
                 }
 
                 return _addRectangleCommand;
@@ -71,13 +76,11 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         #region Command Handlers
 
-        private void AddTriangle(Canvas canvas)
+        private void AddTriangle()
         {
             var rand = new Random();
-            var mousePoint = Mouse.GetPosition(canvas);
             var triangle = new TriangleGenerator()
             {
-                //DesignPos = new Point((int)mousePoint.X, (int)mousePoint.Y),
                 Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
                 VertexPositions = new List<Vector3>
                 {
@@ -93,13 +96,16 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                 }
             };
 
-            Shapes.Add(triangle);
+            SynthComponents.Add(new SynthComponentModel
+            {
+                DesignPos = CurrentDesignPos,
+                Module = triangle
+            });
         }
 
-        private void AddRectangle(Canvas canvas)
+        private void AddRectangle()
         {
             var rand = new Random();
-            var mousePoint = Mouse.GetPosition(canvas);
             var rectangle = new RectangleGenerator
             {
                 //DesignPos = new Point((int)mousePoint.X, (int)mousePoint.Y),
@@ -120,9 +126,12 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                 }
             };
 
-            Shapes.Add(rectangle);
+            SynthComponents.Add(new SynthComponentModel
+            {
+                DesignPos = CurrentDesignPos,
+                Module = rectangle
+            });
         }
-
         #endregion
     }
 }

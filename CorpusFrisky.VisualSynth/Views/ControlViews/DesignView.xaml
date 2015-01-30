@@ -4,25 +4,65 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:customControls="clr-namespace:CorpusFrisky.VisualSynth.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Canvas x:Name="DesignCanvas"
-                Background="Gray">
+                Background="Gray"
+                MouseRightButtonDown="SetDesignPos">
             <Canvas.ContextMenu>
                 <ContextMenu x:Name="DesignContextMenu"
                              StaysOpen="True">
                     <MenuItem Header="Add">
                         <MenuItem x:Name="AddTriangleMenuItem" Header="Triangle"
-                                  Command="{Binding AddTriangleCommand}" CommandParameter="{Binding ElementName=DesignCanvas}"/>
+                                  Command="{Binding AddTriangleCommand}" />
                         <MenuItem x:Name="AddRectangleMenuItem" Header="Rectangle"
-                                  Command="{Binding AddRectangleCommand}" CommandParameter="{Binding ElementName=DesignCanvas}"/>
+                                  Command="{Binding AddRectangleCommand}" />
                     </MenuItem>
                 </ContextMenu>
             </Canvas.ContextMenu>
-            
+
+            <ItemsControl ItemsSource="{Binding SynthComponents}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Canvas.Left"
+                            Value="{Binding DesignPos.X}"/>
+                        <Setter Property="Canvas.Top" 
+                            Value="{Binding DesignPos.Y}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Rectangle Fill="DarkBlue"
+                               Height="20" Width="20"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!--<customControls:CanvasItemsControl ItemsSource="{Binding SynthComponents}">
+                <customControls:CanvasItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </customControls:CanvasItemsControl.ItemsPanel>
+                <customControls:CanvasItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Rectangle Fill="DarkBlue"
+                                   Height="200" Width="200">
+                        </Rectangle>
+                    </DataTemplate>
+                </customControls:CanvasItemsControl.ItemTemplate>
+            </customControls:CanvasItemsControl>-->
         </Canvas>
-            
+
+        
+        
     </Grid>
 </UserControl>
