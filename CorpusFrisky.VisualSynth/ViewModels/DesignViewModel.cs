@@ -24,8 +24,9 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         private readonly IEventAggregator _eventAggregator;
 
-        private ICommand _addTriangleCommand;
-        private ICommand _addRectangleCommand;
+        private DelegateCommand _addTriangleCommand;
+        private DelegateCommand _addRectangleCommand;
+        private DelegateCommand<SynthComponentModel> _handleModuleLeftClick;
 
         #endregion
 
@@ -46,7 +47,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         #region Commands
 
-        public ICommand AddTriangleCommand
+        public DelegateCommand AddTriangleCommand
         {
             get
             {
@@ -59,7 +60,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             }
         }
 
-        public ICommand AddRectangleCommand
+        public DelegateCommand AddRectangleCommand
         {
             get
             {
@@ -69,6 +70,17 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                 }
 
                 return _addRectangleCommand;
+            }
+        }
+
+        public DelegateCommand<SynthComponentModel> HandleModuleLeftClickCommand
+        {
+            get
+            {
+                if (_handleModuleLeftClick == null)
+                    _handleModuleLeftClick = new DelegateCommand<SynthComponentModel>(HandleModuleLeftClick);
+
+                return _handleModuleLeftClick;
             }
         }
 
@@ -137,6 +149,15 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             {
                 DesignPos = CurrentDesignPos,
                 Module = rectangle
+            });
+        }
+
+        private void HandleModuleLeftClick(SynthComponentModel componentModel)
+        {
+
+            _eventAggregator.GetEvent<ModuleAddedEvent>().Publish(new ModuleAddedEventArgs
+            {
+                Module = componentModel.Module as TriangleGenerator
             });
         }
         #endregion

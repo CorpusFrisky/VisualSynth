@@ -1,11 +1,11 @@
 ﻿<UserControl x:Class="CorpusFrisky.VisualSynth.Views.ControlViews.DesignView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:customControls="clr-namespace:CorpusFrisky.VisualSynth.CustomControls"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:helpers="clr-namespace:CorpusFrisky.VisualSynth.Helpers"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -36,12 +36,21 @@
                             Value="{Binding DesignPos.X}"/>
                         <Setter Property="Canvas.Top" 
                             Value="{Binding DesignPos.Y}"/>
+                        
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Rectangle Fill="DarkBlue"
-                               Height="20" Width="20"/>
+                               Height="20" Width="20">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                    <helpers:InvokeDelegateCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.HandleModuleLeftClickCommand}"
+                                    CommandParameter="{Binding}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Rectangle>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

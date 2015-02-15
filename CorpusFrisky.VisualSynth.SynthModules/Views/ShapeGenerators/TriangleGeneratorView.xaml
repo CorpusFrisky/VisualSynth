@@ -19,6 +19,8 @@
         <Grid.Background>Thistle</Grid.Background>
         
             <StackPanel>
+                <TextBlock Text="{Binding TestString}"
+                           Width="300"/>
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <TextBlock Text="Color1"/>
                     <xctk:ColorPicker Margin="20,0"

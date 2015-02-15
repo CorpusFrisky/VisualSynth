@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Windows;
 using Autofac;
 using Autofac.Core;
 using CorpusFrisky.VisualSynth.Controllers.Interfaces;
@@ -44,14 +45,16 @@ namespace CorpusFrisky.VisualSynth.Controllers
 
         private void ModuleAdded(ModuleAddedEventArgs args)
         {
-            var moduleView = RegionManager.Regions[RegionNames.LeftControlRegion].Views.FirstOrDefault(x => x.GetType() == typeof(TriangleGeneratorView)) as TriangleGeneratorView;
+            var currentView = RegionManager.Regions[RegionNames.LeftControlRegion].Views.FirstOrDefault(x => x.GetType() == typeof(TriangleGeneratorView)) as TriangleGeneratorView;
 
-            if (moduleView == null)
+            if (currentView != null)
             {
-                moduleView = ComponentContext.Resolve<TriangleGeneratorView>();
-                moduleView.ViewModel.Module = args.Module;
-                RegionManager.RegisterViewWithRegion(RegionNames.LeftControlRegion, () => moduleView);
+                RegionManager.Regions[RegionNames.LeftControlRegion].Remove(currentView);
             }
+
+            var moduleView = ComponentContext.Resolve<TriangleGeneratorView>();
+            moduleView.ViewModel.Module = args.Module;
+            RegionManager.RegisterViewWithRegion(RegionNames.LeftControlRegion, () => moduleView);
         }
     }
 }
