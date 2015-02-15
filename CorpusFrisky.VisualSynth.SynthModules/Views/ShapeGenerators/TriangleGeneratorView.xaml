@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:converters="clr-namespace:CorpusFrisky.VisualSynth.SynthModules.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="300">
     <UserControl.Resources>
+        <converters:OpenGlToWindowsColorConverter x:Key="ColorConverter"/>
         <Style TargetType="{x:Type TextBlock}">
             <Style.Setters>
                 <Setter Property="Width" Value="40"/>
@@ -20,7 +22,7 @@
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <TextBlock Text="Color1"/>
                     <xctk:ColorPicker Margin="20,0"
-                                      SelectedColor="{Binding Module.VertexColors[0]}"/>
+                                      SelectedColor="{Binding Module.ColorV0, Converter={StaticResource ColorConverter}}"/>
                 </StackPanel>
             </StackPanel>
     </Grid>

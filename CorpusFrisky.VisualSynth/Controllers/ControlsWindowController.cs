@@ -2,6 +2,7 @@
 using Autofac;
 using Autofac.Core;
 using CorpusFrisky.VisualSynth.Controllers.Interfaces;
+using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.SynthModules.Views.ShapeGenerators;
 using CorpusFrisky.VisualSynth.Views.ControlViews;
 using CorpusFrisky.VisualSynth.Views.Windows;
@@ -17,9 +18,10 @@ namespace CorpusFrisky.VisualSynth.Controllers
         {
             SubscribeToEvents();
         }
-
+        
         private void SubscribeToEvents()
         {
+            EventAggregator.GetEvent<ModuleAddedEvent>().Subscribe(ModuleAdded);
         }
 
         public override void Show()
@@ -37,18 +39,19 @@ namespace CorpusFrisky.VisualSynth.Controllers
                 RegionManager.RegisterViewWithRegion(RegionNames.LowerControlRegion, () => designView);
             }
 
+            ComponentContext.Resolve<ControlsWindow>().Show();
+        }
 
-
-
+        private void ModuleAdded(ModuleAddedEventArgs args)
+        {
             var moduleView = RegionManager.Regions[RegionNames.LeftControlRegion].Views.FirstOrDefault(x => x.GetType() == typeof(TriangleGeneratorView)) as TriangleGeneratorView;
 
             if (moduleView == null)
             {
-                moduleView = parameters == null ? ComponentContext.Resolve<TriangleGeneratorView>() : ComponentContext.Resolve<TriangleGeneratorView>(parameters);
+                moduleView = ComponentContext.Resolve<TriangleGeneratorView>();
+                moduleView.ViewModel.Module = args.Module;
                 RegionManager.RegisterViewWithRegion(RegionNames.LeftControlRegion, () => moduleView);
             }
-
-            ComponentContext.Resolve<ControlsWindow>().Show();
         }
     }
 }

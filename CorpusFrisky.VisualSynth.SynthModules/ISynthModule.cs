@@ -3,7 +3,7 @@ using OpenTK;
 
 namespace CorpusFrisky.VisualSynth.SynthModules
 {
-    public interface ISynthModule
+    public interface ISynthModule 
     {
         void PreRender();
         void Render();

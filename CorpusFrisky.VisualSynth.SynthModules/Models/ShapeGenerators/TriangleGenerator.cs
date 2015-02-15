@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using Microsoft.Practices.Prism.Mvvm;
+using OpenTK.Graphics.OpenGL;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
 {

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.Models;
 using CorpusFrisky.VisualSynth.SynthModules;
 using CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators;
@@ -87,7 +88,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                     new Vector3(100.0f,0.0f,0.0f),
                     new Vector3(0.0f,100.0f,0.0f)
                 },
-                VertexColors = new List<Color4>
+                VertexColors = new ObservableCollection<Color4>
                 {
                     new Color4(1.0f,0.0f,0.0f,0.0f),
                     new Color4(1.0f,1.0f,0.0f,0.0f),
@@ -95,11 +96,18 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                 }
             };
 
-            SynthComponents.Add(new SynthComponentModel
+            var componentModel = new SynthComponentModel
             {
                 DesignPos = CurrentDesignPos,
                 Module = triangle
-            });
+            };
+
+            SynthComponents.Add(componentModel);
+
+            _eventAggregator.GetEvent<ModuleAddedEvent>().Publish(new ModuleAddedEventArgs
+                                                                  {
+                                                                      Module = triangle
+                                                                  });
         }
 
         private void AddRectangle()
@@ -116,7 +124,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                     new Vector3(100.0f,100.0f,0.0f),
                     new Vector3(-100.0f,100.0f,0.0f)
                 },
-                VertexColors = new List<Color4>
+                VertexColors = new ObservableCollection<Color4>
                 {
                     new Color4(1.0f,0.0f,0.0f,0.0f),
                     new Color4(1.0f,1.0f,0.0f,0.0f),

@@ -98,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\ColorConverters.cs" />
     <Compile Include="DependencyInjection\SynthModulesDI.cs" />
     <Compile Include="ISynthModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

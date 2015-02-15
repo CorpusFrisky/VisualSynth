@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Microsoft.Practices.Prism;
+using Microsoft.Practices.Prism.Mvvm;
 using OpenTK;
 using OpenTK.Graphics;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
 {
-    public class ShapeGeneratorBase : ISynthModule
+    public class ShapeGeneratorBase : BindableBase, ISynthModule
     {
         protected bool ConstructionValidated;
 
@@ -13,14 +17,20 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
         {
             Center = new Vector3(0);
             VertexPositions = new List<Vector3>();
-            VertexColors = new List<Color4>();
+            VertexColors = new ObservableCollection<Color4>();
 
             ConstructionValidated = false;
         }
 
         public Vector3 Center { get; set; }
         public List<Vector3> VertexPositions { get; set; }
-        public List<Color4> VertexColors { get; set; }
+        public ObservableCollection<Color4> VertexColors { get; set; }
+
+        public Color4 ColorV0
+        {
+            get { return VertexColors[0]; }
+            set { VertexColors[0] = value; }
+        }
 
         protected void ValidateConstruction(int numVertices)
         {
