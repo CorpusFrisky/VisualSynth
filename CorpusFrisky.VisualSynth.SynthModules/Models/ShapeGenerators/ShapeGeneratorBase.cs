@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Graphics;
 
-namespace CorpusFrisky.VisualSynth.SynthModules.ShapeGenerators
+namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
 {
     public class ShapeGeneratorBase : ISynthModule
     {

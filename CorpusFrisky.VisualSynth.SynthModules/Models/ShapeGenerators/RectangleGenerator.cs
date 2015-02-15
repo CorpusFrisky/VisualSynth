@@ -1,10 +1,10 @@
 ﻿using OpenTK.Graphics.OpenGL;
 
-namespace CorpusFrisky.VisualSynth.SynthModules.ShapeGenerators
+namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
 {
-    public class TriangleGenerator : ShapeGeneratorBase
+    public class RectangleGenerator : ShapeGeneratorBase
     {
-        public static int NumVertices = 3;
+        public static int NumVertices = 4;
 
         public override void PreRender()
         {
@@ -15,6 +15,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ShapeGenerators
             }
         }
 
+
         public override void Render()
         {
             GL.MatrixMode(MatrixMode.Projection);
@@ -22,7 +23,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ShapeGenerators
             GL.Ortho(0.0, 1000.0, 0.0, 1000.0, 0.0, 4.0);
             GL.Translate(Center);
 
-            GL.Begin(BeginMode.Triangles);
+            GL.Begin(BeginMode.Quads);
 
             GL.Color4(VertexColors[0]);
             GL.Vertex3(VertexPositions[0]);
@@ -30,6 +31,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ShapeGenerators
             GL.Vertex3(VertexPositions[1]);
             GL.Color4(VertexColors[2]);
             GL.Vertex3(VertexPositions[2]);
+            GL.Color4(VertexColors[3]);
+            GL.Vertex3(VertexPositions[3]);
 
             GL.End();
         }
