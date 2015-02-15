@@ -4,9 +4,9 @@ using CorpusFrisky.VisualSynth.Controllers.Interfaces;
 using CorpusFrisky.VisualSynth.ViewModels;
 using CorpusFrisky.VisualSynth.Views.ControlViews;
 
-namespace CorpusFrisky.VisualSynth.Modules
+namespace CorpusFrisky.VisualSynth.DependencyInjection
 {
-    class ControlsModule : Module
+    class ControlsDI : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

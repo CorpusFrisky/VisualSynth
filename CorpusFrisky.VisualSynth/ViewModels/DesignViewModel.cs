@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using CorpusFrisky.VisualSynth.Models;
-using CorpusFrisky.VisualSynth.Modules;
 using CorpusFrisky.VisualSynth.SynthModules;
 using CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators;
 using Microsoft.Practices.Prism.Commands;

@@ -157,8 +157,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Modules\DisplayModule.cs" />
-    <Compile Include="Modules\ControlsModule.cs" />
+    <Compile Include="DependencyInjection\DisplayDI.cs" />
+    <Compile Include="DependencyInjection\ControlsDI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

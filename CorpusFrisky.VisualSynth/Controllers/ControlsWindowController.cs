@@ -2,6 +2,7 @@
 using Autofac;
 using Autofac.Core;
 using CorpusFrisky.VisualSynth.Controllers.Interfaces;
+using CorpusFrisky.VisualSynth.SynthModules.Views.ShapeGenerators;
 using CorpusFrisky.VisualSynth.Views.ControlViews;
 using CorpusFrisky.VisualSynth.Views.Windows;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -34,6 +35,17 @@ namespace CorpusFrisky.VisualSynth.Controllers
             {
                 designView = parameters == null ? ComponentContext.Resolve<DesignView>() : ComponentContext.Resolve<DesignView>(parameters);
                 RegionManager.RegisterViewWithRegion(RegionNames.LowerControlRegion, () => designView);
+            }
+
+
+
+
+            var moduleView = RegionManager.Regions[RegionNames.LeftControlRegion].Views.FirstOrDefault(x => x.GetType() == typeof(TriangleGeneratorView)) as TriangleGeneratorView;
+
+            if (moduleView == null)
+            {
+                moduleView = parameters == null ? ComponentContext.Resolve<TriangleGeneratorView>() : ComponentContext.Resolve<TriangleGeneratorView>(parameters);
+                RegionManager.RegisterViewWithRegion(RegionNames.LeftControlRegion, () => moduleView);
             }
 
             ComponentContext.Resolve<ControlsWindow>().Show();

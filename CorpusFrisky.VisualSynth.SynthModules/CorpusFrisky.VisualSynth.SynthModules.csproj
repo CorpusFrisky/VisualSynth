@@ -98,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependencyInjection\SynthModulesDI.cs" />
     <Compile Include="ISynthModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\ShapeGenerators\ShapeGeneratorBase.cs" />
