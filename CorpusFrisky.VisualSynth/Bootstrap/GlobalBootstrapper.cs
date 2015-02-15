@@ -2,6 +2,7 @@
 using Autofac;
 using CorpusFrisky.VisualSynth.Controllers;
 using CorpusFrisky.VisualSynth.DependencyInjection;
+using CorpusFrisky.VisualSynth.SynthModules.DependencyInjection;
 using CorpusFrisky.VisualSynth.Views.Windows;
 using Prism.AutofacExtension;
 
