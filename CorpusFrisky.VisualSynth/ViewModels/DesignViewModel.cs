@@ -157,7 +157,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
             _eventAggregator.GetEvent<ModuleAddedEvent>().Publish(new ModuleAddedEventArgs
             {
-                Module = componentModel.Module as TriangleGenerator
+                Module = componentModel.Module
             });
         }
         #endregion

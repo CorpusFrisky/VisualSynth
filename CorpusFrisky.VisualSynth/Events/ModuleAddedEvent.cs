@@ -1,4 +1,5 @@
 ﻿using CorpusFrisky.VisualSynth.Models;
+using CorpusFrisky.VisualSynth.SynthModules;
 using CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators;
 using Microsoft.Practices.Prism.PubSubEvents;
 
@@ -11,6 +12,6 @@ namespace CorpusFrisky.VisualSynth.Events
 
     public class ModuleAddedEventArgs
     {
-        public TriangleGenerator Module { get; set; }
+        public ISynthModule Module { get; set; }
     }
 }

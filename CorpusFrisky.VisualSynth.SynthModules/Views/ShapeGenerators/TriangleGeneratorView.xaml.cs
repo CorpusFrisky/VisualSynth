@@ -30,10 +30,10 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Views.ShapeGenerators
             set { DataContext = value; }
         }
 
-        public TriangleGeneratorView(TriangleGeneratorViewModel viewModel)
+        public TriangleGeneratorView(ISynthModule viewModel)
         {
             InitializeComponent();
-            ViewModel = viewModel;
+            ViewModel = new TriangleGeneratorViewModel(viewModel);
         }
 
     }
