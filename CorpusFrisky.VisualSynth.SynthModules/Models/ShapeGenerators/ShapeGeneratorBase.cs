@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using Microsoft.Practices.Prism;
+﻿using CorpusFrisky.VisualSynth.Common;
 using Microsoft.Practices.Prism.Mvvm;
 using OpenTK;
 using OpenTK.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
 {
@@ -58,6 +57,16 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
         public virtual void PostRender()
         {
             throw new NotImplementedException();
+        }
+
+        public virtual SynthModuleType ModuleType
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public virtual int NumVertices
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 }

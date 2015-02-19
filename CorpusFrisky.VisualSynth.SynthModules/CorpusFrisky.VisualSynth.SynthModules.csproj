@@ -114,7 +114,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CorpusFrisky.VisualSynth.Common\CorpusFrisky.VisualSynth.Common.csproj">
+      <Project>{226111a7-5452-4718-9462-023dc05bf4ea}</Project>
+      <Name>CorpusFrisky.VisualSynth.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ShapeGenerators\TriangleGeneratorView.xaml">
       <SubType>Designer</SubType>

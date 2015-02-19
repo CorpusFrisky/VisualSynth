@@ -124,7 +124,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Constants.cs" />
     <Compile Include="CustomControls\CanvasItemsControl.cs" />
     <Compile Include="Events\ModuleAddedEvent.cs" />
     <Compile Include="Helpers\InvokeDelegateCommandAction.cs" />
@@ -195,6 +194,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\CorpusFrisky.VisualSynth.Common\CorpusFrisky.VisualSynth.Common.csproj">
+      <Project>{226111a7-5452-4718-9462-023dc05bf4ea}</Project>
+      <Name>CorpusFrisky.VisualSynth.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CorpusFrisky.VisualSynth.SynthModules\CorpusFrisky.VisualSynth.SynthModules.csproj">
       <Project>{4d3b9bdb-69c4-4e4a-a4fc-c0a8766cf621}</Project>
       <Name>CorpusFrisky.VisualSynth.SynthModules</Name>

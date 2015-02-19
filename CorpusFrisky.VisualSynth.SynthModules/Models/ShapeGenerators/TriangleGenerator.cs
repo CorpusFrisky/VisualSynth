@@ -1,11 +1,19 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
+﻿using CorpusFrisky.VisualSynth.Common;
 using OpenTK.Graphics.OpenGL;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
 {
     public class TriangleGenerator : ShapeGeneratorBase
     {
-        public static int NumVertices = 3;
+        public override int NumVertices
+        {
+            get { return 3; }
+        }
+
+        public override SynthModuleType ModuleType
+        {
+            get { return SynthModuleType.TRIANGLE_GENERATOR; }
+        }
 
         public override void PreRender()
         {

@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using CorpusFrisky.VisualSynth.Events;
+﻿using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.Models;
-using CorpusFrisky.VisualSynth.SynthModules;
 using CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using OpenTK;
 using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Drawing;
 
 namespace CorpusFrisky.VisualSynth.ViewModels
 {
@@ -108,13 +103,11 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                 }
             };
 
-            var componentModel = new SynthComponentModel
+            SynthComponents.Add(new SynthComponentModel
             {
                 DesignPos = CurrentDesignPos,
                 Module = triangle
-            };
-
-            SynthComponents.Add(componentModel);
+            });
 
             _eventAggregator.GetEvent<ModuleAddedEvent>().Publish(new ModuleAddedEventArgs
                                                                   {
@@ -148,6 +141,11 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             SynthComponents.Add(new SynthComponentModel
             {
                 DesignPos = CurrentDesignPos,
+                Module = rectangle
+            });
+
+            _eventAggregator.GetEvent<ModuleAddedEvent>().Publish(new ModuleAddedEventArgs
+            {
                 Module = rectangle
             });
         }

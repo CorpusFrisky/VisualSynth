@@ -1,10 +1,19 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using CorpusFrisky.VisualSynth.Common;
+using OpenTK.Graphics.OpenGL;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
 {
     public class RectangleGenerator : ShapeGeneratorBase
     {
-        public static int NumVertices = 4;
+        public override int NumVertices
+        {
+            get { return 3; }
+        }
+
+        public override SynthModuleType ModuleType
+        {
+            get { return SynthModuleType.RECTANGLE_GENERATOR; }
+        }
 
         public override void PreRender()
         {

@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using System.Windows;
-using Autofac;
+﻿using Autofac;
 using Autofac.Core;
+using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.Controllers.Interfaces;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.SynthModules;
@@ -10,6 +9,11 @@ using CorpusFrisky.VisualSynth.Views.ControlViews;
 using CorpusFrisky.VisualSynth.Views.Windows;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Controls;
+using CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators;
 
 namespace CorpusFrisky.VisualSynth.Controllers
 {
@@ -20,7 +24,7 @@ namespace CorpusFrisky.VisualSynth.Controllers
         {
             SubscribeToEvents();
         }
-        
+
         private void SubscribeToEvents()
         {
             EventAggregator.GetEvent<ModuleAddedEvent>().Subscribe(ModuleAdded);
@@ -35,7 +39,7 @@ namespace CorpusFrisky.VisualSynth.Controllers
         {
             var designView = RegionManager.Regions[RegionNames.LowerControlRegion].Views.FirstOrDefault(x => x.GetType() == typeof(DesignView)) as DesignView;
 
-            if(designView == null)
+            if (designView == null)
             {
                 designView = parameters == null ? ComponentContext.Resolve<DesignView>() : ComponentContext.Resolve<DesignView>(parameters);
                 RegionManager.RegisterViewWithRegion(RegionNames.LowerControlRegion, () => designView);
@@ -46,16 +50,44 @@ namespace CorpusFrisky.VisualSynth.Controllers
 
         private void ModuleAdded(ModuleAddedEventArgs args)
         {
-            var currentView = RegionManager.Regions[RegionNames.LeftControlRegion].Views.FirstOrDefault(x => x.GetType() == typeof(TriangleGeneratorView)) as TriangleGeneratorView;
+            var currentView = RegionManager.Regions[RegionNames.LeftControlRegion].Views.FirstOrDefault(x => x.GetType() == typeof(UserControl));
 
             if (currentView != null)
             {
                 RegionManager.Regions[RegionNames.LeftControlRegion].Remove(currentView);
             }
 
-            var moduleView = ComponentContext.Resolve<TriangleGeneratorView>(new TypedParameter(typeof(ISynthModule), args.Module));
-            //moduleView.ViewModel.Module = args.Module;
+            //TODO: Clean up this mess.
+
+            var viewType = GetViewTypeFromModule(args.Module);
+
+            var compContextType = ComponentContext.GetType().GetInterfaces().Single(e => e.Name == "ILifetimeScope");
+            var resExtensionsType = typeof(Autofac.ResolutionExtensions);
+            var test = resExtensionsType.GetMethods();
+            Console.Out.Write(test);
+            MethodInfo method = resExtensionsType.GetMethod("Resolve", new[] { typeof(IComponentContext), typeof(Parameter[])})
+                                                  .MakeGenericMethod(viewType);
+            var moduleView = method.Invoke(this, new object[] {  ComponentContext,
+                                                                 new Parameter[] {new TypedParameter(typeof(ISynthModule), args.Module) }
+                                                              });
+
+            //var moduleView = ComponentContext.Resolve<viewType.>(new TypedParameter(typeof(ISynthModule), args.Module));
             RegionManager.RegisterViewWithRegion(RegionNames.LeftControlRegion, () => moduleView);
+        }
+
+        private Type GetViewTypeFromModule(ISynthModule module)
+        {
+            switch (module.ModuleType)
+            {
+                case SynthModuleType.TRIANGLE_GENERATOR:
+                    return typeof(TriangleGeneratorView);
+                case SynthModuleType.RECTANGLE_GENERATOR:
+                    //return typeof (RectangleGeneratorView);
+                    return null;
+
+            }
+
+            return null;
         }
     }
 }
