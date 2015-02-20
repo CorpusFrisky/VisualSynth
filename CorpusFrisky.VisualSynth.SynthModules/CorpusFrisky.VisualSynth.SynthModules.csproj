@@ -105,7 +105,11 @@
     <Compile Include="Models\ShapeGenerators\ShapeGeneratorBase.cs" />
     <Compile Include="Models\ShapeGenerators\RectangleGenerator.cs" />
     <Compile Include="Models\ShapeGenerators\TriangleGenerator.cs" />
+    <Compile Include="ViewModels\ShapeGenerators\RectangleGeneratorViewModel.cs" />
     <Compile Include="ViewModels\ShapeGenerators\TriangleGeneratorViewModel.cs" />
+    <Compile Include="Views\ShapeGenerators\RectangleGeneratorView.xaml.cs">
+      <DependentUpon>RectangleGeneratorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShapeGenerators\TriangleGeneratorView.xaml.cs">
       <DependentUpon>TriangleGeneratorView.xaml</DependentUpon>
     </Compile>
@@ -121,6 +125,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ShapeGenerators\RectangleGeneratorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ShapeGenerators\TriangleGeneratorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
