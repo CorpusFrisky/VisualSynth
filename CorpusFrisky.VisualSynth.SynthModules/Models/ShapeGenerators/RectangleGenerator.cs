@@ -1,4 +1,5 @@
 ﻿using CorpusFrisky.VisualSynth.Common;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
@@ -13,6 +14,12 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
         public override SynthModuleType ModuleType
         {
             get { return SynthModuleType.RECTANGLE_GENERATOR; }
+        }
+
+        public Color4 ColorV3
+        {
+            get { return VertexColors[3]; }
+            set { VertexColors[3] = value; }
         }
 
         public override void PreRender()

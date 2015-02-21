@@ -4,8 +4,46 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:converters="clr-namespace:CorpusFrisky.VisualSynth.SynthModules.Converters"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Width="200">
-        <Grid.Background>OrangeRed</Grid.Background>
+    <UserControl.Resources>
+        <converters:OpenGlToWindowsColorConverter x:Key="ColorConverter"/>
+        <Style TargetType="{x:Type TextBlock}">
+            <Style.Setters>
+                <Setter Property="Width" Value="40"/>
+            </Style.Setters>
+        </Style>
+    </UserControl.Resources>
+    <Grid x:Name="TriangleGenGrid"
+          Height="500" Width="200">
+        <Grid.Background>Thistle</Grid.Background>
+
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="ColorV0" 
+                               Width="50"/>
+                <xctk:ColorPicker Margin="20,0"
+                                      SelectedColor="{Binding Module.ColorV0, Converter={StaticResource ColorConverter}}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="ColorV1"
+                           Width="50"/>
+                <xctk:ColorPicker Margin="20,0"
+                                  SelectedColor="{Binding Module.ColorV1, Converter={StaticResource ColorConverter}}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="ColorV2"
+                           Width="50"/>
+                <xctk:ColorPicker Margin="20,0"
+                                      SelectedColor="{Binding Module.ColorV2, Converter={StaticResource ColorConverter}}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="ColorV3"
+                           Width="50"/>
+                <xctk:ColorPicker Margin="20,0"
+                                      SelectedColor="{Binding Module.ColorV3, Converter={StaticResource ColorConverter}}"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

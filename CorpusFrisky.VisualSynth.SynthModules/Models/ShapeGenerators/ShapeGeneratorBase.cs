@@ -31,6 +31,18 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
             set { VertexColors[0] = value; }
         }
 
+        public Color4 ColorV1
+        {
+            get { return VertexColors[1]; }
+            set { VertexColors[1] = value; }
+        }
+
+        public Color4 ColorV2
+        {
+            get { return VertexColors[2]; }
+            set { VertexColors[2] = value; }
+        }
+
         protected void ValidateConstruction(int numVertices)
         {
             while (VertexPositions.Count < numVertices)

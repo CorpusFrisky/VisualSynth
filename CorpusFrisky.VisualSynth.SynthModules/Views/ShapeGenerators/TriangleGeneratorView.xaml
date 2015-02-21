@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:converters="clr-namespace:CorpusFrisky.VisualSynth.SynthModules.Converters"
-             mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="300">
+             mc:Ignorable="d" >
     <UserControl.Resources>
         <converters:OpenGlToWindowsColorConverter x:Key="ColorConverter"/>
         <Style TargetType="{x:Type TextBlock}">
@@ -15,17 +14,29 @@
             </Style.Setters>
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid x:Name="TriangleGenGrid"
+          Height="500" Width="200">
         <Grid.Background>Thistle</Grid.Background>
-        
-            <StackPanel>
-                <TextBlock Text="{Binding TestString}"
-                           Width="300"/>
-                <StackPanel Orientation="Horizontal" Margin="10">
-                    <TextBlock Text="Color1"/>
+
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                    <TextBlock Text="ColorV0" 
+                               Width="50"/>
                     <xctk:ColorPicker Margin="20,0"
                                       SelectedColor="{Binding Module.ColorV0, Converter={StaticResource ColorConverter}}"/>
-                </StackPanel>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="ColorV1"
+                           Width="50"/>
+                <xctk:ColorPicker Margin="20,0"
+                                  SelectedColor="{Binding Module.ColorV1, Converter={StaticResource ColorConverter}}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="ColorV2"
+                           Width="50"/>
+                <xctk:ColorPicker Margin="20,0"
+                                      SelectedColor="{Binding Module.ColorV2, Converter={StaticResource ColorConverter}}"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

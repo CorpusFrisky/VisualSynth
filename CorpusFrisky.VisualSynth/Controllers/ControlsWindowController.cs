@@ -18,10 +18,14 @@ namespace CorpusFrisky.VisualSynth.Controllers
 {
     public class ControlsWindowController : BaseController, IControlsWindowController
     {
+        private readonly Type AutoFacResExtenionsType = null;
+
         public ControlsWindowController(ILifetimeScope componentContext, IRegionManager regionManager, IEventAggregator eventAggregator)
             : base(componentContext, regionManager, eventAggregator)
         {
             SubscribeToEvents();
+
+            AutoFacResExtenionsType = typeof(Autofac.ResolutionExtensions);
         }
 
         private void SubscribeToEvents()
@@ -56,34 +60,35 @@ namespace CorpusFrisky.VisualSynth.Controllers
                 RegionManager.Regions[RegionNames.LeftControlRegion].Remove(currentView);
             }
 
-             //TODO: Clean up this mess.
-
-            var viewType = GetViewTypeFromModule(args.Module);
-
-            var resExtensionsType = typeof(Autofac.ResolutionExtensions);
-            var test = resExtensionsType.GetMethods();
-            Console.Out.Write(test);
-            MethodInfo resolveMethod = resExtensionsType.GetMethod("Resolve", new[] { typeof(IComponentContext), typeof(Parameter[])})
-                                                  .MakeGenericMethod(viewType);
-            var moduleView = resolveMethod.Invoke(this, new object[] {  ComponentContext,
-                                                                        new Parameter[] {new TypedParameter(typeof(ISynthModule), args.Module) }
-                                                                     });
-
-            //var moduleView = ComponentContext.Resolve<viewType.>(new TypedParameter(typeof(ISynthModule), args.Module));
-            RegionManager.RegisterViewWithRegion(RegionNames.LeftControlRegion, () => moduleView);
+            var view = GetViewForModule(args.Module);
+            RegionManager.RegisterViewWithRegion(RegionNames.LeftControlRegion, () => view);
         }
 
-        private Type GetViewTypeFromModule(ISynthModule module)
+        private object GetViewForModule(ISynthModule module)
         {
+            Type viewType;
             switch (module.ModuleType)
             {
                 case SynthModuleType.TRIANGLE_GENERATOR:
-                    return typeof(TriangleGeneratorView);
+                    viewType = typeof(TriangleGeneratorView);
+                    break;
                 case SynthModuleType.RECTANGLE_GENERATOR:
-                    return typeof(RectangleGeneratorView);
+                    viewType = typeof(RectangleGeneratorView);
+                    break;
                 default:
                     return null;
             }
+
+            MethodInfo resolveMethod = AutoFacResExtenionsType.GetMethod("Resolve", new[] { typeof(IComponentContext), typeof(Parameter[]) })
+                                                              .MakeGenericMethod(viewType);
+
+            var moduleView = resolveMethod.Invoke(this, 
+                                                   new object[] {  ComponentContext,
+                                                                   new Parameter[] {new TypedParameter(typeof(ISynthModule),
+                                                                                    module) }
+                                                                });
+
+            return moduleView;
         }
     }
 }
