@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using Autofac.Core;
 using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.Controllers.Interfaces;
@@ -10,6 +11,7 @@ using CorpusFrisky.VisualSynth.Views.Windows;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Controls;
 
 namespace CorpusFrisky.VisualSynth.Controllers
@@ -54,17 +56,31 @@ namespace CorpusFrisky.VisualSynth.Controllers
                 RegionManager.Regions[RegionNames.LeftControlRegion].Remove(currentView);
             }
 
-            RegionManager.RegisterViewWithRegion(RegionNames.LeftControlRegion, () => GetViewFromModule(args.Module));
+             //TODO: Clean up this mess.
+
+            var viewType = GetViewTypeFromModule(args.Module);
+
+            var resExtensionsType = typeof(Autofac.ResolutionExtensions);
+            var test = resExtensionsType.GetMethods();
+            Console.Out.Write(test);
+            MethodInfo resolveMethod = resExtensionsType.GetMethod("Resolve", new[] { typeof(IComponentContext), typeof(Parameter[])})
+                                                  .MakeGenericMethod(viewType);
+            var moduleView = resolveMethod.Invoke(this, new object[] {  ComponentContext,
+                                                                        new Parameter[] {new TypedParameter(typeof(ISynthModule), args.Module) }
+                                                                     });
+
+            //var moduleView = ComponentContext.Resolve<viewType.>(new TypedParameter(typeof(ISynthModule), args.Module));
+            RegionManager.RegisterViewWithRegion(RegionNames.LeftControlRegion, () => moduleView);
         }
 
-        private object GetViewFromModule(ISynthModule module)
+        private Type GetViewTypeFromModule(ISynthModule module)
         {
             switch (module.ModuleType)
             {
                 case SynthModuleType.TRIANGLE_GENERATOR:
-                    return new TriangleGeneratorView(module);
+                    return typeof(TriangleGeneratorView);
                 case SynthModuleType.RECTANGLE_GENERATOR:
-                    return new RectangleGeneratorView(module);
+                    return typeof(RectangleGeneratorView);
                 default:
                     return null;
             }
