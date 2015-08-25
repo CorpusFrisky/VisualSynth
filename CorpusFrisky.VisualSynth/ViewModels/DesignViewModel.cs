@@ -1,15 +1,13 @@
-﻿using CorpusFrisky.VisualSynth.Events;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Drawing;
+using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using OpenTK;
-using OpenTK.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Drawing;
 
 namespace CorpusFrisky.VisualSynth.ViewModels
 {
@@ -25,12 +23,14 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         #endregion
 
+
         public DesignViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
 
             SynthComponents = new ObservableCollection<SynthComponentModel>();
         }
+
 
         #region Properties
 
@@ -39,6 +39,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         public Point CurrentDesignPos { get; set; }
 
         #endregion
+
 
         #region Commands
 
@@ -73,7 +74,9 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             get
             {
                 if (_handleModuleLeftClick == null)
+                {
                     _handleModuleLeftClick = new DelegateCommand<SynthComponentModel>(HandleModuleLeftClick);
+                }
 
                 return _handleModuleLeftClick;
             }
@@ -81,33 +84,22 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         #endregion
 
+
         #region Command Handlers
 
         private void AddTriangle()
         {
             var rand = new Random();
             var triangle = new TriangleGenerator()
-            {
-                Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
-                VertexPositions = new List<Vector3>
-                {
-                    new Vector3(-100.0f,0.0f,0.0f),
-                    new Vector3(100.0f,0.0f,0.0f),
-                    new Vector3(0.0f,100.0f,0.0f)
-                },
-                VertexColors = new ObservableCollection<Color4>
-                {
-                    new Color4(1.0f,0.0f,0.0f,0.0f),
-                    new Color4(1.0f,1.0f,0.0f,0.0f),
-                    new Color4(1.0f,0.0f,1.0f,0.0f),
-                }
-            };
+                           {
+                               Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
+                           };
 
             SynthComponents.Add(new SynthComponentModel
-            {
-                DesignPos = CurrentDesignPos,
-                Module = triangle
-            });
+                                {
+                                    DesignPos = CurrentDesignPos,
+                                    Module = triangle
+                                });
 
             _eventAggregator.GetEvent<ModuleAddedEvent>().Publish(new ModuleAddedEventArgs
                                                                   {
@@ -119,45 +111,31 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         {
             var rand = new Random();
             var rectangle = new RectangleGenerator
-            {
-                //DesignPos = new Point((int)mousePoint.X, (int)mousePoint.Y),
-                Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
-                VertexPositions = new List<Vector3>
-                {
-                    new Vector3(-100.0f,0.0f,0.0f),
-                    new Vector3(100.0f,0.0f,0.0f),
-                    new Vector3(100.0f,100.0f,0.0f),
-                    new Vector3(-100.0f,100.0f,0.0f)
-                },
-                VertexColors = new ObservableCollection<Color4>
-                {
-                    new Color4(1.0f,0.0f,0.0f,0.0f),
-                    new Color4(1.0f,1.0f,0.0f,0.0f),
-                    new Color4(1.0f,0.0f,1.0f,0.0f),
-                    new Color4(1.0f,0.0f,1.0f,0.0f)
-                }
-            };
+                            {
+                                //DesignPos = new Point((int)mousePoint.X, (int)mousePoint.Y),
+                                Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
+                            };
 
             SynthComponents.Add(new SynthComponentModel
-            {
-                DesignPos = CurrentDesignPos,
-                Module = rectangle
-            });
+                                {
+                                    DesignPos = CurrentDesignPos,
+                                    Module = rectangle
+                                });
 
             _eventAggregator.GetEvent<ModuleAddedEvent>().Publish(new ModuleAddedEventArgs
-            {
-                Module = rectangle
-            });
+                                                                  {
+                                                                      Module = rectangle
+                                                                  });
         }
 
         private void HandleModuleLeftClick(SynthComponentModel componentModel)
         {
-
             _eventAggregator.GetEvent<ModuleAddedEvent>().Publish(new ModuleAddedEventArgs
-            {
-                Module = componentModel.Module
-            });
+                                                                  {
+                                                                      Module = componentModel.Module
+                                                                  });
         }
+
         #endregion
     }
 }

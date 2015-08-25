@@ -1,4 +1,5 @@
 ﻿using CorpusFrisky.VisualSynth.Common;
+using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
@@ -6,20 +7,46 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
 {
     public class RectangleGenerator : ShapeGeneratorBase
     {
+        public RectangleGenerator()
+        {
+            SetupDefaultVertices();
+        }
+
+        private void SetupDefaultVertices()
+        {
+            Vertices.Add(new VertexModel()
+                         {
+                             Color = new Color4(1.0f, 0.0f, 0.0f, 0.0f),
+                             Position = new Vector3(-100.0f, 0.0f, 0.0f)
+                         });
+
+            Vertices.Add(new VertexModel()
+                         {
+                             Color = new Color4(1.0f, 1.0f, 0.0f, 0.0f),
+                             Position = new Vector3(100.0f, 0.0f, 0.0f)
+                         });
+
+            Vertices.Add(new VertexModel()
+                         {
+                             Color = new Color4(1.0f, 0.0f, 1.0f, 0.0f),
+                             Position = new Vector3(100.0f, 100.0f, 0.0f)
+                         });
+
+            Vertices.Add(new VertexModel()
+                         {
+                             Color = new Color4(1.0f, 0.0f, 1.0f, 0.0f),
+                             Position = new Vector3(-100.0f, 100.0f, 0.0f)
+                         });
+        }
+
         public override int NumVertices
         {
-            get { return 3; }
+            get { return 4; }
         }
 
         public override SynthModuleType ModuleType
         {
             get { return SynthModuleType.RECTANGLE_GENERATOR; }
-        }
-
-        public Color4 ColorV3
-        {
-            get { return VertexColors[3]; }
-            set { VertexColors[3] = value; }
         }
 
         public override void PreRender()
@@ -39,16 +66,13 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
             GL.Ortho(0.0, 1000.0, 0.0, 1000.0, 0.0, 4.0);
             GL.Translate(Center);
 
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
 
-            GL.Color4(VertexColors[0]);
-            GL.Vertex3(VertexPositions[0]);
-            GL.Color4(VertexColors[1]);
-            GL.Vertex3(VertexPositions[1]);
-            GL.Color4(VertexColors[2]);
-            GL.Vertex3(VertexPositions[2]);
-            GL.Color4(VertexColors[3]);
-            GL.Vertex3(VertexPositions[3]);
+            foreach (var vertex in Vertices)
+            {
+                GL.Color4(vertex.Color);
+                GL.Vertex3(vertex.Position);
+            }
 
             GL.End();
         }

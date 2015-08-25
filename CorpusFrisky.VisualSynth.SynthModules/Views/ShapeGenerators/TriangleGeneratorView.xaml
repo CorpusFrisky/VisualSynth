@@ -19,24 +19,18 @@
         <Grid.Background>Thistle</Grid.Background>
 
         <StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10">
-                    <TextBlock Text="ColorV0" 
-                               Width="50"/>
-                    <xctk:ColorPicker Margin="20,0"
-                                      SelectedColor="{Binding Module.ColorV0, Converter={StaticResource ColorConverter}}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBlock Text="ColorV1"
-                           Width="50"/>
-                <xctk:ColorPicker Margin="20,0"
-                                  SelectedColor="{Binding Module.ColorV1, Converter={StaticResource ColorConverter}}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBlock Text="ColorV2"
-                           Width="50"/>
-                <xctk:ColorPicker Margin="20,0"
-                                      SelectedColor="{Binding Module.ColorV2, Converter={StaticResource ColorConverter}}"/>
-            </StackPanel>
+            <ListView ItemsSource="{Binding Module.Vertices}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="10">
+                            <TextBlock Text="Color"
+                                       Width="50"/>
+                            <xctk:ColorPicker Margin="20,0"
+                                      SelectedColor="{Binding Color, Converter={StaticResource ColorConverter}}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
     </Grid>
 </UserControl>
