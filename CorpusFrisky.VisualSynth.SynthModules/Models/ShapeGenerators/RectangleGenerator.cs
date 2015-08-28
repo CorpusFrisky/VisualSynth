@@ -66,7 +66,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
             GL.Ortho(0.0, 1000.0, 0.0, 1000.0, 0.0, 4.0);
             GL.Translate(Center);
 
-            GL.Begin(PrimitiveType.Quads);
+            GL.Begin(BeginMode.Quads);//(PrimitiveType.Quads);
 
             foreach (var vertex in Vertices)
             {

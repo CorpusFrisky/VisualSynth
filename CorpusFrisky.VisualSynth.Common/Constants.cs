@@ -13,4 +13,9 @@
         TRIANGLE_GENERATOR,
         RECTANGLE_GENERATOR
     }
+
+    public static class Constants
+    {
+        public const float FrameRate = 30.0f;
+    }
 }

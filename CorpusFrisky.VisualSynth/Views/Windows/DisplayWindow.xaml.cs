@@ -1,6 +1,7 @@
 ﻿using System.Timers;
 using System.Windows;
 using System.Windows.Forms;
+using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.ViewModels;
 using OpenTK.Graphics.OpenGL;
 using Timer = System.Timers.Timer;
@@ -27,7 +28,7 @@ namespace CorpusFrisky.VisualSynth.Views.Windows
             GlControl1.Height = (int)Height;
             GlControl1.Width = (int)Width;
 
-            _repaintTimer = new Timer(1000.0 / 30.0);
+            _repaintTimer = new Timer(1000.0 / Constants.FrameRate);
             _repaintTimer.Elapsed += Repaint;
             _repaintTimer.Start();
         }
