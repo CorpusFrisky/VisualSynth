@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.Models;
+using CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers;
 using CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
@@ -29,6 +30,8 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             _eventAggregator = eventAggregator;
 
             SynthComponents = new ObservableCollection<SynthComponentModel>();
+
+            AddTestOscillator();
         }
 
 
@@ -134,6 +137,21 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                                                   {
                                                                       Module = componentModel.Module
                                                                   });
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        private void AddTestOscillator()
+        {
+            var osc = new Oscillator();
+
+            SynthComponents.Add(new SynthComponentModel()
+            {
+                DesignPos = new Point(-100, -100),
+                Module = osc
+            });
         }
 
         #endregion

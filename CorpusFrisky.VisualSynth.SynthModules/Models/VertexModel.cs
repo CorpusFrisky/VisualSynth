@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers;
 using Microsoft.Practices.Prism.Mvvm;
 using OpenTK;
 using OpenTK.Graphics;
@@ -52,6 +53,11 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
         #endregion
 
         #region Methods
+
+        public void UpdateVertex()
+        {
+            ApplyModifiers();
+        }
 
         public void AddPropertyModifier(VertexProperty property, IModifierModule module)
         {

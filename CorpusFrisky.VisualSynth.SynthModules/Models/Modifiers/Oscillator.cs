@@ -21,7 +21,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
             _index = 0;
         }
 
-
         public static void InitOscillatorTables()
         {
             _sinTable = new double[TableLength];

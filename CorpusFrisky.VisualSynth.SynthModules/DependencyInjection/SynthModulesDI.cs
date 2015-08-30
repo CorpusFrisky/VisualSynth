@@ -2,6 +2,7 @@
 using CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
 using CorpusFrisky.VisualSynth.SynthModules.Views.ShapeGenerators;
+using TriangleGeneratorViewModel = CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators.TriangleGeneratorViewModel;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.DependencyInjection
 {
@@ -10,9 +11,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules.DependencyInjection
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
-            builder.RegisterType<TriangleGenerator>().AsSelf();
-            builder.RegisterType<TriangleGeneratorView>().AsSelf();
             builder.RegisterType<TriangleGeneratorViewModel>().AsSelf();
+            builder.RegisterType<TriangleGeneratorView>().AsSelf();
+            builder.RegisterType<ViewModels.ShapeGenerators.TriangleGeneratorViewModel>().AsSelf();
 
             builder.RegisterType<RectangleGenerator>().AsSelf();
             builder.RegisterType<RectangleGeneratorView>().AsSelf();

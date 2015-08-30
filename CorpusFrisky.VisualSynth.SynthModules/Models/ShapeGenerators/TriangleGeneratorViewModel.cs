@@ -33,6 +33,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
                          });
         }
 
+        #region Properties
+
         public override int NumVertices
         {
             get { return 3; }
@@ -43,6 +45,10 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
             get { return SynthModuleType.TRIANGLE_GENERATOR; }
         }
 
+        #endregion
+
+        #region Methods
+
         public override void PreRender()
         {
             if (!ConstructionValidated)
@@ -50,10 +56,14 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
                 ValidateConstruction(NumVertices);
                 ConstructionValidated = true;
             }
+
+            base.PreRender();
         }
 
         public override void Render()
         {
+            base.Render();
+
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             GL.Ortho(0.0, 1000.0, 0.0, 1000.0, 0.0, 4.0);
@@ -69,5 +79,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
 
             GL.End();
         }
+
+        #endregion
     }
 }

@@ -11,5 +11,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
         }
 
         public ISynthModule Module { get; set; }
+
+
     }
 }

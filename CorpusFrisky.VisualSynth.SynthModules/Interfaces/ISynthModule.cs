@@ -8,6 +8,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules
         void Render();
         void PostRender();
 
+        bool ConnectSynthModule(/*int pin,*/ ISynthModule module);
+        bool DisconnectSynthModule(/*int pin,*/ ISynthModule module);
+
         SynthModuleType ModuleType { get; }
     }
 }

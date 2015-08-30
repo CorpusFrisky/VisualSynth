@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using CorpusFrisky.VisualSynth.Common;
 using Microsoft.Practices.Prism.Mvvm;
 using OpenTK;
@@ -12,13 +13,21 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
         protected bool ConstructionValidated;
         private ObservableCollection<VertexModel> _vertices;
 
+        private ObservableCollection<ISynthModule> _connectedModules; 
+
         public ShapeGeneratorBase()
         {
             Center = new Vector3(0);
             Vertices = new ObservableCollection<VertexModel>();
+            ConnectedModules = new ObservableCollection<ISynthModule>();
+
+            ConnectedModules.CollectionChanged += OnConnectedModulesChanged;
 
             ConstructionValidated = false;
         }
+
+        
+        #region Properties
 
         public ObservableCollection<VertexModel> Vertices
         {
@@ -26,7 +35,36 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
             set { SetProperty(ref _vertices, value); }
         }
 
+        public ObservableCollection<ISynthModule> ConnectedModules
+        {
+            get { return _connectedModules; } 
+            private set { SetProperty(ref _connectedModules, value); }
+        }
+
         public Vector3 Center { get; set; }
+
+        public virtual SynthModuleType ModuleType
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public virtual int NumVertices
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        private void OnConnectedModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+        }
+
+        #endregion
+
+
+        #region Methods
 
         protected void ValidateConstruction(int numVertices)
         {
@@ -55,14 +93,23 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
             throw new NotImplementedException();
         }
 
-        public virtual SynthModuleType ModuleType
+        public virtual bool ConnectSynthModule(/*int pin,*/ ISynthModule module)
         {
-            get { throw new NotImplementedException(); }
+            //if(!IsAbleToAttach())
+            //{
+            //    return false;
+            //}
+
+            ConnectedModules.Add(module);
+
+            return true;
         }
 
-        public virtual int NumVertices
+        public virtual bool DisconnectSynthModule(/*int pin,*/ ISynthModule module)
         {
-            get { throw new NotImplementedException(); }
+            throw new NotImplementedException();
         }
+
+        #endregion
     }
 }
