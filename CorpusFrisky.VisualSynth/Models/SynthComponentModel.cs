@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using CorpusFrisky.VisualSynth.SynthModules;
+using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 
 namespace CorpusFrisky.VisualSynth.Models
 {

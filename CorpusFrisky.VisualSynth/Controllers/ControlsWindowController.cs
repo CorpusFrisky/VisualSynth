@@ -13,6 +13,7 @@ using Microsoft.Practices.Prism.Regions;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
+using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 
 namespace CorpusFrisky.VisualSynth.Controllers
 {

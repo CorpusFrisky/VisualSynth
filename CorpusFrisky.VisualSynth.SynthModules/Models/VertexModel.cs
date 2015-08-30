@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers;
 using Microsoft.Practices.Prism.Mvvm;
 using OpenTK;

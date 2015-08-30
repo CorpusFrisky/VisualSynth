@@ -1,6 +1,6 @@
 ﻿using CorpusFrisky.VisualSynth.Models;
 using CorpusFrisky.VisualSynth.SynthModules;
-using CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators;
+using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using Microsoft.Practices.Prism.PubSubEvents;
 
 namespace CorpusFrisky.VisualSynth.Events

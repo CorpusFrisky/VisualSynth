@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CorpusFrisky.VisualSynth.Common;
+using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using OpenTK;
 using OpenTK.Graphics;
 
@@ -44,6 +45,16 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
         public void PostRender()
         {
             
+        }
+
+        public virtual bool ConnectSynthModule(ISynthModule module)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual bool DisconnectSynthModule(ISynthModule module)
+        {
+            throw new NotImplementedException();
         }
 
         public SynthModuleType ModuleType { get; private set; }

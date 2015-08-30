@@ -4,7 +4,7 @@ using System.Drawing;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers;
-using CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -93,7 +93,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         private void AddTriangle()
         {
             var rand = new Random();
-            var triangle = new TriangleGenerator()
+            var triangle = new TriangleGeneratorViewModel()
                            {
                                Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
                            };
@@ -113,7 +113,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         private void AddRectangle()
         {
             var rand = new Random();
-            var rectangle = new RectangleGenerator
+            var rectangle = new RectangleGeneratorViewModel
                             {
                                 //DesignPos = new Point((int)mousePoint.X, (int)mousePoint.Y),
                                 Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),

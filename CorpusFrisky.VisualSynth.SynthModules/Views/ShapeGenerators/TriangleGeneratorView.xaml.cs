@@ -1,5 +1,6 @@
 ﻿using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
 using System.Windows.Controls;
+using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Views.ShapeGenerators
 {
@@ -17,7 +18,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Views.ShapeGenerators
         public TriangleGeneratorView(ISynthModule viewModel)
         {
             InitializeComponent();
-            ViewModel = new TriangleGeneratorViewModel(viewModel);
+            ViewModel = viewModel as TriangleGeneratorViewModel;
         }
 
     }

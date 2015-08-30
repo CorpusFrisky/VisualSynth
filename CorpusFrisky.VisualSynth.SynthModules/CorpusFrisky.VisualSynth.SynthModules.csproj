@@ -121,9 +121,7 @@
     <Compile Include="Models\Modifiers\Oscillator.cs" />
     <Compile Include="Models\VertexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\ShapeGenerators\ShapeGeneratorBase.cs" />
-    <Compile Include="Models\ShapeGenerators\RectangleGenerator.cs" />
-    <Compile Include="Models\ShapeGenerators\TriangleGeneratorViewModel.cs" />
+    <Compile Include="ViewModels\ShapeGenerators\ShapeGeneratorBaseViewModel.cs" />
     <Compile Include="ViewModels\ShapeGenerators\RectangleGeneratorViewModel.cs" />
     <Compile Include="ViewModels\ShapeGenerators\TriangleGeneratorViewModel.cs" />
     <Compile Include="Views\ShapeGenerators\RectangleGeneratorView.xaml.cs">

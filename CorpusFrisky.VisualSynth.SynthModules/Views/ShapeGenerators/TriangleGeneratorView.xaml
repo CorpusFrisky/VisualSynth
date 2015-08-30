@@ -19,7 +19,7 @@
         <Grid.Background>Thistle</Grid.Background>
 
         <StackPanel>
-            <ListView ItemsSource="{Binding Module.Vertices}">
+            <ListView ItemsSource="{Binding Vertices}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="10">

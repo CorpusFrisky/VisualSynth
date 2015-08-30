@@ -2,20 +2,22 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using CorpusFrisky.VisualSynth.Common;
+using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
+using CorpusFrisky.VisualSynth.SynthModules.Models;
 using Microsoft.Practices.Prism.Mvvm;
 using OpenTK;
 using OpenTK.Graphics;
 
-namespace CorpusFrisky.VisualSynth.SynthModules.Models.ShapeGenerators
+namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 {
-    public class ShapeGeneratorBase : BindableBase, ISynthModule
+    public class ShapeGeneratorBaseViewModel : BindableBase, ISynthModule
     {
         protected bool ConstructionValidated;
         private ObservableCollection<VertexModel> _vertices;
 
         private ObservableCollection<ISynthModule> _connectedModules; 
 
-        public ShapeGeneratorBase()
+        public ShapeGeneratorBaseViewModel()
         {
             Center = new Vector3(0);
             Vertices = new ObservableCollection<VertexModel>();

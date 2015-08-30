@@ -1,8 +1,4 @@
-﻿using CorpusFrisky.VisualSynth.Common;
-using OpenTK;
-using OpenTK.Graphics;
-
-namespace CorpusFrisky.VisualSynth.SynthModules
+﻿namespace CorpusFrisky.VisualSynth.SynthModules.Interfaces
 {
     public interface IPropertyModifierModule: IModifierModule
     {

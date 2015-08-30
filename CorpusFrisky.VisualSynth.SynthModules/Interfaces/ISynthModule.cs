@@ -1,6 +1,6 @@
 ﻿using CorpusFrisky.VisualSynth.Common;
 
-namespace CorpusFrisky.VisualSynth.SynthModules
+namespace CorpusFrisky.VisualSynth.SynthModules.Interfaces
 {
     public interface ISynthModule
     {
