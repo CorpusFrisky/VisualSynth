@@ -133,7 +133,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CustomControls\CanvasItemsControl.cs" />
-    <Compile Include="Events\ModuleAddedEvent.cs" />
+    <Compile Include="Events\ModuleAddedOrClickedEvent.cs" />
     <Compile Include="Helpers\InvokeDelegateCommandAction.cs" />
     <Compile Include="Models\SynthComponentModel.cs" />
     <Compile Include="ViewModels\DesignViewModel.cs" />

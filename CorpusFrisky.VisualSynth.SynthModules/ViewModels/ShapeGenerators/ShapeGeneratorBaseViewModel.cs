@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
@@ -15,13 +16,13 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
         protected bool ConstructionValidated;
         private ObservableCollection<VertexModel> _vertices;
 
-        private ObservableCollection<ISynthModule> _connectedModules; 
+        private ObservableCollection<ConnectedModule> _connectedModules; 
 
         public ShapeGeneratorBaseViewModel()
         {
             Center = new Vector3(0);
             Vertices = new ObservableCollection<VertexModel>();
-            ConnectedModules = new ObservableCollection<ISynthModule>();
+            ConnectedModules = new ObservableCollection<ConnectedModule>();
 
             ConnectedModules.CollectionChanged += OnConnectedModulesChanged;
 
@@ -37,7 +38,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             set { SetProperty(ref _vertices, value); }
         }
 
-        public ObservableCollection<ISynthModule> ConnectedModules
+        public ObservableCollection<ConnectedModule> ConnectedModules
         {
             get { return _connectedModules; } 
             private set { SetProperty(ref _connectedModules, value); }
@@ -59,7 +60,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
         #region Event Handlers
 
-        private void OnConnectedModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        protected virtual void OnConnectedModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
         }
 
@@ -95,21 +96,32 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             throw new NotImplementedException();
         }
 
-        public virtual bool ConnectSynthModule(/*int pin,*/ ISynthModule module)
+        public bool ConnectSynthModule(int pin, ISynthModule module)
         {
             //if(!IsAbleToAttach())
             //{
             //    return false;
             //}
 
-            ConnectedModules.Add(module);
+            ConnectedModules.Add(new ConnectedModule
+            {
+                Pin = pin,
+                Module = module
+            });
 
             return true;
         }
 
-        public virtual bool DisconnectSynthModule(/*int pin,*/ ISynthModule module)
+        public bool DisconnectSynthModule(int pin, ISynthModule module)
         {
-            throw new NotImplementedException();
+            var moduleToDisconnect = ConnectedModules.First(x => x.Module == module && x.Pin == pin);
+            if (moduleToDisconnect != null)
+            {
+                ConnectedModules.Remove(moduleToDisconnect);
+                return true;
+            }
+
+            return false;
         }
 
         #endregion

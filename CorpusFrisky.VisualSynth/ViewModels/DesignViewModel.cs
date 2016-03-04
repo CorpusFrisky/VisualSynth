@@ -21,6 +21,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         private DelegateCommand _addTriangleCommand;
         private DelegateCommand _addRectangleCommand;
         private DelegateCommand<SynthComponentModel> _handleModuleLeftClick;
+        private Oscillator _testOsc;
 
         #endregion
 
@@ -98,13 +99,15 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
                            };
 
+            triangle.ConnectSynthModule(0, _testOsc);
+
             SynthComponents.Add(new SynthComponentModel
                                 {
                                     DesignPos = CurrentDesignPos,
                                     Module = triangle
                                 });
 
-            _eventAggregator.GetEvent<ModuleAddedEvent>().Publish(new ModuleAddedEventArgs
+            _eventAggregator.GetEvent<ModuleAddedOrClickedEvent>().Publish(new ModuleAddedOrClickedEventArgs
                                                                   {
                                                                       Module = triangle
                                                                   });
@@ -115,7 +118,6 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             var rand = new Random();
             var rectangle = new RectangleGeneratorViewModel
                             {
-                                //DesignPos = new Point((int)mousePoint.X, (int)mousePoint.Y),
                                 Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
                             };
 
@@ -125,7 +127,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                     Module = rectangle
                                 });
 
-            _eventAggregator.GetEvent<ModuleAddedEvent>().Publish(new ModuleAddedEventArgs
+            _eventAggregator.GetEvent<ModuleAddedOrClickedEvent>().Publish(new ModuleAddedOrClickedEventArgs
                                                                   {
                                                                       Module = rectangle
                                                                   });
@@ -133,7 +135,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         private void HandleModuleLeftClick(SynthComponentModel componentModel)
         {
-            _eventAggregator.GetEvent<ModuleAddedEvent>().Publish(new ModuleAddedEventArgs
+            _eventAggregator.GetEvent<ModuleAddedOrClickedEvent>().Publish(new ModuleAddedOrClickedEventArgs
                                                                   {
                                                                       Module = componentModel.Module
                                                                   });
@@ -145,12 +147,13 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         private void AddTestOscillator()
         {
-            var osc = new Oscillator();
+            _testOsc = new Oscillator();
+            _testOsc.Rate = 1;
 
             SynthComponents.Add(new SynthComponentModel()
             {
                 DesignPos = new Point(-100, -100),
-                Module = osc
+                Module = _testOsc
             });
         }
 

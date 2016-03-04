@@ -5,12 +5,12 @@ using Microsoft.Practices.Prism.PubSubEvents;
 
 namespace CorpusFrisky.VisualSynth.Events
 {
-    public class ModuleAddedEvent : PubSubEvent<ModuleAddedEventArgs>
+    public class ModuleAddedOrClickedEvent : PubSubEvent<ModuleAddedOrClickedEventArgs>
     {
          
     }
 
-    public class ModuleAddedEventArgs
+    public class ModuleAddedOrClickedEventArgs
     {
         public ISynthModule Module { get; set; }
     }

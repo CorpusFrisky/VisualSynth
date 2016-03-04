@@ -16,6 +16,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
         private static double[] _sinTable;
 
         private double _index;
+        private double _cachedIndex;
+        private double _cachedValue;
 
         public Oscillator()
         {
@@ -27,7 +29,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
             _sinTable = new double[TableLength];
             for (var i = 0; i < _sinTable.Length; i++)
             {
-                _sinTable[i] = Math.Sin((i/_sinTable.Length)*2*Math.PI);
+                _sinTable[i] = Math.Sin(i/((double)_sinTable.Length)*2d*Math.PI);
             }
         }
 
@@ -35,7 +37,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
 
         public void PreRender()
         {
-            _index += (Rate * TableLength / Constants.FrameRate) % TableLength;
+            _index += Rate * TableLength / Constants.FrameRate;
+            _index %= TableLength;
         }
 
         public void Render()
@@ -47,12 +50,12 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
             
         }
 
-        public virtual bool ConnectSynthModule(ISynthModule module)
+        public bool ConnectSynthModule(int pin, ISynthModule module)
         {
             throw new NotImplementedException();
         }
 
-        public virtual bool DisconnectSynthModule(ISynthModule module)
+        public bool DisconnectSynthModule(int pin, ISynthModule module)
         {
             throw new NotImplementedException();
         }
@@ -61,14 +64,21 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
 
         public double GetValue()
         {
-            var index = (int)_index;
-            var dec = _index - index;
+            //Only recalculate if we've changed index since the last check.
+            if (_cachedIndex != _index)
+            {
+                _cachedIndex = _index;
 
-            var lowVal = _sinTable[index];
-            var highVal = _sinTable[index + 1];
+                var index = (int)_index;
+                var dec = _index - index;
 
-            return lowVal + ((highVal - lowVal)*dec);
+                var lowVal = _sinTable[index];
+                var highVal = _sinTable[index + 1];
 
+                _cachedValue = lowVal + ((highVal - lowVal) * dec);
+            }
+
+            return _cachedValue;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace CorpusFrisky.VisualSynth.Controllers
 
         private void SubscribeToEvents()
         {
-            EventAggregator.GetEvent<ModuleAddedEvent>().Subscribe(ModuleAdded);
+            EventAggregator.GetEvent<ModuleAddedOrClickedEvent>().Subscribe(ModuleAddedOrClicked);
         }
 
         public override void Show()
@@ -52,7 +52,7 @@ namespace CorpusFrisky.VisualSynth.Controllers
             ComponentContext.Resolve<ControlsWindow>().Show();
         }
 
-        private void ModuleAdded(ModuleAddedEventArgs args)
+        private void ModuleAddedOrClicked(ModuleAddedOrClickedEventArgs args)
         {
             var currentView = RegionManager.Regions[RegionNames.LeftControlRegion].Views.FirstOrDefault(x => x.GetType().IsSubclassOf(typeof(UserControl)));
 
