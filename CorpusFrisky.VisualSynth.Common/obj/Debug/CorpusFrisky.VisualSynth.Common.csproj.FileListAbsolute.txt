@@ -1,0 +1,4 @@
+C:\Projects\CorpusFrisky\VisualSynth\CorpusFrisky.VisualSynth.Common\bin\Debug\CorpusFrisky.VisualSynth.Common.dll
+C:\Projects\CorpusFrisky\VisualSynth\CorpusFrisky.VisualSynth.Common\bin\Debug\CorpusFrisky.VisualSynth.Common.pdb
+C:\Projects\CorpusFrisky\VisualSynth\CorpusFrisky.VisualSynth.Common\obj\Debug\CorpusFrisky.VisualSynth.Common.dll
+C:\Projects\CorpusFrisky\VisualSynth\CorpusFrisky.VisualSynth.Common\obj\Debug\CorpusFrisky.VisualSynth.Common.pdb
