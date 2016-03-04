@@ -113,12 +113,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
 
         private void ApplyColorModifiers()
         {
-            var modificationValue = 0.0;
-            foreach (var modifier in _propertyModifiers[VertexProperty.Color])
-            {
-                modificationValue += modifier.GetValue();
-            }
-
+            var modificationValue = _propertyModifiers[VertexProperty.Color].Sum(modifier => modifier.GetValue());
             modificationValue /= _propertyModifiers[VertexProperty.Color].Count;
 
             //Use the set color value as a max and oscillate around the midpoint between the max and 0;

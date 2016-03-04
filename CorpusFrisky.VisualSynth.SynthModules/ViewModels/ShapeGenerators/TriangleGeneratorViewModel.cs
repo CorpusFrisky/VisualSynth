@@ -89,31 +89,12 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
         { }
 
 
-        protected override void OnConnectedModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.NewItems != null)
-            {
-                foreach (var newItem in e.NewItems)
-                {
-                    AddConnectedModule(newItem as ConnectedModule);
-                }
-            }
-
-            if (e.OldItems != null)
-            {
-                foreach (var oldItems in e.OldItems)
-                {
-                    RemoveConnectedModule(oldItems as ConnectedModule);
-                }
-            }
-        }
-
 
         #endregion
 
         #region Helper Methods
 
-        private void AddConnectedModule(ConnectedModule connectedModule)
+        protected override void AddConnectedModule(ConnectedModule connectedModule)
         {
             var modifierModule = connectedModule.Module as IModifierModule;
             if (modifierModule == null)
@@ -137,7 +118,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             }
         }
 
-        private void RemoveConnectedModule(ConnectedModule connectedModule)
+        protected override void RemoveConnectedModule(ConnectedModule connectedModule)
         {
             var modifierModule = connectedModule.Module as IModifierModule;
             if (modifierModule == null)

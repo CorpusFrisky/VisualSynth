@@ -121,6 +121,8 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                 Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
                             };
 
+            rectangle.ConnectSynthModule(0, _testOsc);
+
             SynthComponents.Add(new SynthComponentModel
                                 {
                                     DesignPos = CurrentDesignPos,
@@ -148,7 +150,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         private void AddTestOscillator()
         {
             _testOsc = new Oscillator();
-            _testOsc.Rate = 1;
+            _testOsc.Rate = 0.333;
 
             SynthComponents.Add(new SynthComponentModel()
             {

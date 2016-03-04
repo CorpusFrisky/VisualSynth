@@ -60,10 +60,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
         #region Event Handlers
 
-        protected virtual void OnConnectedModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-        }
-
         #endregion
 
 
@@ -92,6 +88,37 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
         }
 
         public virtual void PostRender()
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+        protected virtual void OnConnectedModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (var newItem in e.NewItems)
+                {
+                    AddConnectedModule(newItem as ConnectedModule);
+                }
+            }
+
+            if (e.OldItems != null)
+            {
+                foreach (var oldItems in e.OldItems)
+                {
+                    RemoveConnectedModule(oldItems as ConnectedModule);
+                }
+            }
+        }
+
+        protected virtual void AddConnectedModule(ConnectedModule connectedModule)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected virtual void RemoveConnectedModule(ConnectedModule connectedModule)
         {
             throw new NotImplementedException();
         }

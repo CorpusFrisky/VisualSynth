@@ -73,7 +73,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
                 var dec = _index - index;
 
                 var lowVal = _sinTable[index];
-                var highVal = _sinTable[index + 1];
+                var highVal = _sinTable[(index + 1) % _sinTable.Length];
 
                 _cachedValue = lowVal + ((highVal - lowVal) * dec);
             }
