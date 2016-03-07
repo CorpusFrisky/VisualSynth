@@ -99,7 +99,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
                            };
 
-            triangle.ConnectSynthModule(0, _testOsc);
+            //triangle.ConnectSynthModule(0, _testOsc);
 
             SynthComponents.Add(new SynthComponentModel
                                 {
@@ -121,7 +121,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                 Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
                             };
 
-            rectangle.ConnectSynthModule(0, _testOsc);
+            //rectangle.ConnectSynthModule(0, _testOsc);
 
             SynthComponents.Add(new SynthComponentModel
                                 {

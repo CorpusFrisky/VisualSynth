@@ -119,7 +119,9 @@
     <Compile Include="Interfaces\IModifierModule.cs" />
     <Compile Include="Interfaces\ISynthModule.cs" />
     <Compile Include="Models\ConnectedModule.cs" />
+    <Compile Include="Models\Enums\PinTagetPropertyEnum.cs" />
     <Compile Include="Models\Modifiers\Oscillator.cs" />
+    <Compile Include="Models\Pin.cs" />
     <Compile Include="Models\VertexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ShapeGenerators\ShapeGeneratorBaseViewModel.cs" />

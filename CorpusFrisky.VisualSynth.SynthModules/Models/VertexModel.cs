@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
+using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers;
 using Microsoft.Practices.Prism.Mvvm;
 using OpenTK;
@@ -14,25 +15,15 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
 
         private Vector3 _position;
         private Color4 _color;
-        private readonly Dictionary<VertexProperty, List<IPropertyModifierModule>> _propertyModifiers;
+        private readonly Dictionary<PinTagetPropertyEnum, List<IPropertyModifierModule>> _propertyModifiers;
         private Vector3 _modifiedPosition;
 
         #endregion
 
         public VertexModel()
         {
-            _propertyModifiers = new Dictionary<VertexProperty, List<IPropertyModifierModule>>();
+            _propertyModifiers = new Dictionary<PinTagetPropertyEnum, List<IPropertyModifierModule>>();
         }
-
-        #region Property Enum
-        
-        public enum VertexProperty
-        {
-            Position = 0,
-            Color,
-        };
-
-        #endregion
 
         #region Properties
 
@@ -69,7 +60,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
             ApplyModifiers();
         }
 
-        public void AddPropertyModifier(VertexProperty property, IModifierModule module)
+        public void AddPropertyModifier(PinTagetPropertyEnum property, IModifierModule module)
         {
             var propertyModifier = module as IPropertyModifierModule;
             if (propertyModifier == null)
@@ -86,7 +77,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
             _propertyModifiers[property].Add(propertyModifier);
         }
 
-        public void RemovePropertyModifier(VertexProperty property, IModifierModule module)
+        public void RemovePropertyModifier(PinTagetPropertyEnum property, IModifierModule module)
         {
             if (_propertyModifiers.ContainsKey(property))
             {
@@ -100,12 +91,12 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
 
         public void ApplyModifiers()
         {
-            if (_propertyModifiers.ContainsKey(VertexProperty.Position))
+            if (_propertyModifiers.ContainsKey(PinTagetPropertyEnum.Position))
             {
                 ApplyPositionModifiers();                
             }
 
-            if (_propertyModifiers.ContainsKey(VertexProperty.Color))
+            if (_propertyModifiers.ContainsKey(PinTagetPropertyEnum.Color))
             {
                 ApplyColorModifiers();
             }
@@ -113,8 +104,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
 
         private void ApplyColorModifiers()
         {
-            var modificationValue = _propertyModifiers[VertexProperty.Color].Sum(modifier => modifier.GetValue());
-            modificationValue /= _propertyModifiers[VertexProperty.Color].Count;
+            var modificationValue = _propertyModifiers[PinTagetPropertyEnum.Color].Sum(modifier => modifier.GetValue());
+            modificationValue /= _propertyModifiers[PinTagetPropertyEnum.Color].Count;
 
             //Use the set color value as a max and oscillate around the midpoint between the max and 0;
             //  For red:  (r/2) + (r/2)*modValue  --->   (r/2)*(1 + modValue)   ---->  r * ((1 + mod)/2)

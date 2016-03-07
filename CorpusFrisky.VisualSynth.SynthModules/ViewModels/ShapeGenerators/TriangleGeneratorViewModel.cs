@@ -3,6 +3,7 @@ using System.Linq;
 using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
+using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -87,59 +88,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
         public override void PostRender()
         { }
-
-
-
-        #endregion
-
-        #region Helper Methods
-
-        protected override void AddConnectedModule(ConnectedModule connectedModule)
-        {
-            var modifierModule = connectedModule.Module as IModifierModule;
-            if (modifierModule == null)
-            {
-                // TODO: log a message
-                return;
-            }
-
-            //TODO: Come up with a good way to associated pins with properties
-            switch (connectedModule.Pin)
-            {
-                case 0:
-                    Vertices[0].AddPropertyModifier(VertexModel.VertexProperty.Color, modifierModule);
-                    break;
-                case 1:
-                    Vertices[1].AddPropertyModifier(VertexModel.VertexProperty.Color, modifierModule);
-                    break;
-                case 2:
-                    Vertices[2].AddPropertyModifier(VertexModel.VertexProperty.Color, modifierModule);
-                    break;
-            }
-        }
-
-        protected override void RemoveConnectedModule(ConnectedModule connectedModule)
-        {
-            var modifierModule = connectedModule.Module as IModifierModule;
-            if (modifierModule == null)
-            {
-                // TODO: log a message
-                return;
-            }
-
-            switch (connectedModule.Pin)
-            {
-                case 0:
-                    Vertices[0].RemovePropertyModifier(VertexModel.VertexProperty.Color, modifierModule);
-                    break;
-                case 1:
-                    Vertices[1].RemovePropertyModifier(VertexModel.VertexProperty.Color, modifierModule);
-                    break;
-                case 2:
-                    Vertices[2].RemovePropertyModifier(VertexModel.VertexProperty.Color, modifierModule);
-                    break;
-            }
-        }
 
         #endregion
     }

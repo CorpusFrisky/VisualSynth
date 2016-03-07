@@ -2,9 +2,11 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Windows.Forms;
 using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
+using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using Microsoft.Practices.Prism.Mvvm;
 using OpenTK;
 using OpenTK.Graphics;
@@ -16,12 +18,14 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
         protected bool ConstructionValidated;
         private ObservableCollection<VertexModel> _vertices;
 
-        private ObservableCollection<ConnectedModule> _connectedModules; 
+        private ObservableCollection<ConnectedModule> _connectedModules;
+
 
         public ShapeGeneratorBaseViewModel()
         {
             Center = new Vector3(0);
             Vertices = new ObservableCollection<VertexModel>();
+            Pins = new ObservableCollection<Pin>();
             ConnectedModules = new ObservableCollection<ConnectedModule>();
 
             ConnectedModules.CollectionChanged += OnConnectedModulesChanged;
@@ -37,6 +41,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             get { return _vertices; }
             set { SetProperty(ref _vertices, value); }
         }
+
+        public ObservableCollection<Pin> Pins { get; set; }
 
         public ObservableCollection<ConnectedModule> ConnectedModules
         {
@@ -63,19 +69,21 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
         #endregion
 
 
-        #region Methods
 
-        protected void ValidateConstruction(int numVertices)
+        #region ISynthModule Implementation
+
+        public virtual void SetupPins()
         {
-            while (Vertices.Count < numVertices)
+            var pinIndex = 0;
+            var vertexNumber = 1;
+            foreach (var vertex in Vertices)
             {
-                Vertices.Add(new VertexModel()
-                             {
-                                 Color = new Color4(),
-                                 Position = new Vector3()
-                             });
+                Pins.Add(new Pin {PinIndex = pinIndex++, Label = "V" + vertexNumber + " Color", TargetObject = vertex, TargetType = PinTargetTypeEnum.Vertex, TargetProperty = PinTagetPropertyEnum.Color });
+                Pins.Add(new Pin { PinIndex = pinIndex++, Label = "V" + vertexNumber + " Position", TargetObject = vertex, TargetType = PinTargetTypeEnum.Vertex, TargetProperty = PinTagetPropertyEnum.Position });
+                vertexNumber++;
             }
         }
+
 
         public virtual void PreRender()
         {
@@ -92,7 +100,51 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             throw new NotImplementedException();
         }
 
+        public bool ConnectSynthModule(Pin pin, ISynthModule module)
+        {
+            //if(!IsAbleToAttach())
+            //{
+            //    return false;
+            //}
 
+            ConnectedModules.Add(new ConnectedModule
+            {
+                Pin = pin,
+                Module = module
+            });
+
+            return true;
+        }
+
+        public bool DisconnectSynthModule(Pin pin, ISynthModule module)
+        {
+            var moduleToDisconnect = ConnectedModules.First(x => x.Module == module && x.Pin == pin);
+            if (moduleToDisconnect != null)
+            {
+                ConnectedModules.Remove(moduleToDisconnect);
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
+
+        #region Methods
+
+        protected void ValidateConstruction(int numVertices)
+        {
+            while (Vertices.Count < numVertices)
+            {
+                Vertices.Add(new VertexModel()
+                {
+                    Color = new Color4(),
+                    Position = new Vector3()
+                });
+            }
+
+            SetupPins();
+        }
 
         protected virtual void OnConnectedModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -115,42 +167,55 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
         protected virtual void AddConnectedModule(ConnectedModule connectedModule)
         {
-            throw new NotImplementedException();
+            var modifierModule = connectedModule.Module as IModifierModule;
+            if (modifierModule == null)
+            {
+                // TODO: log a message
+                return;
+            }
+
+            var pin = connectedModule.Pin;
+
+            switch (pin.TargetType)
+            {
+                case PinTargetTypeEnum.Vertex:
+                    var vertex = pin.TargetObject as VertexModel;
+                    if (vertex == null)
+                    {
+                        //TODO: Log
+                        return;
+                    }
+                    vertex.AddPropertyModifier(pin.TargetProperty, modifierModule);
+                    break;
+            }
         }
 
         protected virtual void RemoveConnectedModule(ConnectedModule connectedModule)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool ConnectSynthModule(int pin, ISynthModule module)
-        {
-            //if(!IsAbleToAttach())
-            //{
-            //    return false;
-            //}
-
-            ConnectedModules.Add(new ConnectedModule
+            var modifierModule = connectedModule.Module as IModifierModule;
+            if (modifierModule == null)
             {
-                Pin = pin,
-                Module = module
-            });
-
-            return true;
-        }
-
-        public bool DisconnectSynthModule(int pin, ISynthModule module)
-        {
-            var moduleToDisconnect = ConnectedModules.First(x => x.Module == module && x.Pin == pin);
-            if (moduleToDisconnect != null)
-            {
-                ConnectedModules.Remove(moduleToDisconnect);
-                return true;
+                // TODO: log a message
+                return;
             }
 
-            return false;
+            var pin = connectedModule.Pin;
+
+            switch (pin.TargetType)
+            {
+                case PinTargetTypeEnum.Vertex:
+                    var vertex = pin.TargetObject as VertexModel;
+                    if (vertex == null)
+                    {
+                        //TODO: Log
+                        return;
+                    }
+                    vertex.RemovePropertyModifier(pin.TargetProperty, modifierModule);
+                    break;
+            }
         }
 
         #endregion
+
     }
 }

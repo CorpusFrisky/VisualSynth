@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,16 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
         private double _cachedIndex;
         private double _cachedValue;
 
+        public enum OscillatorType
+        {
+            Sine,
+            Triangle,
+            Square,
+            RampUp,
+            RampDown,
+            SampleAndHold
+        }
+
         public Oscillator()
         {
             _index = 0;
@@ -33,7 +44,22 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
             }
         }
 
+        #region Properties
+
         public double Rate { get; set; }
+
+       
+        public SynthModuleType ModuleType { get; private set; }
+        public ObservableCollection<Pin> Pins { get; set; }
+
+        #endregion
+
+        #region ISynthModule Implementations
+
+        public void SetupPins()
+        {
+            throw new NotImplementedException();
+        }
 
         public void PreRender()
         {
@@ -50,17 +76,19 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
             
         }
 
-        public bool ConnectSynthModule(int pin, ISynthModule module)
+        public bool ConnectSynthModule(Pin pin, ISynthModule module)
         {
             throw new NotImplementedException();
         }
 
-        public bool DisconnectSynthModule(int pin, ISynthModule module)
+        public bool DisconnectSynthModule(Pin pin, ISynthModule module)
         {
             throw new NotImplementedException();
         }
 
-        public SynthModuleType ModuleType { get; private set; }
+        #endregion
+
+        #region  IPropertyModifierModule
 
         public double GetValue()
         {
@@ -80,5 +108,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
 
             return _cachedValue;
         }
+
+        #endregion
     }
 }
