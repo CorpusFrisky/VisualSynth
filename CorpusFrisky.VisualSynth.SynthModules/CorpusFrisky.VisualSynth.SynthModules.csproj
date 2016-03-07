@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="Converters\ColorConverters.cs" />
     <Compile Include="DependencyInjection\SynthModulesDI.cs" />
+    <Compile Include="Events\PinSetupCompleteEvent.cs" />
     <Compile Include="Interfaces\IPropertyModifierModule.cs" />
     <Compile Include="Interfaces\IModifierModule.cs" />
     <Compile Include="Interfaces\ISynthModule.cs" />

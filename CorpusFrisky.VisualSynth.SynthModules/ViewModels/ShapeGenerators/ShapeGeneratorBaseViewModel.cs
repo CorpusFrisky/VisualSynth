@@ -4,10 +4,12 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Forms;
 using CorpusFrisky.VisualSynth.Common;
+using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.Prism.PubSubEvents;
 using OpenTK;
 using OpenTK.Graphics;
 
@@ -21,8 +23,10 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
         private ObservableCollection<ConnectedModule> _connectedModules;
 
 
-        public ShapeGeneratorBaseViewModel()
+        public ShapeGeneratorBaseViewModel(IEventAggregator eventAggregator)
         {
+            EventAggregator = eventAggregator;
+
             Center = new Vector3(0);
             Vertices = new ObservableCollection<VertexModel>();
             Pins = new ObservableCollection<Pin>();
@@ -35,6 +39,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
         
         #region Properties
+
+        public IEventAggregator EventAggregator { get; private set; }
 
         public ObservableCollection<VertexModel> Vertices
         {
@@ -82,6 +88,11 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
                 Pins.Add(new Pin { PinIndex = pinIndex++, Label = "V" + vertexNumber + " Position", TargetObject = vertex, TargetType = PinTargetTypeEnum.Vertex, TargetProperty = PinTagetPropertyEnum.Position });
                 vertexNumber++;
             }
+
+            EventAggregator.GetEvent<PinSetupCompleteEvent>().Publish(new PinSetupCompleteEventArgs
+            {
+                SynthModule = this
+            });
         }
 
 

@@ -15,12 +15,16 @@
             <Canvas.ContextMenu>
                 <ContextMenu x:Name="DesignContextMenu"
                              StaysOpen="True">
-                    <MenuItem Header="Add">
+                    <MenuItem Header="ShapeGenerator">
                         <MenuItem x:Name="AddTriangleMenuItem" Header="Triangle"
                                   Command="{Binding AddTriangleCommand}" />
                         <MenuItem x:Name="AddRectangleMenuItem" Header="Rectangle"
                                   Command="{Binding AddRectangleCommand}" />
                     </MenuItem>
+                    <!--<MenuItem Header="Modifier">
+                        <MenuItem x:Name="AddOscillatorMenuItem" Header="Oscillator"
+                                  Command="{Binding AddOscillatorCommand}" />
+                    </MenuItem>-->
                 </ContextMenu>
             </Canvas.ContextMenu>
 
@@ -36,21 +40,51 @@
                             Value="{Binding DesignPos.X}"/>
                         <Setter Property="Canvas.Top" 
                             Value="{Binding DesignPos.Y}"/>
-                        
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Rectangle Fill="DarkBlue"
-                               Height="20" Width="20">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <helpers:InvokeDelegateCommandAction
-                                    Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.HandleModuleLeftClickCommand}"
-                                    CommandParameter="{Binding}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Rectangle>
+                        <Canvas>
+                            <ItemsControl ItemsSource="{Binding Module.Pins}"
+                                          Panel.ZIndex="1">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style>
+                                        <Setter Property="Canvas.Left"
+                                            Value="{Binding PinDesignPos.X}"/>
+                                        <Setter Property="Canvas.Top" 
+                                            Value="{Binding PinDesignPos.Y}"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Background="Black"
+                                                    Height="10" Width="10"/>
+                                            <TextBlock Margin="3,0"
+                                                       Text="{Binding Label}"
+                                                       Foreground="White"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Rectangle Fill="DarkBlue"
+                                       Canvas.Left="10"
+                                       Panel.ZIndex ="0"
+                                       Height="{Binding Height}" Width="70">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <helpers:InvokeDelegateCommandAction
+                                                    Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.HandleModuleLeftClickCommand}"
+                                                    CommandParameter="{Binding}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Rectangle>
+                        </Canvas>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

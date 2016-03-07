@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Linq;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers;
@@ -33,9 +34,16 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             SynthComponents = new ObservableCollection<SynthComponentModel>();
 
             AddTestOscillator();
+
+            SubscribeToEvents();
         }
 
+        private void SubscribeToEvents()
+        {
+            _eventAggregator.GetEvent<PinSetupCompleteEvent>().Subscribe(OnPinCompleteEvent);
+        }
 
+       
         #region Properties
 
         public ObservableCollection<SynthComponentModel> SynthComponents { get; set; }
@@ -94,7 +102,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         private void AddTriangle()
         {
             var rand = new Random();
-            var triangle = new TriangleGeneratorViewModel()
+            var triangle = new TriangleGeneratorViewModel(_eventAggregator)
                            {
                                Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
                            };
@@ -116,7 +124,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         private void AddRectangle()
         {
             var rand = new Random();
-            var rectangle = new RectangleGeneratorViewModel
+            var rectangle = new RectangleGeneratorViewModel(_eventAggregator)
                             {
                                 Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
                             };
@@ -141,6 +149,21 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                                                   {
                                                                       Module = componentModel.Module
                                                                   });
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        private void OnPinCompleteEvent(PinSetupCompleteEventArgs args)
+        {
+            var module = SynthComponents.FirstOrDefault(x => x.Module == args.SynthModule);
+            if (module == null)
+            {
+                return;
+            }
+
+            module.Height = (module.Module.Pins.Count * 20) + 20;
         }
 
         #endregion
