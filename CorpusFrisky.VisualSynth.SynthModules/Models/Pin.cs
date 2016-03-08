@@ -14,6 +14,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
 
         public object TargetObject { get; set; }
 
+        public PinTypeEnum PinType { get; set; }
+
         public PinTargetTypeEnum TargetType { get; set; }
 
         public PinTagetPropertyEnum TargetProperty { get; set; }

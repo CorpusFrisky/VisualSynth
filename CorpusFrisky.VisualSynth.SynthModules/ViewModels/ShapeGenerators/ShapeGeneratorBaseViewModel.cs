@@ -84,8 +84,25 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             var vertexNumber = 1;
             foreach (var vertex in Vertices)
             {
-                Pins.Add(new Pin {PinIndex = pinIndex++, Label = "V" + vertexNumber + " Color", TargetObject = vertex, TargetType = PinTargetTypeEnum.Vertex, TargetProperty = PinTagetPropertyEnum.Color });
-                Pins.Add(new Pin { PinIndex = pinIndex++, Label = "V" + vertexNumber + " Position", TargetObject = vertex, TargetType = PinTargetTypeEnum.Vertex, TargetProperty = PinTagetPropertyEnum.Position });
+                Pins.Add(new Pin
+                {
+                    PinIndex = pinIndex++,
+                    Label = "V" + vertexNumber + " Color",
+                    PinType = PinTypeEnum.ValueInput,
+                    TargetObject = vertex,
+                    TargetType = PinTargetTypeEnum.Vertex,
+                    TargetProperty = PinTagetPropertyEnum.Color
+                });
+
+                Pins.Add(new Pin
+                {
+                    PinIndex = pinIndex++,
+                    Label = "V" + vertexNumber + " Position",
+                    PinType = PinTypeEnum.ValueInput,
+                    TargetObject = vertex,
+                    TargetType = PinTargetTypeEnum.Vertex,
+                    TargetProperty = PinTagetPropertyEnum.Position
+                });
                 vertexNumber++;
             }
 
