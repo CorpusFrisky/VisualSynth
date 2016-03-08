@@ -132,9 +132,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CustomControls\CanvasItemsControl.cs" />
     <Compile Include="Events\ModuleAddedOrClickedEvent.cs" />
     <Compile Include="Helpers\InvokeDelegateCommandAction.cs" />
+    <Compile Include="Models\ConnectionWire.cs" />
     <Compile Include="Models\SynthComponentModel.cs" />
     <Compile Include="ViewModels\DesignViewModel.cs" />
     <Compile Include="Views\ControlViews\DesignView.xaml.cs">

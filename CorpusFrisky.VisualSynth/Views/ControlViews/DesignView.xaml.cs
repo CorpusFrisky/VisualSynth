@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using CorpusFrisky.VisualSynth.ViewModels;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace CorpusFrisky.VisualSynth.Views.ControlViews
 {
@@ -30,6 +31,12 @@ namespace CorpusFrisky.VisualSynth.Views.ControlViews
                 var point = e.GetPosition(canvas);
                 ViewModel.CurrentDesignPos = new Point((int)point.X, (int)point.Y);
             }
+        }
+
+        private void SetMousePos(object sender, MouseEventArgs e)
+        {
+            var point = e.GetPosition(DesignCanvas);
+            ViewModel.CurrentMousePos = new Point((int) point.X, (int) point.Y);
         }
     }
 }

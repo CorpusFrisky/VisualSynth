@@ -78,6 +78,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
 
             OutputPins.Add(new OutputValuePin
             {
+                Module = this,
                 PinIndex = pinIndex++,
                 Label = "Output",
                 PinType = PinTypeEnum.Value

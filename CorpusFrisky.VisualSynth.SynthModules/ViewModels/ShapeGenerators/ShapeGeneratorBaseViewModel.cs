@@ -97,6 +97,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             {
                 InputPins.Add(new InputValuePin
                 {
+                    Module = this,
                     PinIndex = inputPinIndex,
                     Label = "V" + vertexNumber + " Color",
                     PinType = PinTypeEnum.Value,
@@ -109,6 +110,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
                 InputPins.Add(new InputValuePin
                 {
+                    Module = this,
                     PinIndex = inputPinIndex,
                     Label = "V" + vertexNumber + " Position",
                     PinType = PinTypeEnum.Value,

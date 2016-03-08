@@ -8,10 +8,15 @@
              xmlns:helpers="clr-namespace:CorpusFrisky.VisualSynth.Helpers"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         <Canvas x:Name="DesignCanvas"
                 Background="Gray"
-                MouseRightButtonDown="SetDesignPos">
+                MouseRightButtonDown="SetDesignPos"
+                MouseMove="SetMousePos">
             <Canvas.ContextMenu>
                 <ContextMenu x:Name="DesignContextMenu"
                              StaysOpen="True">
@@ -28,6 +33,7 @@
                 </ContextMenu>
             </Canvas.ContextMenu>
 
+            <!-- Display all design modules -->
             <ItemsControl ItemsSource="{Binding SynthComponents}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -45,6 +51,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Canvas>
+                            <!-- Display all input pins -->
                             <ItemsControl ItemsSource="{Binding Module.InputPins}"
                                           Panel.ZIndex="1">
                                 <ItemsControl.ItemsPanel>
@@ -64,7 +71,9 @@
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
                                             <Button Background="Black"
-                                                    Height="10" Width="10"/>
+                                                    Height="10" Width="10"
+                                                    Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.PinLeftClickedCommand}"
+                                                    CommandParameter="{Binding}"/>
                                             <TextBlock Margin="3,0"
                                                        Text="{Binding Label}"
                                                        Foreground="White"/>
@@ -72,6 +81,7 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
+                            <!-- Display all output pins -->
                             <ItemsControl ItemsSource="{Binding Module.OutputPins}"
                                           Panel.ZIndex="1">
                                 <ItemsControl.ItemsPanel>
@@ -95,12 +105,14 @@
                                                        Text="{Binding Label}"
                                                        Foreground="White"/>
                                             <Button Background="Black"
-                                                    Height="10" Width="10"/>
-                                            
+                                                    Height="10" Width="10"
+                                                    Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.PinLeftClickedCommand}"
+                                                    CommandParameter="{Binding}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
+                            <!-- Display module body -->
                             <Rectangle Fill="DarkBlue"
                                        Canvas.Left="10"
                                        Panel.ZIndex ="0"
@@ -118,20 +130,28 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <!--<customControls:CanvasItemsControl ItemsSource="{Binding SynthComponents}">
-                <customControls:CanvasItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas/>
-                    </ItemsPanelTemplate>
-                </customControls:CanvasItemsControl.ItemsPanel>
-                <customControls:CanvasItemsControl.ItemTemplate>
+            <!-- Display connection wires -->
+            <ItemsControl ItemsSource="{Binding ConnectionWires}">
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Rectangle Fill="DarkBlue"
-                                   Height="200" Width="200">
-                        </Rectangle>
+                        <Line Stroke="Black"
+                              StrokeThickness="1"
+                              X1="{Binding Pin1Pos.X}"
+                              Y1="{Binding Pin1Pos.Y}"
+                              X2="{Binding Pin2Pos.X}"
+                              Y2="{Binding Pin2Pos.Y}"/>
                     </DataTemplate>
-                </customControls:CanvasItemsControl.ItemTemplate>
-            </customControls:CanvasItemsControl>-->
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+            <Line Stroke="Black"
+                  StrokeThickness="1"
+                  Visibility="{Binding ShouldShowActivelyConnectingLine, Converter={StaticResource BooleanToVisibilityConverter}}"
+                  X1="{Binding ActivelyConnectingPinPos.X}"
+                  Y1="{Binding ActivelyConnectingPinPos.Y}"
+                  X2="{Binding CurrentMousePos.X}"
+                  Y2="{Binding CurrentMousePos.Y}"/>
+
         </Canvas>
 
         

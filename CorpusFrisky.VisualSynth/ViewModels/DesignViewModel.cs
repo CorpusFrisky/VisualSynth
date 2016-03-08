@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.Models;
+using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
 using Microsoft.Practices.Prism.Commands;
@@ -24,7 +25,10 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         private DelegateCommand _addRectangleCommand;
         private DelegateCommand _addOscillatorCommand;
         private DelegateCommand<SynthComponentModel> _handleModuleLeftClick;
-        private OscillatorViewModel _testOsc;
+        private DelegateCommand<PinBase> _pinLeftClickedCommand;
+             
+        private PinBase _activelyConnectingPin;
+        private Point _currentMousePos;
 
         #endregion
 
@@ -34,6 +38,8 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             _eventAggregator = eventAggregator;
 
             SynthComponents = new ObservableCollection<SynthComponentModel>();
+            ConnectionWires = new ObservableCollection<ConnectionWire>();
+            ActivelyConnectingPin = null;
 
             SubscribeToEvents();
         }
@@ -48,7 +54,50 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         public ObservableCollection<SynthComponentModel> SynthComponents { get; set; }
 
+        public ObservableCollection<ConnectionWire> ConnectionWires { get; set; }
+
+        public PinBase ActivelyConnectingPin
+        {
+            get { return _activelyConnectingPin; }
+            set
+            {
+                SetProperty(ref _activelyConnectingPin, value);
+                OnPropertyChanged("ShouldShowActivelyConnectingLine");
+                OnPropertyChanged("ActivelyConnectingPinPos");
+            }
+        }
+
         public Point CurrentDesignPos { get; set; }
+
+        public bool ShouldShowActivelyConnectingLine 
+        {
+            get { return ActivelyConnectingPin != null; }
+        }
+
+        public Point ActivelyConnectingPinPos
+        {
+            get
+            {
+                if (ActivelyConnectingPin == null)
+                {
+                    return Point.Empty;
+                }
+
+                var component = SynthComponents.FirstOrDefault(x => x.Module == ActivelyConnectingPin.Module);
+                if (component == null)
+                {
+                    return Point.Empty;
+                }
+
+                return Point.Add(component.DesignPos, new Size(ActivelyConnectingPin.PinDesignPos));
+            }
+        }
+
+        public Point CurrentMousePos
+        {
+            get { return _currentMousePos; }
+            set { SetProperty(ref _currentMousePos, value); }
+        }
 
         #endregion
 
@@ -75,6 +124,12 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             get { return _handleModuleLeftClick ?? (_handleModuleLeftClick = new DelegateCommand<SynthComponentModel>(HandleModuleLeftClick)); }
         }
 
+        public DelegateCommand<PinBase> PinLeftClickedCommand
+        {
+            get { return _pinLeftClickedCommand ?? (_pinLeftClickedCommand = new DelegateCommand<PinBase>(PinLeftClicked)); }
+        }
+
+        
         #endregion
 
 
@@ -148,6 +203,18 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                                                   {
                                                                       Module = componentModel.Module
                                                                   });
+        }
+
+        private void PinLeftClicked(PinBase pin)
+        {
+            if (ActivelyConnectingPin == null)
+            {
+                ActivelyConnectingPin = pin;
+            }
+            else
+            {
+                
+            }
         }
 
         #endregion
