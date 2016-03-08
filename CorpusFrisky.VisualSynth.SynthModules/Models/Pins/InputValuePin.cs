@@ -18,7 +18,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
         {
             get
             {
-                return new Point(0, 10 + (DesignSequence * 20));
+                return new Point(0, 10 + (PinIndex * 20));
             }
         }
     }

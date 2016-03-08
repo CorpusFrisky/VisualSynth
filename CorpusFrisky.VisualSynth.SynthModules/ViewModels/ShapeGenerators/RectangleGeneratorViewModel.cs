@@ -54,12 +54,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
         public override void PreRender()
         {
-            if (!ConstructionValidated)
-            {
-                ValidateConstruction(NumVertices);
-                ConstructionValidated = true;
-            }
-
             foreach (var vertex in Vertices)
             {
                 vertex.ApplyModifiers();

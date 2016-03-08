@@ -16,9 +16,9 @@ namespace CorpusFrisky.VisualSynth.Bootstrap
 
             builder.RegisterModule<ControlsDI>();
             builder.RegisterModule<DisplayDI>();
-
             builder.RegisterModule<SynthModulesDI>();
-                builder.RegisterType<ControlsWindow>().AsSelf().SingleInstance();
+
+            builder.RegisterType<ControlsWindow>().AsSelf().SingleInstance();
             builder.RegisterType<DisplayWindow>().AsSelf().SingleInstance();
             builder.RegisterType<GlobalController>().AsSelf().SingleInstance();
         }

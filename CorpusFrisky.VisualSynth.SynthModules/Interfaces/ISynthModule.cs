@@ -7,6 +7,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Interfaces
 {
     public interface ISynthModule
     {
+        void Initialize();
         void SetupPins();
         void PreRender();
         void Render();
@@ -18,6 +19,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Interfaces
 
         SynthModuleType ModuleType { get; }
 
-        ObservableCollection<PinBase> Pins { get; set; } 
+        ObservableCollection<PinBase> InputPins { get; set; } 
+        ObservableCollection<PinBase> OutputPins { get; set; }
     }
 }

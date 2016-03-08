@@ -21,10 +21,10 @@
                         <MenuItem x:Name="AddRectangleMenuItem" Header="Rectangle"
                                   Command="{Binding AddRectangleCommand}" />
                     </MenuItem>
-                    <!--<MenuItem Header="Modifier">
+                    <MenuItem Header="Modifier">
                         <MenuItem x:Name="AddOscillatorMenuItem" Header="Oscillator"
                                   Command="{Binding AddOscillatorCommand}" />
-                    </MenuItem>-->
+                    </MenuItem>
                 </ContextMenu>
             </Canvas.ContextMenu>
 
@@ -45,7 +45,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Canvas>
-                            <ItemsControl ItemsSource="{Binding Module.Pins}"
+                            <ItemsControl ItemsSource="{Binding Module.InputPins}"
                                           Panel.ZIndex="1">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -68,6 +68,35 @@
                                             <TextBlock Margin="3,0"
                                                        Text="{Binding Label}"
                                                        Foreground="White"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <ItemsControl ItemsSource="{Binding Module.OutputPins}"
+                                          Panel.ZIndex="1">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style>
+                                        <Setter Property="Canvas.Left"
+                                            Value="{Binding PinDesignPos.X}"/>
+                                        <Setter Property="Canvas.Top" 
+                                            Value="{Binding PinDesignPos.Y}"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Width="20"
+                                                       Margin="0,0,3,0"
+                                                       Text="{Binding Label}"
+                                                       Foreground="White"/>
+                                            <Button Background="Black"
+                                                    Height="10" Width="10"/>
+                                            
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

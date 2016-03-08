@@ -30,7 +30,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
             Center = new Vector3(0);
             Vertices = new ObservableCollection<VertexModel>();
-            Pins = new ObservableCollection<PinBase>();
+            InputPins = new ObservableCollection<PinBase>();
+            OutputPins = new ObservableCollection<PinBase>();
             ConnectedModules = new ObservableCollection<ConnectedModule>();
 
             ConnectedModules.CollectionChanged += OnConnectedModulesChanged;
@@ -38,6 +39,14 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             ConstructionValidated = false;
         }
 
+        public void Initialize()
+        {
+            if (!ConstructionValidated)
+            {
+                ValidateConstruction(NumVertices);
+                ConstructionValidated = true;
+            }
+        }
         
         #region Properties
 
@@ -49,7 +58,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             set { SetProperty(ref _vertices, value); }
         }
 
-        public ObservableCollection<PinBase> Pins { get; set; }
+        public ObservableCollection<PinBase> InputPins { get; set; }
+        public ObservableCollection<PinBase> OutputPins { get; set; }
 
         public ObservableCollection<ConnectedModule> ConnectedModules
         {
@@ -82,14 +92,12 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
         public virtual void SetupPins()
         {
             var inputPinIndex = 0;
-            var outputPinIndex = 0;
             var vertexNumber = 1;
             foreach (var vertex in Vertices)
             {
-                Pins.Add(new InputValuePin
+                InputPins.Add(new InputValuePin
                 {
                     PinIndex = inputPinIndex,
-                    DesignSequence = inputPinIndex,
                     Label = "V" + vertexNumber + " Color",
                     PinType = PinTypeEnum.Value,
                     TargetObject = vertex,
@@ -99,10 +107,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
                 inputPinIndex++;
 
-                Pins.Add(new InputValuePin
+                InputPins.Add(new InputValuePin
                 {
                     PinIndex = inputPinIndex,
-                    DesignSequence = inputPinIndex,
                     Label = "V" + vertexNumber + " Position",
                     PinType = PinTypeEnum.Value,
                     TargetObject = vertex,

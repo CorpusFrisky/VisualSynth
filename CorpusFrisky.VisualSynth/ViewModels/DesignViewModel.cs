@@ -10,6 +10,7 @@ using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using OpenTK;
+using OpenTK.Audio;
 
 namespace CorpusFrisky.VisualSynth.ViewModels
 {
@@ -21,6 +22,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         private DelegateCommand _addTriangleCommand;
         private DelegateCommand _addRectangleCommand;
+        private DelegateCommand _addOscillatorCommand;
         private DelegateCommand<SynthComponentModel> _handleModuleLeftClick;
         private OscillatorViewModel _testOsc;
 
@@ -55,41 +57,22 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         public DelegateCommand AddTriangleCommand
         {
-            get
-            {
-                if (_addTriangleCommand == null)
-                {
-                    _addTriangleCommand = new DelegateCommand(AddTriangle);
-                }
-
-                return _addTriangleCommand;
-            }
+            get { return _addTriangleCommand ?? (_addTriangleCommand = new DelegateCommand(AddTriangle)); }
         }
 
         public DelegateCommand AddRectangleCommand
         {
-            get
-            {
-                if (_addRectangleCommand == null)
-                {
-                    _addRectangleCommand = new DelegateCommand(AddRectangle);
-                }
+            get { return _addRectangleCommand ?? (_addRectangleCommand = new DelegateCommand(AddRectangle)); }
+        }
 
-                return _addRectangleCommand;
-            }
+        public DelegateCommand AddOscillatorCommand
+        {
+            get { return _addOscillatorCommand ?? (_addOscillatorCommand = new DelegateCommand(AddOscillator)); }
         }
 
         public DelegateCommand<SynthComponentModel> HandleModuleLeftClickCommand
         {
-            get
-            {
-                if (_handleModuleLeftClick == null)
-                {
-                    _handleModuleLeftClick = new DelegateCommand<SynthComponentModel>(HandleModuleLeftClick);
-                }
-
-                return _handleModuleLeftClick;
-            }
+            get { return _handleModuleLeftClick ?? (_handleModuleLeftClick = new DelegateCommand<SynthComponentModel>(HandleModuleLeftClick)); }
         }
 
         #endregion
@@ -110,6 +93,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                     DesignPos = CurrentDesignPos,
                                     Module = triangle
                                 });
+            triangle.Initialize();
 
             _eventAggregator.GetEvent<ModuleAddedOrClickedEvent>().Publish(new ModuleAddedOrClickedEventArgs
                                                                   {
@@ -130,6 +114,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                     DesignPos = CurrentDesignPos,
                                     Module = rectangle
                                 });
+            rectangle.Initialize();
 
             _eventAggregator.GetEvent<ModuleAddedOrClickedEvent>().Publish(new ModuleAddedOrClickedEventArgs
                                                                   {
@@ -139,8 +124,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         private void AddOscillator()
         {
-            var rand = new Random();
-            var oscillator = new OscillatorViewModel()
+            var oscillator = new OscillatorViewModel(_eventAggregator)
             {
                 Rate = 1.0,
             };
@@ -150,6 +134,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                 DesignPos = CurrentDesignPos,
                 Module = oscillator
             });
+            oscillator.Initialize();
 
             _eventAggregator.GetEvent<ModuleAddedOrClickedEvent>().Publish(new ModuleAddedOrClickedEventArgs
             {
@@ -177,7 +162,9 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                 return;
             }
 
-            module.Height = (module.Module.Pins.Count * 20) + 20;
+            var maxNumPins = Math.Max(module.Module.InputPins.Count, module.Module.OutputPins.Count);
+
+            module.Height = (maxNumPins * 20) + 20;
         }
 
         #endregion

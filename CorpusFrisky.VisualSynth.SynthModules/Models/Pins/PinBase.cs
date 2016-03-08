@@ -20,8 +20,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
 
         public PinTypeEnum PinType { get; set; }
 
-        public virtual int DesignSequence { get; set; }
-
         public virtual Point PinDesignPos
         {
             get { throw new NotImplementedException(); }

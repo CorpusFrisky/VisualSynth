@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using CorpusFrisky.VisualSynth.Common;
+using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
+using Microsoft.Practices.Prism.PubSubEvents;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
 {
@@ -27,9 +29,18 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
             SampleAndHold
         }
 
-        public OscillatorViewModel()
+        public OscillatorViewModel(IEventAggregator eventAggregator)
         {
+            EventAggregator = eventAggregator;
+
             _index = 0;
+            InputPins = new ObservableCollection<PinBase>();
+            OutputPins = new ObservableCollection<PinBase>();
+        }
+
+        public void Initialize()
+        {
+            SetupPins();
         }
 
         public static void InitOscillatorTables()
@@ -43,11 +54,19 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
 
         #region Properties
 
+        public IEventAggregator EventAggregator { get; private set; }
+
+
         public double Rate { get; set; }
 
-       
-        public SynthModuleType ModuleType { get; private set; }
-        public ObservableCollection<PinBase> Pins { get; set; }
+
+        public SynthModuleType ModuleType
+        {
+            get { return SynthModuleType.Oscillator; }
+        }
+
+        public ObservableCollection<PinBase> InputPins { get; set; }
+        public ObservableCollection<PinBase> OutputPins { get; set; }
 
         #endregion
 
@@ -57,12 +76,16 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
         {
             var pinIndex = 0;
 
-            Pins.Add(new OutputValuePin
+            OutputPins.Add(new OutputValuePin
             {
                 PinIndex = pinIndex++,
                 Label = "Output",
-                DesignSequence = 0,
                 PinType = PinTypeEnum.Value
+            });
+
+            EventAggregator.GetEvent<PinSetupCompleteEvent>().Publish(new PinSetupCompleteEventArgs
+            {
+                SynthModule = this
             });
         }
 
