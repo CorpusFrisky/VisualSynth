@@ -48,7 +48,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
         public override SynthModuleType ModuleType
         {
-            get { return SynthModuleType.TRIANGLE_GENERATOR; }
+            get { return SynthModuleType.TriangleGenerator; }
         }
 
         #endregion

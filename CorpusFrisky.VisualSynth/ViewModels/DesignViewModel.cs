@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.Models;
-using CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
@@ -22,7 +22,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         private DelegateCommand _addTriangleCommand;
         private DelegateCommand _addRectangleCommand;
         private DelegateCommand<SynthComponentModel> _handleModuleLeftClick;
-        private Oscillator _testOsc;
+        private OscillatorViewModel _testOsc;
 
         #endregion
 
@@ -32,8 +32,6 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             _eventAggregator = eventAggregator;
 
             SynthComponents = new ObservableCollection<SynthComponentModel>();
-
-            AddTestOscillator();
 
             SubscribeToEvents();
         }
@@ -107,8 +105,6 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
                            };
 
-            //triangle.ConnectSynthModule(0, _testOsc);
-
             SynthComponents.Add(new SynthComponentModel
                                 {
                                     DesignPos = CurrentDesignPos,
@@ -129,8 +125,6 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                 Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
                             };
 
-            //rectangle.ConnectSynthModule(0, _testOsc);
-
             SynthComponents.Add(new SynthComponentModel
                                 {
                                     DesignPos = CurrentDesignPos,
@@ -141,6 +135,26 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                                                   {
                                                                       Module = rectangle
                                                                   });
+        }
+
+        private void AddOscillator()
+        {
+            var rand = new Random();
+            var oscillator = new OscillatorViewModel()
+            {
+                Rate = 1.0,
+            };
+
+            SynthComponents.Add(new SynthComponentModel
+            {
+                DesignPos = CurrentDesignPos,
+                Module = oscillator
+            });
+
+            _eventAggregator.GetEvent<ModuleAddedOrClickedEvent>().Publish(new ModuleAddedOrClickedEventArgs
+            {
+                Module = oscillator
+            });
         }
 
         private void HandleModuleLeftClick(SynthComponentModel componentModel)
@@ -170,17 +184,17 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         #region Helper Methods
 
-        private void AddTestOscillator()
-        {
-            _testOsc = new Oscillator();
-            _testOsc.Rate = 0.333;
+        //private void AddTestOscillator()
+        //{
+        //    _testOsc = new OscillatorViewModel();
+        //    _testOsc.Rate = 0.333;
 
-            SynthComponents.Add(new SynthComponentModel()
-            {
-                DesignPos = new Point(-100, -100),
-                Module = _testOsc
-            });
-        }
+        //    SynthComponents.Add(new SynthComponentModel()
+        //    {
+        //        DesignPos = new Point(-100, -100),
+        //        Module = _testOsc
+        //    });
+        //}
 
         #endregion
     }

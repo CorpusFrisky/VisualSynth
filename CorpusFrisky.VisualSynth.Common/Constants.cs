@@ -10,8 +10,10 @@
 
     public enum SynthModuleType
     {
-        TRIANGLE_GENERATOR,
-        RECTANGLE_GENERATOR
+        TriangleGenerator,
+        RectangleGenerator,
+
+        Oscillator
     }
 
     public static class Constants

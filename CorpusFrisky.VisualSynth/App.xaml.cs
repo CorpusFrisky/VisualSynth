@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using CorpusFrisky.VisualSynth.Bootstrap;
-using CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
 
 namespace CorpusFrisky.VisualSynth
 {
@@ -20,7 +20,7 @@ namespace CorpusFrisky.VisualSynth
 
         private void OnStartup()
         {
-            Oscillator.InitOscillatorTables();
+            OscillatorViewModel.InitOscillatorTables();
         }
     }
 }

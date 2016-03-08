@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
-using OpenTK;
-using OpenTK.Graphics;
+using CorpusFrisky.VisualSynth.SynthModules.Models;
+using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
+using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 
-namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
+namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
 {
-    public class Oscillator : IPropertyModifierModule
+    public class OscillatorViewModel : IPropertyModifierModule
     {
         private const int TableLength = 1000;
         private static double[] _sinTable;
@@ -30,7 +27,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
             SampleAndHold
         }
 
-        public Oscillator()
+        public OscillatorViewModel()
         {
             _index = 0;
         }
@@ -50,7 +47,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
 
        
         public SynthModuleType ModuleType { get; private set; }
-        public ObservableCollection<Pin> Pins { get; set; }
+        public ObservableCollection<PinBase> Pins { get; set; }
 
         #endregion
 
@@ -58,7 +55,15 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
 
         public void SetupPins()
         {
-            throw new NotImplementedException();
+            var pinIndex = 0;
+
+            Pins.Add(new OutputValuePin
+            {
+                PinIndex = pinIndex++,
+                Label = "Output",
+                DesignSequence = 0,
+                PinType = PinTypeEnum.Value
+            });
         }
 
         public void PreRender()
@@ -76,12 +81,12 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers
             
         }
 
-        public bool ConnectSynthModule(Pin pin, ISynthModule module)
+        public bool ConnectSynthModule(PinBase pin, ISynthModule module)
         {
             throw new NotImplementedException();
         }
 
-        public bool DisconnectSynthModule(Pin pin, ISynthModule module)
+        public bool DisconnectSynthModule(PinBase pin, ISynthModule module)
         {
             throw new NotImplementedException();
         }

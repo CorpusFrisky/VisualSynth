@@ -121,13 +121,18 @@
     <Compile Include="Interfaces\ISynthModule.cs" />
     <Compile Include="Models\ConnectedModule.cs" />
     <Compile Include="Models\Enums\PinTagetPropertyEnum.cs" />
-    <Compile Include="Models\Modifiers\Oscillator.cs" />
-    <Compile Include="Models\Pin.cs" />
+    <Compile Include="Models\Pins\OutputValuePin.cs" />
+    <Compile Include="Models\Pins\InputValuePin.cs" />
+    <Compile Include="ViewModels\Modifiers\OscillatorViewModel.cs" />
+    <Compile Include="Models\Pins\PinBase.cs" />
     <Compile Include="Models\VertexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ShapeGenerators\ShapeGeneratorBaseViewModel.cs" />
     <Compile Include="ViewModels\ShapeGenerators\RectangleGeneratorViewModel.cs" />
     <Compile Include="ViewModels\ShapeGenerators\TriangleGeneratorViewModel.cs" />
+    <Compile Include="Views\Modifiers\OscillatorView.xaml.cs">
+      <DependentUpon>OscillatorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShapeGenerators\RectangleGeneratorView.xaml.cs">
       <DependentUpon>RectangleGeneratorView.xaml</DependentUpon>
     </Compile>
@@ -146,6 +151,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Modifiers\OscillatorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ShapeGenerators\RectangleGeneratorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

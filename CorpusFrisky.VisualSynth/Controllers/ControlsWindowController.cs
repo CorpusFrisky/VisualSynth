@@ -14,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
+using CorpusFrisky.VisualSynth.SynthModules.Views.Modifiers;
 
 namespace CorpusFrisky.VisualSynth.Controllers
 {
@@ -70,11 +71,14 @@ namespace CorpusFrisky.VisualSynth.Controllers
             Type viewType;
             switch (module.ModuleType)
             {
-                case SynthModuleType.TRIANGLE_GENERATOR:
+                case SynthModuleType.TriangleGenerator:
                     viewType = typeof(TriangleGeneratorView);
                     break;
-                case SynthModuleType.RECTANGLE_GENERATOR:
+                case SynthModuleType.RectangleGenerator:
                     viewType = typeof(RectangleGeneratorView);
+                    break;
+                case SynthModuleType.Oscillator:
+                    viewType = typeof(OscillatorView);
                     break;
                 default:
                     return null;

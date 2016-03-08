@@ -2,7 +2,6 @@
 using System.Linq;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
-using CorpusFrisky.VisualSynth.SynthModules.Models.Modifiers;
 using Microsoft.Practices.Prism.Mvvm;
 using OpenTK;
 using OpenTK.Graphics;

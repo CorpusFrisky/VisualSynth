@@ -49,7 +49,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
         public override SynthModuleType ModuleType
         {
-            get { return SynthModuleType.RECTANGLE_GENERATOR; }
+            get { return SynthModuleType.RectangleGenerator; }
         }
 
         public override void PreRender()

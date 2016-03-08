@@ -2,10 +2,8 @@
 {
     public enum PinTypeEnum
     {
-        ValueInput,
-        ValueOutput,
-        FrameInput,
-        FrameOutput
+        Value,
+        Frame
     }
 
     public enum PinTargetTypeEnum
