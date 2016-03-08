@@ -83,15 +83,11 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                     return Point.Empty;
                 }
 
-                var component = SynthComponents.FirstOrDefault(x => x.Module == ActivelyConnectingPin.Module);
-                if (component == null)
-                {
-                    return Point.Empty;
-                }
-
-                return Point.Add(component.DesignPos, new Size(ActivelyConnectingPin.PinDesignPos));
+                return GetPinCenterPos(ActivelyConnectingPin);
             }
         }
+
+      
 
         public Point CurrentMousePos
         {
@@ -213,7 +209,40 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             }
             else
             {
-                
+                if (ActivelyConnectingPin.IsInput)
+                {
+                    if (pin.IsInput)
+                    {
+                        return;
+                    }
+
+                    ActivelyConnectingPin.Module.ConnectSynthModule(ActivelyConnectingPin, pin.Module);
+
+                    ConnectionWires.Add(new ConnectionWire
+                    {
+                        IsHighlighted = false,
+                        Pin1Pos = GetPinCenterPos(pin),
+                        Pin2Pos = GetPinCenterPos(ActivelyConnectingPin)
+                    });
+                }
+                else
+                {
+                    if (!pin.IsInput)
+                    {
+                        return;
+                    }
+
+                    pin.Module.ConnectSynthModule(pin, ActivelyConnectingPin.Module);
+
+                    ConnectionWires.Add(new ConnectionWire
+                    {
+                        IsHighlighted = false,
+                        Pin1Pos = GetPinCenterPos(ActivelyConnectingPin),
+                        Pin2Pos = GetPinCenterPos(pin)
+                    });
+                }
+
+                ActivelyConnectingPin = null;
             }
         }
 
@@ -249,6 +278,19 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         //        Module = _testOsc
         //    });
         //}
+
+        Point GetPinCenterPos(PinBase pin)
+        {
+            var component = SynthComponents.FirstOrDefault(x => x.Module == pin.Module);
+            if (component == null)
+            {
+                return Point.Empty;
+            }
+
+            var pinPos = Point.Add(component.DesignPos, new Size(pin.PinDesignPos));
+            //offset to pin center
+            return Point.Add(pinPos, new Size(5, 5));
+        }
 
         #endregion
     }

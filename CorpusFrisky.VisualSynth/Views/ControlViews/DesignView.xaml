@@ -101,7 +101,7 @@
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Width="20"
-                                                       Margin="0,0,3,0"
+                                                       Margin="-23,0,3,0"
                                                        Text="{Binding Label}"
                                                        Foreground="White"/>
                                             <Button Background="Black"
@@ -136,6 +136,7 @@
                     <DataTemplate>
                         <Line Stroke="Black"
                               StrokeThickness="1"
+                              IsHitTestVisible="False"
                               X1="{Binding Pin1Pos.X}"
                               Y1="{Binding Pin1Pos.Y}"
                               X2="{Binding Pin2Pos.X}"
@@ -146,6 +147,7 @@
             
             <Line Stroke="Black"
                   StrokeThickness="1"
+                  IsHitTestVisible="False"
                   Visibility="{Binding ShouldShowActivelyConnectingLine, Converter={StaticResource BooleanToVisibilityConverter}}"
                   X1="{Binding ActivelyConnectingPinPos.X}"
                   Y1="{Binding ActivelyConnectingPinPos.Y}"

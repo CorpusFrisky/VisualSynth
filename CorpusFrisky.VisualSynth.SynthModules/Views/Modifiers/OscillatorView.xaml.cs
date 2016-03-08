@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Views.Modifiers
 {
@@ -20,9 +23,16 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Views.Modifiers
     /// </summary>
     public partial class OscillatorView : UserControl
     {
-        public OscillatorView()
+        public OscillatorViewModel ViewModel
+        {
+            get { return DataContext as OscillatorViewModel; }
+            set { DataContext = value; }
+        }
+
+        public OscillatorView(ISynthModule viewModel)
         {
             InitializeComponent();
+            ViewModel = viewModel as OscillatorViewModel;
         }
     }
 }

@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
+using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
 {
-    public class OscillatorViewModel : IPropertyModifierModule
+    public class OscillatorViewModel : BindableBase, IPropertyModifierModule
     {
         private const int TableLength = 1000;
         private static double[] _sinTable;
+
+        private double _rate;
 
         private double _index;
         private double _cachedIndex;
@@ -57,7 +61,11 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
         public IEventAggregator EventAggregator { get; private set; }
 
 
-        public double Rate { get; set; }
+        public double Rate
+        {
+            get { return _rate; }
+            set { SetProperty(ref _rate, value); }
+        }
 
 
         public SynthModuleType ModuleType
