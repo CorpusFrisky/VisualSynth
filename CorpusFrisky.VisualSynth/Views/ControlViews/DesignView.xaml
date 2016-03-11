@@ -116,7 +116,8 @@
                             <Rectangle Fill="DarkBlue"
                                        Canvas.Left="10"
                                        Panel.ZIndex ="0"
-                                       Height="{Binding Height}" Width="70">
+                                       Height="{Binding Height}" 
+                                       Width="{Binding Width}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonDown">
                                         <helpers:InvokeDelegateCommandAction

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
+using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
@@ -252,32 +253,19 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         private void OnPinCompleteEvent(PinSetupCompleteEventArgs args)
         {
-            var module = SynthComponents.FirstOrDefault(x => x.Module == args.SynthModule);
-            if (module == null)
+            var component = SynthComponents.FirstOrDefault(x => x.Module == args.SynthModule);
+            if (component == null)
             {
                 return;
             }
 
-            var maxNumPins = Math.Max(module.Module.InputPins.Count, module.Module.OutputPins.Count);
 
-            module.Height = (maxNumPins * 20) + 20;
+            component.UpdateDimensions();
         }
 
         #endregion
 
         #region Helper Methods
-
-        //private void AddTestOscillator()
-        //{
-        //    _testOsc = new OscillatorViewModel();
-        //    _testOsc.Rate = 0.333;
-
-        //    SynthComponents.Add(new SynthComponentModel()
-        //    {
-        //        DesignPos = new Point(-100, -100),
-        //        Module = _testOsc
-        //    });
-        //}
 
         Point GetPinCenterPos(PinBase pin)
         {
