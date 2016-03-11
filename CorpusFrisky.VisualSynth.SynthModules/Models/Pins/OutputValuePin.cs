@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using CorpusFrisky.VisualSynth.Common;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
 {
@@ -11,7 +12,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
         {
             get
             {
-                return new Point(80, 10 + (PinIndex * 20));
+                return new Point(DesignConstants.ModuleBodyWidth + DesignConstants.PinWidth, DesignConstants.PinsPadding + (PinIndex * (DesignConstants.PinHeight + DesignConstants.PinMargin)));
             }
         }
     }
