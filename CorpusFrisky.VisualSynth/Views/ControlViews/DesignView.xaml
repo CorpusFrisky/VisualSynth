@@ -133,6 +133,11 @@
 
             <!-- Display connection wires -->
             <ItemsControl ItemsSource="{Binding ConnectionWires}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Line Stroke="Black"
