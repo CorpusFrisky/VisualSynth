@@ -13,7 +13,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Interfaces
         void PostRender();
 
         bool ConnectSynthModule(PinBase pin, ISynthModule module);
-        bool DisconnectSynthModule(PinBase pin, ISynthModule module);
+        void DisconnectSynthModule(PinBase pin, ISynthModule module);
 
 
         SynthModuleType ModuleType { get; }

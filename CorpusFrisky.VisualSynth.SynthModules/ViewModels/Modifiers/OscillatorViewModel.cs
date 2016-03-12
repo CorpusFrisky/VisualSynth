@@ -123,14 +123,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
             return true;
         }
 
-        public bool DisconnectSynthModule(PinBase pin, ISynthModule module)
+        public override void DisconnectSynthModule(PinBase pin, ISynthModule module)
         {
-            if (!base.DisconnectSynthModule(pin, module))
-            {
-                return false;
-            }
-
-            return true;
+            base.DisconnectSynthModule(pin, module);
         }
 
         #endregion

@@ -217,7 +217,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                         return;
                     }
 
-                    ActivelyConnectingPin.Module.ConnectSynthModule(ActivelyConnectingPin, pin.Module);
+                    ActivelyConnectingPin.ConnectSynthModule(ActivelyConnectingPin, pin.Module);
 
                     ConnectionWires.Add(new ConnectionWire
                     {

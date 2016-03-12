@@ -21,8 +21,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
         protected bool ConstructionValidated;
         private ObservableCollection<VertexModel> _vertices;
 
-        private ObservableCollection<ConnectedModule> _connectedModules;
-
 
         public ShapeGeneratorBaseViewModel(IEventAggregator eventAggregator)
         {
@@ -30,11 +28,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
             Center = new Vector3(0);
             Vertices = new ObservableCollection<VertexModel>();
-            InputPins = new ObservableCollection<PinBase>();
-            OutputPins = new ObservableCollection<PinBase>();
-            ConnectedModules = new ObservableCollection<ConnectedModule>();
-
-            ConnectedModules.CollectionChanged += OnConnectedModulesChanged;
+            
+            
 
             ConstructionValidated = false;
         }
@@ -60,11 +55,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             set { SetProperty(ref _vertices, value); }
         }
 
-        public ObservableCollection<ConnectedModule> ConnectedModules
-        {
-            get { return _connectedModules; } 
-            private set { SetProperty(ref _connectedModules, value); }
-        }
 
         public Vector3 Center { get; set; }
 
@@ -155,30 +145,20 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             //    return false;
             //}
 
-            ConnectedModules.Add(new ConnectedModule
-            {
-                Pin = pin,
-                Module = module
-            });
+            
 
             return true;
         }
 
-        public override bool DisconnectSynthModule(PinBase pin, ISynthModule module)
+        public override void DisconnectSynthModule(PinBase pin, ISynthModule module)
         {
-            if (!base.DisconnectSynthModule(pin, module))
-            {
-                return false;
-            }
+            base.DisconnectSynthModule(pin, module);
 
             var moduleToDisconnect = ConnectedModules.First(x => x.Module == module && x.Pin == pin);
             if (moduleToDisconnect != null)
             {
                 ConnectedModules.Remove(moduleToDisconnect);
-                return true;
             }
-
-            return false;
         }
 
         #endregion
@@ -199,26 +179,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             SetupPins();
         }
 
-        protected virtual void OnConnectedModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.NewItems != null)
-            {
-                foreach (var newItem in e.NewItems)
-                {
-                    ToggleConnectedModule(newItem as ConnectedModule, true);
-                }
-            }
+        
 
-            if (e.OldItems != null)
-            {
-                foreach (var oldItems in e.OldItems)
-                {
-                    ToggleConnectedModule(oldItems as ConnectedModule, false);
-                }
-            }
-        }
-
-        protected virtual void ToggleConnectedModule(ConnectedModule connectedModule, bool adding)
+        protected override void ToggleConnectedModule(ConnectedModule connectedModule, bool adding)
         {
             var pin = connectedModule.Pin;
 
