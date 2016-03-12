@@ -8,7 +8,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Interfaces
     public interface ISynthModule
     {
         void Initialize();
-        void SetupPins();
         void PreRender();
         void Render();
         void PostRender();

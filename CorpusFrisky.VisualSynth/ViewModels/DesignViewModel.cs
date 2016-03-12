@@ -206,7 +206,6 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         {
             if (ActivelyConnectingPin == null)
             {
-                if(pin.)
                 ActivelyConnectingPin = pin;
             }
             else

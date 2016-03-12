@@ -12,7 +12,7 @@ using Microsoft.Practices.Prism.PubSubEvents;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
 {
-    public class OscillatorViewModel : BindableBase, IPropertyModifierModule
+    public class OscillatorViewModel : SynthModuleBase, IPropertyModifierModule
     {
         private const int TableLength = 1000;
         private static double[] _sinTable;
@@ -42,9 +42,12 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
             OutputPins = new ObservableCollection<PinBase>();
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
+            base.Initialize();
+
             SetupPins();
+
         }
 
         public static void InitOscillatorTables()
@@ -68,19 +71,16 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
         }
 
 
-        public SynthModuleType ModuleType
+        public override SynthModuleType ModuleType
         {
             get { return SynthModuleType.Oscillator; }
         }
-
-        public ObservableCollection<PinBase> InputPins { get; set; }
-        public ObservableCollection<PinBase> OutputPins { get; set; }
 
         #endregion
 
         #region ISynthModule Implementations
 
-        public void SetupPins()
+        protected override void SetupPins()
         {
             var pinIndex = 0;
 
@@ -98,29 +98,39 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
             });
         }
 
-        public void PreRender()
+        public override void PreRender()
         {
             _index += Rate * TableLength / Constants.FrameRate;
             _index %= TableLength;
         }
 
-        public void Render()
+        public override void Render()
         {
         }
 
-        public void PostRender()
+        public override void PostRender()
         {
             
         }
 
-        public bool ConnectSynthModule(PinBase pin, ISynthModule module)
+        public override bool  ConnectSynthModule(PinBase pin, ISynthModule module)
         {
-            throw new NotImplementedException();
+            if (!base.ConnectSynthModule(pin, module))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public bool DisconnectSynthModule(PinBase pin, ISynthModule module)
         {
-            throw new NotImplementedException();
+            if (!base.DisconnectSynthModule(pin, module))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         #endregion

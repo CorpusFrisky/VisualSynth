@@ -16,7 +16,7 @@ using OpenTK.Graphics;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 {
-    public class ShapeGeneratorBaseViewModel : BindableBase, ISynthModule
+    public class ShapeGeneratorBaseViewModel : SynthModuleBase
     {
         protected bool ConstructionValidated;
         private ObservableCollection<VertexModel> _vertices;
@@ -39,8 +39,10 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             ConstructionValidated = false;
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
+            base.Initialize();
+
             if (!ConstructionValidated)
             {
                 ValidateConstruction(NumVertices);
@@ -58,9 +60,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             set { SetProperty(ref _vertices, value); }
         }
 
-        public ObservableCollection<PinBase> InputPins { get; set; }
-        public ObservableCollection<PinBase> OutputPins { get; set; }
-
         public ObservableCollection<ConnectedModule> ConnectedModules
         {
             get { return _connectedModules; } 
@@ -69,7 +68,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
         public Vector3 Center { get; set; }
 
-        public virtual SynthModuleType ModuleType
+        public override SynthModuleType ModuleType
         {
             get { throw new NotImplementedException(); }
         }
@@ -89,7 +88,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
         #region ISynthModule Implementation
 
-        public virtual void SetupPins()
+        protected override void SetupPins()
         {
             var inputPinIndex = 0;
             var vertexNumber = 1;
@@ -130,23 +129,27 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
         }
 
 
-        public virtual void PreRender()
+        public override void PreRender()
         {
             throw new NotImplementedException();
         }
 
-        public virtual void Render()
+        public override void Render()
         {
             throw new NotImplementedException();
         }
 
-        public virtual void PostRender()
+        public override void PostRender()
         {
             throw new NotImplementedException();
         }
 
-        public bool ConnectSynthModule(PinBase pin, ISynthModule module)
+        public override bool ConnectSynthModule(PinBase pin, ISynthModule module)
         {
+            if (!base.ConnectSynthModule(pin, module))
+            {
+                return false;
+            }
             //if(!IsAbleToAttach())
             //{
             //    return false;
@@ -161,8 +164,13 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             return true;
         }
 
-        public bool DisconnectSynthModule(PinBase pin, ISynthModule module)
+        public override bool DisconnectSynthModule(PinBase pin, ISynthModule module)
         {
+            if (!base.DisconnectSynthModule(pin, module))
+            {
+                return false;
+            }
+
             var moduleToDisconnect = ConnectedModules.First(x => x.Module == module && x.Pin == pin);
             if (moduleToDisconnect != null)
             {

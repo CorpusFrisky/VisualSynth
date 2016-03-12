@@ -13,7 +13,9 @@
         TriangleGenerator,
         RectangleGenerator,
 
-        Oscillator
+        Oscillator,
+
+        Unknown
     }
 
     public static class Constants

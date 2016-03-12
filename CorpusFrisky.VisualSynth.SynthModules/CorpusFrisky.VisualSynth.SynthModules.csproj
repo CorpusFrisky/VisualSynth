@@ -130,6 +130,7 @@
     <Compile Include="ViewModels\ShapeGenerators\ShapeGeneratorBaseViewModel.cs" />
     <Compile Include="ViewModels\ShapeGenerators\RectangleGeneratorViewModel.cs" />
     <Compile Include="ViewModels\ShapeGenerators\TriangleGeneratorViewModel.cs" />
+    <Compile Include="ViewModels\SynthModuleBase.cs" />
     <Compile Include="Views\Modifiers\OscillatorView.xaml.cs">
       <DependentUpon>OscillatorView.xaml</DependentUpon>
     </Compile>
