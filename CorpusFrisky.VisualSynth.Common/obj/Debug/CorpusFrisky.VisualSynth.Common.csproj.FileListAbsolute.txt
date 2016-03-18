@@ -3,3 +3,8 @@ C:\Projects\CorpusFrisky\VisualSynth\CorpusFrisky.VisualSynth.Common\bin\Debug\C
 C:\Projects\CorpusFrisky\VisualSynth\CorpusFrisky.VisualSynth.Common\obj\Debug\CorpusFrisky.VisualSynth.Common.dll
 C:\Projects\CorpusFrisky\VisualSynth\CorpusFrisky.VisualSynth.Common\obj\Debug\CorpusFrisky.VisualSynth.Common.pdb
 C:\Projects\CorpusFrisky\VisualSynth\CorpusFrisky.VisualSynth.Common\obj\Debug\CorpusFrisky.VisualSynth.Common.csprojResolveAssemblyReference.cache
+C:\Projects\VisualSynth\CorpusFrisky.VisualSynth.Common\bin\Debug\CorpusFrisky.VisualSynth.Common.dll
+C:\Projects\VisualSynth\CorpusFrisky.VisualSynth.Common\bin\Debug\CorpusFrisky.VisualSynth.Common.pdb
+C:\Projects\VisualSynth\CorpusFrisky.VisualSynth.Common\obj\Debug\CorpusFrisky.VisualSynth.Common.csprojResolveAssemblyReference.cache
+C:\Projects\VisualSynth\CorpusFrisky.VisualSynth.Common\obj\Debug\CorpusFrisky.VisualSynth.Common.dll
+C:\Projects\VisualSynth\CorpusFrisky.VisualSynth.Common\obj\Debug\CorpusFrisky.VisualSynth.Common.pdb

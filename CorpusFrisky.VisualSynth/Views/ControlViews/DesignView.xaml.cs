@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using CorpusFrisky.VisualSynth.ViewModels;
-using Xceed.Wpf.AvalonDock.Layout;
 
 namespace CorpusFrisky.VisualSynth.Views.ControlViews
 {
