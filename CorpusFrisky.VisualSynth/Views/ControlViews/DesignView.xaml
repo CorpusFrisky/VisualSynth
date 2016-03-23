@@ -17,6 +17,14 @@
                 Background="Gray"
                 MouseRightButtonDown="SetDesignPos"
                 MouseMove="SetMousePos">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <helpers:InvokeDelegateCommandAction
+                                                    Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.HandleLeftClickCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
             <Canvas.ContextMenu>
                 <ContextMenu x:Name="DesignContextMenu"
                              StaysOpen="True">
@@ -146,7 +154,24 @@
                               X1="{Binding Pin1Pos.X}"
                               Y1="{Binding Pin1Pos.Y}"
                               X2="{Binding Pin2Pos.X}"
-                              Y2="{Binding Pin2Pos.Y}"/>
+                              Y2="{Binding Pin2Pos.Y}">
+                            <Line.Style>
+                                <Style TargetType="Line">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
+                                            <DataTrigger.Setters>
+                                                <Setter Property="Stroke" Value="Blue"/>
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsDeletionTarget}" Value="True">
+                                            <DataTrigger.Setters>
+                                                <Setter Property="Stroke" Value="Red"/>
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Line.Style>
+                        </Line>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

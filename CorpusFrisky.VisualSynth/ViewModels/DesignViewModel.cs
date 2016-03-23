@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Linq;
-using CorpusFrisky.VisualSynth.Common;
+﻿using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
@@ -12,7 +8,10 @@ using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using OpenTK;
-using OpenTK.Audio;
+using System;
+using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Linq;
 
 namespace CorpusFrisky.VisualSynth.ViewModels
 {
@@ -27,7 +26,8 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         private DelegateCommand _addOscillatorCommand;
         private DelegateCommand<SynthComponentModel> _handleModuleLeftClick;
         private DelegateCommand<PinBase> _pinLeftClickedCommand;
-             
+        private DelegateCommand _handleLeftClickCommand;
+
         private PinBase _activelyConnectingPin;
         private Point _currentMousePos;
 
@@ -50,7 +50,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             _eventAggregator.GetEvent<PinSetupCompleteEvent>().Subscribe(OnPinCompleteEvent);
         }
 
-       
+
         #region Properties
 
         public ObservableCollection<SynthComponentModel> SynthComponents { get; set; }
@@ -70,7 +70,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         public Point CurrentDesignPos { get; set; }
 
-        public bool ShouldShowActivelyConnectingLine 
+        public bool ShouldShowActivelyConnectingLine
         {
             get { return ActivelyConnectingPin != null; }
         }
@@ -88,7 +88,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             }
         }
 
-      
+
 
         public Point CurrentMousePos
         {
@@ -121,12 +121,17 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             get { return _handleModuleLeftClick ?? (_handleModuleLeftClick = new DelegateCommand<SynthComponentModel>(HandleModuleLeftClick)); }
         }
 
+        public DelegateCommand HandleLeftClickCommand
+        {
+            get { return _handleLeftClickCommand ?? (_handleLeftClickCommand = new DelegateCommand(LeftClick)); }
+        }
+        
         public DelegateCommand<PinBase> PinLeftClickedCommand
         {
             get { return _pinLeftClickedCommand ?? (_pinLeftClickedCommand = new DelegateCommand<PinBase>(PinLeftClicked)); }
         }
 
-        
+
         #endregion
 
 
@@ -202,6 +207,11 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                                                   });
         }
 
+        private void LeftClick()
+        {
+            ActivelyConnectingPin = null;
+        }
+
         private void PinLeftClicked(PinBase pin)
         {
             if (ActivelyConnectingPin == null)
@@ -218,13 +228,6 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                     }
 
                     ActivelyConnectingPin.ConnectSynthModule(ActivelyConnectingPin, pin.Module);
-
-                    ConnectionWires.Add(new ConnectionWire
-                    {
-                        IsHighlighted = false,
-                        Pin1Pos = GetPinCenterPos(pin),
-                        Pin2Pos = GetPinCenterPos(ActivelyConnectingPin)
-                    });
                 }
                 else
                 {
@@ -234,14 +237,15 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                     }
 
                     pin.Module.ConnectSynthModule(pin, ActivelyConnectingPin.Module);
-
-                    ConnectionWires.Add(new ConnectionWire
-                    {
-                        IsHighlighted = false,
-                        Pin1Pos = GetPinCenterPos(ActivelyConnectingPin),
-                        Pin2Pos = GetPinCenterPos(pin)
-                    });
                 }
+
+                ConnectionWires.Add(new ConnectionWire
+                {
+                    OutputConnection = ActivelyConnectingPin.IsInput ? pin : ActivelyConnectingPin,
+                    InputConnection = ActivelyConnectingPin.IsInput ? ActivelyConnectingPin : pin,
+                    Pin1Pos = GetPinCenterPos(ActivelyConnectingPin),
+                    Pin2Pos = GetPinCenterPos(pin)
+                });
 
                 ActivelyConnectingPin = null;
             }
@@ -258,7 +262,6 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             {
                 return;
             }
-
 
             component.UpdateDimensions();
         }
@@ -277,7 +280,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
             var pinPos = Point.Add(component.DesignPos, new Size(pin.PinDesignPos));
             //offset to pin center
-            return Point.Add(pinPos, new Size(5, 5));
+            return Point.Add(pinPos, new Size(DesignConstants.PinWidth / 2, DesignConstants.PinHeight / 2));
         }
 
         #endregion
