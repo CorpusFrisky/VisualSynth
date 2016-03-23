@@ -81,7 +81,15 @@
                                             <Button Background="Black"
                                                     Height="10" Width="10"
                                                     Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.PinLeftClickedCommand}"
-                                                    CommandParameter="{Binding}"/>
+                                                    CommandParameter="{Binding}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseRightButtonDown">
+                                                        <helpers:InvokeDelegateCommandAction
+                                                            Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.PinRightClickedCommand}"
+                                                            CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
                                             <TextBlock Margin="3,0"
                                                        Text="{Binding Label}"
                                                        Foreground="White"/>
@@ -115,7 +123,15 @@
                                             <Button Background="Black"
                                                     Height="10" Width="10"
                                                     Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.PinLeftClickedCommand}"
-                                                    CommandParameter="{Binding}"/>
+                                                    CommandParameter="{Binding}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseRightButtonDown">
+                                                        <helpers:InvokeDelegateCommandAction
+                                                            Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.PinRightClickedCommand}"
+                                                            CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

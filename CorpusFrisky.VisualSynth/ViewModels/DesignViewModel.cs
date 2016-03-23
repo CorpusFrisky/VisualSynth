@@ -26,10 +26,13 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         private DelegateCommand _addOscillatorCommand;
         private DelegateCommand<SynthComponentModel> _handleModuleLeftClick;
         private DelegateCommand<PinBase> _pinLeftClickedCommand;
+        private DelegateCommand<PinBase> _pinRighttClickedCommand;
         private DelegateCommand _handleLeftClickCommand;
 
         private PinBase _activelyConnectingPin;
         private Point _currentMousePos;
+        private PinBase _activelyDisconnectingPin;
+        private ConnectionWire _activelyDisconnectingWire;
 
         #endregion
 
@@ -65,6 +68,26 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                 SetProperty(ref _activelyConnectingPin, value);
                 OnPropertyChanged("ShouldShowActivelyConnectingLine");
                 OnPropertyChanged("ActivelyConnectingPinPos");
+            }
+        }
+
+        public PinBase ActivelyDisconnectingPin
+        {
+            get { return _activelyDisconnectingPin; }
+            set
+            {
+                SetProperty(ref _activelyDisconnectingPin, value);
+            }
+        }
+
+        public ConnectionWire ActivelyDisconnectingWire
+        {
+            get { return _activelyDisconnectingWire; }
+            set
+            {
+                _activelyDisconnectingWire.IsDeletionTarget = false;
+                SetProperty(ref _activelyDisconnectingWire, value);
+                _activelyDisconnectingWire.IsDeletionTarget = true;
             }
         }
 
@@ -123,12 +146,17 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         public DelegateCommand HandleLeftClickCommand
         {
-            get { return _handleLeftClickCommand ?? (_handleLeftClickCommand = new DelegateCommand(LeftClick)); }
+            get { return _handleLeftClickCommand ?? (_handleLeftClickCommand = new DelegateCommand(HandleLeftClick)); }
         }
-        
+
         public DelegateCommand<PinBase> PinLeftClickedCommand
         {
-            get { return _pinLeftClickedCommand ?? (_pinLeftClickedCommand = new DelegateCommand<PinBase>(PinLeftClicked)); }
+            get { return _pinLeftClickedCommand ?? (_pinLeftClickedCommand = new DelegateCommand<PinBase>(HandlePinLeftClick)); }
+        }
+
+        public DelegateCommand<PinBase> PinRightClickedCommand
+        {
+            get { return _pinRighttClickedCommand ?? (_pinRighttClickedCommand = new DelegateCommand<PinBase>(HandlePinRightClick)); }
         }
 
 
@@ -207,12 +235,12 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                                                   });
         }
 
-        private void LeftClick()
+        private void HandleLeftClick()
         {
             ActivelyConnectingPin = null;
         }
 
-        private void PinLeftClicked(PinBase pin)
+        private void HandlePinLeftClick(PinBase pin)
         {
             if (ActivelyConnectingPin == null)
             {
@@ -248,6 +276,20 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                 });
 
                 ActivelyConnectingPin = null;
+            }
+        }
+
+        private void HandlePinRightClick(PinBase pin)
+        {
+            if (pin.ConnectedPins.Count == 0)
+            {
+                ActivelyDisconnectingPin = null;
+                return;
+            }
+
+            if (pin != ActivelyDisconnectingPin)
+            {
+
             }
         }
 
