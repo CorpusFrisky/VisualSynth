@@ -259,21 +259,19 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             if (ActivelyDisconnectingWire != null)
             {
                 ConnectionWires.Remove(ActivelyDisconnectingWire);
-
-                var inputPin = ActivelyDisconnectingWire.InputConnection;
-                var outputPin = ActivelyDisconnectingWire.OutputConnection;
-
-                inputPin.DisconnectSynthModule(outputPin);
-                
+                ActivelyDisconnectingWire.InputConnection.DisconnectSynthModule(ActivelyDisconnectingWire.OutputConnection);
                 ActivelyConnectingPin = ActivelyDisconnectingPin;
-                
-                ActivelyDisconnectingPin = null;
-                ActivelyDisconnectingWire = null;
+                DeactivateDisconnection();
             }
         }
 
         private void HandlePinLeftClick(PinBase pin)
         {
+            if (ActivelyDisconnectingPin != null)
+            {
+                DeactivateDisconnection();
+            }
+
             if (ActivelyConnectingPin == null)
             {
                 ActivelyConnectingPin = pin;
@@ -365,6 +363,13 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             var pinPos = Point.Add(component.DesignPos, new Size(pin.PinDesignPos));
             //offset to pin center
             return Point.Add(pinPos, new Size(DesignConstants.PinWidth / 2, DesignConstants.PinHeight / 2));
+        }
+
+        private void DeactivateDisconnection()
+        {
+            ActivelyDisconnectingPin = null;
+            ActivelyDisconnectingWire = null;
+            _connectionsFromActivelyDisconnectingPin.Clear();
         }
 
         #endregion

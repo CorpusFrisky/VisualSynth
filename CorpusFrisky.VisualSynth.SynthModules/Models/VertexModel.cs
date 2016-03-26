@@ -95,11 +95,19 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
             {
                 ApplyPositionModifiers();                
             }
+            else
+            {
+                ModifiedPosition = Position;
+            }
 
             if (_propertyModifiers.ContainsKey(PinTagetPropertyEnum.Color) &&
                 _propertyModifiers[PinTagetPropertyEnum.Color].Any())
             {
                 ApplyColorModifiers();
+            }
+            else
+            {
+                ModifiedColor = Color;
             }
         }
 
