@@ -2,6 +2,7 @@
 using System.Linq;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
+using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using Microsoft.Practices.Prism.Mvvm;
 using OpenTK;
 using OpenTK.Graphics;
@@ -14,14 +15,14 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
 
         private Vector3 _position;
         private Color4 _color;
-        private readonly Dictionary<PinTagetPropertyEnum, List<IPropertyModifierModule>> _propertyModifiers;
+        private readonly Dictionary<PinTagetPropertyEnum, List<OutputValuePin>> _propertyModifiers;
         private Vector3 _modifiedPosition;
 
         #endregion
 
         public VertexModel()
         {
-            _propertyModifiers = new Dictionary<PinTagetPropertyEnum, List<IPropertyModifierModule>>();
+            _propertyModifiers = new Dictionary<PinTagetPropertyEnum, List<OutputValuePin>>();
         }
 
         #region Properties
@@ -59,28 +60,21 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
             ApplyModifiers();
         }
 
-        public void AddPropertyModifier(PinTagetPropertyEnum property, IModifierModule module)
+        public void AddPropertyModifier(PinTagetPropertyEnum property, OutputValuePin pin)
         {
-            var propertyModifier = module as IPropertyModifierModule;
-            if (propertyModifier == null)
-            {
-                //TODO: log
-                return;
-            }
-
             if (!_propertyModifiers.ContainsKey(property))
             {
-                _propertyModifiers.Add(property, new List<IPropertyModifierModule>());
+                _propertyModifiers.Add(property, new List<OutputValuePin>());
             }
 
-            _propertyModifiers[property].Add(propertyModifier);
+            _propertyModifiers[property].Add(pin);
         }
 
-        public void RemovePropertyModifier(PinTagetPropertyEnum property, IModifierModule module)
+        public void RemovePropertyModifier(PinTagetPropertyEnum property, OutputValuePin pin)
         {
             if (_propertyModifiers.ContainsKey(property))
             {
-                var moduleToRemove = _propertyModifiers[property].First(x => x == module);
+                var moduleToRemove = _propertyModifiers[property].First(x => x == pin);
                 if (moduleToRemove != null)
                 {
                     _propertyModifiers[property].Remove(moduleToRemove);
@@ -113,7 +107,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
 
         private void ApplyColorModifiers()
         {
-            var modificationValue = _propertyModifiers[PinTagetPropertyEnum.Color].Sum(modifier => modifier.GetValue());
+            var modificationValue = _propertyModifiers[PinTagetPropertyEnum.Color].Sum(modifier => modifier.GetValue_Function());
             modificationValue /= _propertyModifiers[PinTagetPropertyEnum.Color].Count;
 
             //Use the set color value as a max and oscillate around the midpoint between the max and 0;

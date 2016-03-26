@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Configuration;
-using CorpusFrisky.VisualSynth.Common;
+﻿using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
-using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
+using System;
+using System.Collections.ObjectModel;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
 {
-    public class OscillatorViewModel : SynthModuleBase, IPropertyModifierModule
+    public class OscillatorViewModel : SynthModuleBase, IModifierModule
     {
         private const int TableLength = 1000;
         private static double[] _sinTable;
@@ -55,7 +53,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
             _sinTable = new double[TableLength];
             for (var i = 0; i < _sinTable.Length; i++)
             {
-                _sinTable[i] = Math.Sin(i/((double)_sinTable.Length)*2d*Math.PI);
+                _sinTable[i] = Math.Sin(i / ((double)_sinTable.Length) * 2d * Math.PI);
             }
         }
 
@@ -89,7 +87,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
                 Module = this,
                 PinIndex = pinIndex++,
                 Label = "Output",
-                PinType = PinTypeEnum.Value
+                PinType = PinTypeEnum.Value,
+                GetValue_Function = GetValue
             });
 
             EventAggregator.GetEvent<PinSetupCompleteEvent>().Publish(new PinSetupCompleteEventArgs
@@ -110,12 +109,12 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
 
         public override void PostRender()
         {
-            
+
         }
 
-        public override bool  ConnectSynthModule(PinBase pin, ISynthModule module)
+        public override bool ConnectSynthModule(PinBase inputPin, PinBase outputPin)
         {
-            if (!base.ConnectSynthModule(pin, module))
+            if (!base.ConnectSynthModule(inputPin, outputPin))
             {
                 return false;
             }
@@ -123,12 +122,12 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
             return true;
         }
 
-        public override void DisconnectSynthModule(PinBase pin, ISynthModule module)
+        public override void DisconnectSynthModule(PinBase inputPin, PinBase outputPin)
         {
-            base.DisconnectSynthModule(pin, module);
+            base.DisconnectSynthModule(inputPin, outputPin);
         }
 
-        protected override void ToggleConnectedModule(ConnectedModule connectedModule, bool adding)
+        protected override void ToggleConnectedModule(PinConnection pinConnection, bool adding)
         {
         }
 

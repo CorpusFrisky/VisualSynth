@@ -3,9 +3,9 @@ using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Models
 {
-    public class ConnectedModule
+    public class PinConnection
     {
-        public PinBase Pin { get; set; }
-        public ISynthModule Module { get; set; }
+        public PinBase InputPin { get; set; }
+        public PinBase OutputPin { get; set; }
     }
 }

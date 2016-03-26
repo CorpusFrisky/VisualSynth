@@ -134,9 +134,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             throw new NotImplementedException();
         }
 
-        public override bool ConnectSynthModule(PinBase pin, ISynthModule module)
+        public override bool ConnectSynthModule(PinBase inputPin, PinBase outputPin)
         {
-            if (!base.ConnectSynthModule(pin, module))
+            if (!base.ConnectSynthModule(inputPin, outputPin))
             {
                 return false;
             }
@@ -150,9 +150,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             return true;
         }
 
-        public override void DisconnectSynthModule(PinBase pin, ISynthModule module)
+        public override void DisconnectSynthModule(PinBase inputPin, PinBase outputPin)
         {
-            base.DisconnectSynthModule(pin, module);
+            base.DisconnectSynthModule(inputPin, outputPin);
         }
 
         #endregion
@@ -175,15 +175,15 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
         
 
-        protected override void ToggleConnectedModule(ConnectedModule connectedModule, bool adding)
+        protected override void ToggleConnectedModule(PinConnection pinConnection, bool adding)
         {
-            var pin = connectedModule.Pin;
+            var pin = pinConnection.InputPin;
 
             if (pin.IsInput)
             {
                 if (pin.PinType == PinTypeEnum.Value)
                 {
-                    ToggleInputValueModule(connectedModule, adding);
+                    ToggleInputValueModule(pinConnection, adding);
                    
                 }
                 else if (pin.PinType == PinTypeEnum.Frame)
@@ -193,21 +193,21 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             }
         }
 
-        private void ToggleInputValueModule(ConnectedModule connectedModule, bool adding)
+        private void ToggleInputValueModule(PinConnection pinConnection, bool adding)
         {
-            var module = connectedModule.Module as IModifierModule;
-            var pin = connectedModule.Pin as InputValuePin;
+            var inputPin = pinConnection.InputPin as InputValuePin;
+            var outputPin = pinConnection.OutputPin as OutputValuePin;
 
-            if (module == null || pin == null)
+            if (inputPin == null)
             {
                 // TODO: log a message
                 return;
             }
 
-            switch (pin.TargetType)
+            switch (inputPin.TargetType)
             {
                 case PinTargetTypeEnum.Vertex:
-                    var vertex = pin.TargetObject as VertexModel;
+                    var vertex = inputPin.TargetObject as VertexModel;
                     if (vertex == null)
                     {
                         //TODO: Log
@@ -216,12 +216,11 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
                     if (adding)
                     {
-                        vertex.AddPropertyModifier(pin.TargetProperty, module);
+                        vertex.AddPropertyModifier(inputPin.TargetProperty, outputPin);
                     }
                     else
                     {
-                        vertex.RemovePropertyModifier(pin.TargetProperty, module);
-
+                        vertex.RemovePropertyModifier(inputPin.TargetProperty, outputPin);
                     }
                     break;
             }

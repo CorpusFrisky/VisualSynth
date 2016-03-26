@@ -45,7 +45,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
             ConnectedPins.Add(pin);
             pin.ConnectedPins.Add(this);
             
-            return Module.ConnectSynthModule(this, pin.Module);
+            return Module.ConnectSynthModule(this, pin);
         }
 
         public virtual void DisconnectSynthModule(PinBase pin)
@@ -53,7 +53,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
             ConnectedPins.Remove(pin);
             pin.ConnectedPins.Remove(this);
 
-            Module.DisconnectSynthModule(this, pin.Module);
+            Module.DisconnectSynthModule(this, pin);
         }
 
         protected virtual bool CanConnect(PinBase pin)

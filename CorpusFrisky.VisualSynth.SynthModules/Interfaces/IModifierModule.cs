@@ -1,6 +1,8 @@
 ﻿namespace CorpusFrisky.VisualSynth.SynthModules.Interfaces
 {
-    public interface IModifierModule : ISynthModule
+    //To determine what to render first.  Eventually we'll want to move to some kind of graph, most likely.
+    public interface IModifierModule
     {
+
     }
 }

@@ -115,10 +115,9 @@
     <Compile Include="Converters\ColorConverters.cs" />
     <Compile Include="DependencyInjection\SynthModulesDI.cs" />
     <Compile Include="Events\PinSetupCompleteEvent.cs" />
-    <Compile Include="Interfaces\IPropertyModifierModule.cs" />
     <Compile Include="Interfaces\IModifierModule.cs" />
     <Compile Include="Interfaces\ISynthModule.cs" />
-    <Compile Include="Models\ConnectedModule.cs" />
+    <Compile Include="Models\PinConnection.cs" />
     <Compile Include="Models\Enums\PinTagetPropertyEnum.cs" />
     <Compile Include="Models\Pins\OutputValuePin.cs" />
     <Compile Include="Models\Pins\InputValuePin.cs" />

@@ -12,13 +12,13 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 {
     public abstract class SynthModuleBase : BindableBase, ISynthModule
     {
-        private ObservableCollection<ConnectedModule> _connectedModules;
+        private ObservableCollection<PinConnection> _connectedModules;
 
         public SynthModuleBase()
         {
             InputPins = new ObservableCollection<PinBase>();
             OutputPins = new ObservableCollection<PinBase>();
-            ConnectedModules = new ObservableCollection<ConnectedModule>();
+            ConnectedModules = new ObservableCollection<PinConnection>();
 
             ConnectedModules.CollectionChanged += OnConnectedModulesChanged;
         }
@@ -33,7 +33,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
         public ObservableCollection<PinBase> InputPins { get; set; }
         public ObservableCollection<PinBase> OutputPins { get; set; }
 
-        public ObservableCollection<ConnectedModule> ConnectedModules
+        public ObservableCollection<PinConnection> ConnectedModules
         {
             get { return _connectedModules; }
             private set { SetProperty(ref _connectedModules, value); }
@@ -61,20 +61,20 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
             throw new System.NotImplementedException();
         }
 
-        public virtual bool ConnectSynthModule(PinBase pin, ISynthModule module)
+        public virtual bool ConnectSynthModule(PinBase inputPin, PinBase outputPin)
         {
-            ConnectedModules.Add(new ConnectedModule
+            ConnectedModules.Add(new PinConnection
             {
-                Pin = pin,
-                Module = module
+                InputPin = inputPin,
+                OutputPin = outputPin
             });
 
             return true;
         }
 
-        public virtual void DisconnectSynthModule(PinBase pin, ISynthModule module)
+        public virtual void DisconnectSynthModule(PinBase inputPin, PinBase outputPin)
         {
-            var moduleToRemove = ConnectedModules.First(x => x.Pin == pin && x.Module == module);
+            var moduleToRemove = ConnectedModules.First(x => x.InputPin == inputPin && x.OutputPin == outputPin);
             ConnectedModules.Remove(moduleToRemove);
         }
 
@@ -84,7 +84,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
             {
                 foreach (var newItem in e.NewItems)
                 {
-                    ToggleConnectedModule(newItem as ConnectedModule, true);
+                    ToggleConnectedModule(newItem as PinConnection, true);
                 }
             }
 
@@ -92,11 +92,11 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
             {
                 foreach (var oldItems in e.OldItems)
                 {
-                    ToggleConnectedModule(oldItems as ConnectedModule, false);
+                    ToggleConnectedModule(oldItems as PinConnection, false);
                 }
             }
         }
 
-        protected abstract void ToggleConnectedModule(ConnectedModule connectedModule, bool adding);
+        protected abstract void ToggleConnectedModule(PinConnection pinConnection, bool adding);
     }
 }
