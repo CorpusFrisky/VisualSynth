@@ -153,12 +153,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
         public override void DisconnectSynthModule(PinBase pin, ISynthModule module)
         {
             base.DisconnectSynthModule(pin, module);
-
-            var moduleToDisconnect = ConnectedModules.First(x => x.Module == module && x.Pin == pin);
-            if (moduleToDisconnect != null)
-            {
-                ConnectedModules.Remove(moduleToDisconnect);
-            }
         }
 
         #endregion

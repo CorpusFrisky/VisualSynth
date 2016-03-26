@@ -9,6 +9,7 @@ using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using OpenTK;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
@@ -28,11 +29,15 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         private DelegateCommand<PinBase> _pinLeftClickedCommand;
         private DelegateCommand<PinBase> _pinRighttClickedCommand;
         private DelegateCommand _handleLeftClickCommand;
+        private DelegateCommand _handleRightClickCommand;
 
         private PinBase _activelyConnectingPin;
         private Point _currentMousePos;
         private PinBase _activelyDisconnectingPin;
         private ConnectionWire _activelyDisconnectingWire;
+        private List<ConnectionWire> _connectionsFromActivelyDisconnectingPin;
+        private int _activelyDisconnectingWireIndex;
+        private bool _shouldShowContextMenu;
 
         #endregion
 
@@ -44,6 +49,8 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             SynthComponents = new ObservableCollection<SynthComponentModel>();
             ConnectionWires = new ObservableCollection<ConnectionWire>();
             ActivelyConnectingPin = null;
+
+            _connectionsFromActivelyDisconnectingPin = new List<ConnectionWire>();
 
             SubscribeToEvents();
         }
@@ -85,9 +92,17 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             get { return _activelyDisconnectingWire; }
             set
             {
-                _activelyDisconnectingWire.IsDeletionTarget = false;
+                if (_activelyDisconnectingWire != null)
+                {
+                    _activelyDisconnectingWire.IsDeletionTarget = false;
+                }
+
                 SetProperty(ref _activelyDisconnectingWire, value);
-                _activelyDisconnectingWire.IsDeletionTarget = true;
+
+                if (_activelyDisconnectingWire != null)
+                {
+                    _activelyDisconnectingWire.IsDeletionTarget = true;
+                }
             }
         }
 
@@ -110,8 +125,6 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                 return GetPinCenterPos(ActivelyConnectingPin);
             }
         }
-
-
 
         public Point CurrentMousePos
         {
@@ -149,6 +162,11 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             get { return _handleLeftClickCommand ?? (_handleLeftClickCommand = new DelegateCommand(HandleLeftClick)); }
         }
 
+        //public DelegateCommand HandleRightClickCommand
+        //{
+        //    get { return _handleRightClickCommand ?? (_handleRightClickCommand = new DelegateCommand(HandleRightClick)); }
+        //}
+
         public DelegateCommand<PinBase> PinLeftClickedCommand
         {
             get { return _pinLeftClickedCommand ?? (_pinLeftClickedCommand = new DelegateCommand<PinBase>(HandlePinLeftClick)); }
@@ -158,7 +176,6 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         {
             get { return _pinRighttClickedCommand ?? (_pinRighttClickedCommand = new DelegateCommand<PinBase>(HandlePinRightClick)); }
         }
-
 
         #endregion
 
@@ -238,6 +255,21 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         private void HandleLeftClick()
         {
             ActivelyConnectingPin = null;
+
+            if (ActivelyDisconnectingWire != null)
+            {
+                ConnectionWires.Remove(ActivelyDisconnectingWire);
+
+                var inputPin = ActivelyDisconnectingWire.InputConnection;
+                var outputPin = ActivelyDisconnectingWire.OutputConnection;
+
+                inputPin.DisconnectSynthModule(outputPin);
+                
+                ActivelyConnectingPin = ActivelyDisconnectingPin;
+                
+                ActivelyDisconnectingPin = null;
+                ActivelyDisconnectingWire = null;
+            }
         }
 
         private void HandlePinLeftClick(PinBase pin)
@@ -255,7 +287,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                         return;
                     }
 
-                    ActivelyConnectingPin.ConnectSynthModule(ActivelyConnectingPin, pin.Module);
+                    ActivelyConnectingPin.ConnectSynthModule(pin);
                 }
                 else
                 {
@@ -264,7 +296,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                         return;
                     }
 
-                    pin.Module.ConnectSynthModule(pin, ActivelyConnectingPin.Module);
+                    pin.ConnectSynthModule(ActivelyConnectingPin);
                 }
 
                 ConnectionWires.Add(new ConnectionWire
@@ -289,8 +321,18 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
             if (pin != ActivelyDisconnectingPin)
             {
-
+                ActivelyDisconnectingPin = pin;
+                _connectionsFromActivelyDisconnectingPin =
+                    ConnectionWires.Where(x => x.InputConnection == pin || x.OutputConnection == pin).ToList();
+                _activelyDisconnectingWireIndex = 0;
             }
+            else
+            {
+                _activelyDisconnectingWireIndex = (_activelyDisconnectingWireIndex + 1) %
+                                                  _connectionsFromActivelyDisconnectingPin.Count;
+            }
+
+            ActivelyDisconnectingWire = _connectionsFromActivelyDisconnectingPin[_activelyDisconnectingWireIndex];
         }
 
         #endregion

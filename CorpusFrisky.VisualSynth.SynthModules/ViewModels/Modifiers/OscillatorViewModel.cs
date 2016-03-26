@@ -128,6 +128,10 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
             base.DisconnectSynthModule(pin, module);
         }
 
+        protected override void ToggleConnectedModule(ConnectedModule connectedModule, bool adding)
+        {
+        }
+
         #endregion
 
         #region  IPropertyModifierModule

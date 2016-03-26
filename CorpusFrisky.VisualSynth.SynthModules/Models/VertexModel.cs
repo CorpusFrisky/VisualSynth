@@ -90,12 +90,14 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
 
         public void ApplyModifiers()
         {
-            if (_propertyModifiers.ContainsKey(PinTagetPropertyEnum.Position))
+            if (_propertyModifiers.ContainsKey(PinTagetPropertyEnum.Position) &&
+                _propertyModifiers[PinTagetPropertyEnum.Position].Any())
             {
                 ApplyPositionModifiers();                
             }
 
-            if (_propertyModifiers.ContainsKey(PinTagetPropertyEnum.Color))
+            if (_propertyModifiers.ContainsKey(PinTagetPropertyEnum.Color) &&
+                _propertyModifiers[PinTagetPropertyEnum.Color].Any())
             {
                 ApplyColorModifiers();
             }

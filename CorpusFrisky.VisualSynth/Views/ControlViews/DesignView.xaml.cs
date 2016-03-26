@@ -37,5 +37,13 @@ namespace CorpusFrisky.VisualSynth.Views.ControlViews
             var point = e.GetPosition(DesignCanvas);
             ViewModel.CurrentMousePos = new Point((int) point.X, (int) point.Y);
         }
+
+        private void DesignCanvas_OnContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            if (e.OriginalSource != DesignCanvas)
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

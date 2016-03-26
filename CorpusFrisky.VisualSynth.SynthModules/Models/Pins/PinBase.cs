@@ -35,7 +35,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
             //get { return new Point(0, 10 + (PinIndex * 20)); }
         }
 
-        public virtual bool ConnectSynthModule(PinBase pin, ISynthModule module)
+        public virtual bool ConnectSynthModule(PinBase pin)
         {
             if (!CanConnect(pin))
             {
@@ -43,15 +43,17 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
             }
 
             ConnectedPins.Add(pin);
+            pin.ConnectedPins.Add(this);
             
-            return Module.ConnectSynthModule(pin, module);
+            return Module.ConnectSynthModule(this, pin.Module);
         }
 
-        public virtual void DisconnectSynthModule(PinBase pin, ISynthModule module)
+        public virtual void DisconnectSynthModule(PinBase pin)
         {
             ConnectedPins.Remove(pin);
+            pin.ConnectedPins.Remove(this);
 
-            Module.DisconnectSynthModule(pin, module);
+            Module.DisconnectSynthModule(this, pin.Module);
         }
 
         protected virtual bool CanConnect(PinBase pin)

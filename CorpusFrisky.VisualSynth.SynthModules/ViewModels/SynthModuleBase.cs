@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
@@ -9,7 +10,7 @@ using Microsoft.Practices.Prism.Mvvm;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 {
-    public class SynthModuleBase : BindableBase, ISynthModule
+    public abstract class SynthModuleBase : BindableBase, ISynthModule
     {
         private ObservableCollection<ConnectedModule> _connectedModules;
 
@@ -73,7 +74,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 
         public virtual void DisconnectSynthModule(PinBase pin, ISynthModule module)
         {
-            pin.DisconnectSynthModule(pin, module);
+            var moduleToRemove = ConnectedModules.First(x => x.Pin == pin && x.Module == module);
+            ConnectedModules.Remove(moduleToRemove);
         }
 
         protected virtual void OnConnectedModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -95,9 +97,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
             }
         }
 
-        protected virtual void ToggleConnectedModule(ConnectedModule connectedModule, bool adding)
-        {
-            throw new NotImplementedException();
-        }
+        protected abstract void ToggleConnectedModule(ConnectedModule connectedModule, bool adding);
     }
 }

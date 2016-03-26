@@ -16,6 +16,7 @@
         <Canvas x:Name="DesignCanvas"
                 Background="Gray"
                 MouseRightButtonDown="SetDesignPos"
+                ContextMenuService.ContextMenuOpening="DesignCanvas_OnContextMenuOpening"
                 MouseMove="SetMousePos">
 
             <i:Interaction.Triggers>
@@ -23,6 +24,10 @@
                     <helpers:InvokeDelegateCommandAction
                                                     Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.HandleLeftClickCommand}"/>
                 </i:EventTrigger>
+                <!--<i:EventTrigger EventName="MouseRightButtonDown">
+                    <helpers:InvokeDelegateCommandAction
+                        Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.HandleRightClickCommand}"/>
+                </i:EventTrigger>-->
             </i:Interaction.Triggers>
 
             <Canvas.ContextMenu>
@@ -80,6 +85,7 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Button Background="Black"
                                                     Height="10" Width="10"
+                                                    ContextMenuService.IsEnabled="False"
                                                     Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.PinLeftClickedCommand}"
                                                     CommandParameter="{Binding}">
                                                 <i:Interaction.Triggers>
@@ -122,6 +128,7 @@
                                                        Foreground="White"/>
                                             <Button Background="Black"
                                                     Height="10" Width="10"
+                                                    ContextMenuService.IsEnabled="False"
                                                     Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.PinLeftClickedCommand}"
                                                     CommandParameter="{Binding}">
                                                 <i:Interaction.Triggers>
@@ -164,8 +171,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Line Stroke="Black"
-                              StrokeThickness="1"
+                        <Line StrokeThickness="1"
                               IsHitTestVisible="False"
                               X1="{Binding Pin1Pos.X}"
                               Y1="{Binding Pin1Pos.Y}"
@@ -173,6 +179,9 @@
                               Y2="{Binding Pin2Pos.Y}">
                             <Line.Style>
                                 <Style TargetType="Line">
+                                    <Style.Setters>
+                                        <Setter Property="Stroke" Value="Black"/>
+                                    </Style.Setters>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
                                             <DataTrigger.Setters>
