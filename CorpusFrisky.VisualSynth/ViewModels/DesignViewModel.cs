@@ -280,27 +280,38 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             {
                 if (ActivelyConnectingPin.IsInput)
                 {
-                    if (pin.IsInput)
+                    var inputPin = ActivelyConnectingPin as InputPin;
+                    var outputPin = pin as OutputPin;
+
+                    if (inputPin == null ||
+                        outputPin == null || 
+                        pin.IsInput)
                     {
                         return;
                     }
 
-                    ActivelyConnectingPin.ConnectSynthModule(pin);
+                    inputPin.ConnectSynthModule(outputPin);
                 }
                 else
                 {
-                    if (!pin.IsInput)
+                    var inputPin = pin as InputPin;
+                    var outputPin = ActivelyConnectingPin as OutputPin;
+
+                    if (inputPin == null ||
+                        outputPin == null ||
+                        !pin.IsInput)
                     {
                         return;
                     }
 
-                    pin.ConnectSynthModule(ActivelyConnectingPin);
+                    inputPin.ConnectSynthModule(outputPin);
                 }
 
                 ConnectionWires.Add(new ConnectionWire
                 {
-                    OutputConnection = ActivelyConnectingPin.IsInput ? pin : ActivelyConnectingPin,
-                    InputConnection = ActivelyConnectingPin.IsInput ? ActivelyConnectingPin : pin,
+                    //TODO: Do we still need IsInput now that I've create InputePint and OutputPin??? (Yes, InputePint)
+                    OutputConnection = (ActivelyConnectingPin.IsInput ? pin : ActivelyConnectingPin) as OutputPin,
+                    InputConnection = (ActivelyConnectingPin.IsInput ? ActivelyConnectingPin : pin) as InputPin,
                     Pin1Pos = GetPinCenterPos(ActivelyConnectingPin),
                     Pin2Pos = GetPinCenterPos(pin)
                 });

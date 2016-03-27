@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
 {
-    public class OutputValuePin : PinBase
+    public class OutputValuePin : OutputPin
     {
         public override bool IsInput { get { return false; } }
 
@@ -16,6 +16,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
             }
         }
 
-        public Func<double> GetValue_Function { get; set; }
+        public override Func<double> GetValue_Function { get; set; }
     }
 }

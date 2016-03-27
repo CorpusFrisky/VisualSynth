@@ -17,9 +17,9 @@ namespace CorpusFrisky.VisualSynth.Models
             IsDeletionTarget = false;
         }
 
-        public PinBase OutputConnection { get; set; }
+        public OutputPin OutputConnection { get; set; }
 
-        public PinBase InputConnection { get; set; }
+        public InputPin InputConnection { get; set; }
 
         public Point Pin1Pos
         {

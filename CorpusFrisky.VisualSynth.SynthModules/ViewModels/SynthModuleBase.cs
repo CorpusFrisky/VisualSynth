@@ -61,7 +61,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
             throw new System.NotImplementedException();
         }
 
-        public virtual bool ConnectSynthModule(PinBase inputPin, PinBase outputPin)
+        public virtual bool ConnectSynthModule(InputPin inputPin, OutputPin outputPin)
         {
             ConnectedModules.Add(new PinConnection
             {
@@ -72,7 +72,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
             return true;
         }
 
-        public virtual void DisconnectSynthModule(PinBase inputPin, PinBase outputPin)
+        public virtual void DisconnectSynthModule(InputPin inputPin, OutputPin outputPin)
         {
             var moduleToRemove = ConnectedModules.First(x => x.InputPin == inputPin && x.OutputPin == outputPin);
             ConnectedModules.Remove(moduleToRemove);

@@ -12,8 +12,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Interfaces
         void Render();
         void PostRender();
 
-        bool ConnectSynthModule(PinBase inputPin, PinBase outputPin);
-        void DisconnectSynthModule(PinBase inputPin, PinBase outputPin);
+        bool ConnectSynthModule(InputPin inputPin, OutputPin outputPin);
+        void DisconnectSynthModule(InputPin inputPin, OutputPin outputPin);
 
 
         SynthModuleType ModuleType { get; }

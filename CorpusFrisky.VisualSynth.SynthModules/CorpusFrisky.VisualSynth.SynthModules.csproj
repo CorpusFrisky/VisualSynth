@@ -119,6 +119,8 @@
     <Compile Include="Interfaces\ISynthModule.cs" />
     <Compile Include="Models\PinConnection.cs" />
     <Compile Include="Models\Enums\PinTagetPropertyEnum.cs" />
+    <Compile Include="Models\Pins\InputPin.cs" />
+    <Compile Include="Models\Pins\OutputPin.cs" />
     <Compile Include="Models\Pins\OutputValuePin.cs" />
     <Compile Include="Models\Pins\InputValuePin.cs" />
     <Compile Include="ViewModels\Modifiers\OscillatorViewModel.cs" />

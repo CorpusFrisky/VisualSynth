@@ -112,7 +112,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
 
         }
 
-        public override bool ConnectSynthModule(PinBase inputPin, PinBase outputPin)
+        public override bool ConnectSynthModule(InputPin inputPin, OutputPin outputPin)
         {
             if (!base.ConnectSynthModule(inputPin, outputPin))
             {
@@ -122,7 +122,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
             return true;
         }
 
-        public override void DisconnectSynthModule(PinBase inputPin, PinBase outputPin)
+        public override void DisconnectSynthModule(InputPin inputPin, OutputPin outputPin)
         {
             base.DisconnectSynthModule(inputPin, outputPin);
         }

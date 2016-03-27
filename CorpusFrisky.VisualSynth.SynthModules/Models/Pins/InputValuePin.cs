@@ -4,7 +4,7 @@ using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
 {
-    public class InputValuePin : PinBase
+    public class InputValuePin : InputPin
     {
         public object TargetObject { get; set; }
 
