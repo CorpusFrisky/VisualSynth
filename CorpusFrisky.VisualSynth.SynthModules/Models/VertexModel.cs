@@ -33,7 +33,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
             set
             {
                 SetProperty(ref _position, value);
-                ModifiedPosition = new Vector3(_position);
+                ApplyModifiers();
             }
         }
 
@@ -43,7 +43,37 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models
             set
             {
                 SetProperty(ref _color, value);
-                ModifiedColor = new Color4(_color.R, _color.G, _color.B, _color.A);
+                ApplyModifiers();
+            }
+        }
+
+        public float X
+        {
+            get { return Position.X; }
+            set
+            {
+                _position.X = value;
+                OnPropertyChanged("Position");
+            }
+        }
+
+        public float Y
+        {
+            get { return Position.Y; }
+            set
+            {
+                _position.Y = value;
+                OnPropertyChanged("Position");
+            }
+        }
+
+        public float Z
+        {
+            get { return Position.Z; }
+            set
+            {
+                _position.Z = value;
+                OnPropertyChanged("Position");
             }
         }
 

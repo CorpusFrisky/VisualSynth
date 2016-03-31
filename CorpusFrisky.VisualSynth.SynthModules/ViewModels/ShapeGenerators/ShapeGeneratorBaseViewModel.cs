@@ -20,6 +20,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
     {
         protected bool ConstructionValidated;
         private ObservableCollection<VertexModel> _vertices;
+        private Vector3 _center;
 
 
         public ShapeGeneratorBaseViewModel(IEventAggregator eventAggregator)
@@ -56,7 +57,41 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
         }
 
 
-        public Vector3 Center { get; set; }
+        public Vector3 Center
+        {
+            get { return _center; }
+            set { SetProperty(ref _center, value); }
+        }
+        
+        public float X
+        {
+            get { return Center.X; }
+            set
+            {
+                _center.X = value;
+                OnPropertyChanged("Center");
+            }
+        }
+
+        public float Y
+        {
+            get { return Center.Y; }
+            set
+            {
+                _center.Y = value;
+                OnPropertyChanged("Center");
+            }
+        }
+
+        public float Z
+        {
+            get { return Center.Z; }
+            set
+            {
+                _center.Z = value;
+                OnPropertyChanged("Center");
+            }
+        }
 
         public override SynthModuleType ModuleType
         {
