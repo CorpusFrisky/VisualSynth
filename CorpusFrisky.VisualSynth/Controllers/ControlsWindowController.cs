@@ -75,15 +75,15 @@ namespace CorpusFrisky.VisualSynth.Controllers
             {
                 case SynthModuleType.TriangleGenerator:
                     view = ComponentContext.Resolve<ShapeGeneratorView>();
-                    view.DataContext = ComponentContext.Resolve<TriangleGeneratorViewModel>();
+                    view.DataContext = module as TriangleGeneratorViewModel;
                     break;
                 case SynthModuleType.RectangleGenerator:
                     view = ComponentContext.Resolve<ShapeGeneratorView>();
-                    view.DataContext = ComponentContext.Resolve<RectangleGeneratorViewModel>();
+                    view.DataContext = module as RectangleGeneratorViewModel;
                     break;
                 case SynthModuleType.Oscillator:
                     view = ComponentContext.Resolve<OscillatorView>();
-                    view.DataContext = ComponentContext.Resolve<OscillatorViewModel>();
+                    view.DataContext = module as OscillatorViewModel;
                     break;
                 default:
                     return null;

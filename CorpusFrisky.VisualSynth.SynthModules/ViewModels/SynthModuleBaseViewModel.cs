@@ -7,15 +7,18 @@ using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.Prism.PubSubEvents;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 {
-    public abstract class SynthModuleBase : BindableBase, ISynthModule
+    public abstract class SynthModuleBaseViewModel : BindableBase, ISynthModule
     {
         private ObservableCollection<PinConnection> _connectedModules;
 
-        public SynthModuleBase()
+        public SynthModuleBaseViewModel(IEventAggregator eventAggregator)
         {
+            EventAggregator = eventAggregator;
+
             InputPins = new ObservableCollection<PinBase>();
             OutputPins = new ObservableCollection<PinBase>();
             ConnectedModules = new ObservableCollection<PinConnection>();
@@ -28,6 +31,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
         }
 
         #region Properties 
+
+        public IEventAggregator EventAggregator { get; private set; }
 
         public virtual SynthModuleType ModuleType { get { return SynthModuleType.Unknown; } }
         public ObservableCollection<PinBase> InputPins { get; set; }

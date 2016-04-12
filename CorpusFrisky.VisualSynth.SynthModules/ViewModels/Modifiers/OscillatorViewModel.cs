@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
 {
-    public class OscillatorViewModel : SynthModuleBase, IModifierModule
+    public class OscillatorViewModel : SynthModuleBaseViewModel, IModifierModule
     {
         private const int TableLength = 1000;
         private static double[] _sinTable;
@@ -31,10 +31,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
             SampleAndHold
         }
 
-        public OscillatorViewModel(IEventAggregator eventAggregator)
+        public OscillatorViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
-            EventAggregator = eventAggregator;
-
             _index = 0;
             InputPins = new ObservableCollection<PinBase>();
             OutputPins = new ObservableCollection<PinBase>();
@@ -58,9 +56,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
         }
 
         #region Properties
-
-        public IEventAggregator EventAggregator { get; private set; }
-
 
         public double Rate
         {

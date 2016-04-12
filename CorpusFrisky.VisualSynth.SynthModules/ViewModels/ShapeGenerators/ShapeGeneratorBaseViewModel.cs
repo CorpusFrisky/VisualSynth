@@ -16,16 +16,15 @@ using OpenTK.Graphics;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 {
-    public class ShapeGeneratorBaseViewModel : SynthModuleBase
+    public class ShapeGeneratorBaseViewModel : SynthModuleBaseViewModel
     {
         protected bool ConstructionValidated;
         private ObservableCollection<VertexModel> _vertices;
         private Vector3 _center;
 
 
-        public ShapeGeneratorBaseViewModel(IEventAggregator eventAggregator)
+        public ShapeGeneratorBaseViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
-            EventAggregator = eventAggregator;
 
             Center = new Vector3(0);
             Vertices = new ObservableCollection<VertexModel>();
@@ -48,14 +47,11 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
         
         #region Properties
 
-        public IEventAggregator EventAggregator { get; private set; }
-
         public ObservableCollection<VertexModel> Vertices
         {
             get { return _vertices; }
             set { SetProperty(ref _vertices, value); }
         }
-
 
         public Vector3 Center
         {
