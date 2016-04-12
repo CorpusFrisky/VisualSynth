@@ -14,6 +14,8 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
 using CorpusFrisky.VisualSynth.SynthModules.Views.Modifiers;
 
 namespace CorpusFrisky.VisualSynth.Controllers
@@ -66,34 +68,28 @@ namespace CorpusFrisky.VisualSynth.Controllers
             RegionManager.RegisterViewWithRegion(RegionNames.LeftControlRegion, () => view);
         }
 
-        private object GetViewForModule(ISynthModule module)
+        private UserControl GetViewForModule(ISynthModule module)
         {
-            Type viewType;
+            UserControl view = null;
             switch (module.ModuleType)
             {
                 case SynthModuleType.TriangleGenerator:
-                    viewType = typeof(TriangleGeneratorView);
+                    view = ComponentContext.Resolve<ShapeGeneratorView>();
+                    view.DataContext = ComponentContext.Resolve<TriangleGeneratorViewModel>();
                     break;
                 case SynthModuleType.RectangleGenerator:
-                    viewType = typeof(RectangleGeneratorView);
+                    view = ComponentContext.Resolve<ShapeGeneratorView>();
+                    view.DataContext = ComponentContext.Resolve<RectangleGeneratorViewModel>();
                     break;
                 case SynthModuleType.Oscillator:
-                    viewType = typeof(OscillatorView);
+                    view = ComponentContext.Resolve<OscillatorView>();
+                    view.DataContext = ComponentContext.Resolve<OscillatorViewModel>();
                     break;
                 default:
                     return null;
             }
 
-            MethodInfo resolveMethod = AutoFacResExtenionsType.GetMethod("Resolve", new[] { typeof(IComponentContext), typeof(Parameter[]) })
-                                                              .MakeGenericMethod(viewType);
-
-            var moduleView = resolveMethod.Invoke(this, 
-                                                   new object[] {  ComponentContext,
-                                                                   new Parameter[] {new TypedParameter(typeof(ISynthModule),
-                                                                                    module) }
-                                                                });
-
-            return moduleView;
+            return view;
         }
     }
 }

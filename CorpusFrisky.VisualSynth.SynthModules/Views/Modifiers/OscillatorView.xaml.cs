@@ -29,10 +29,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Views.Modifiers
             set { DataContext = value; }
         }
 
-        public OscillatorView(ISynthModule viewModel)
+        public OscillatorView()
         {
             InitializeComponent();
-            ViewModel = viewModel as OscillatorViewModel;
         }
     }
 }

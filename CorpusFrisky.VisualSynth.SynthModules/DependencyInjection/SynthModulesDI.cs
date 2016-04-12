@@ -13,10 +13,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.DependencyInjection
         {
             base.Load(builder);
             builder.RegisterType<TriangleGeneratorViewModel>().AsSelf();
-            builder.RegisterType<TriangleGeneratorView>().AsSelf();
-
             builder.RegisterType<RectangleGeneratorViewModel>().AsSelf();
-            builder.RegisterType<RectangleGeneratorView>().AsSelf();
+            builder.RegisterType<ShapeGeneratorView>().AsSelf();
 
             builder.RegisterType<OscillatorViewModel>().AsSelf();
             builder.RegisterType<OscillatorView>().AsSelf();

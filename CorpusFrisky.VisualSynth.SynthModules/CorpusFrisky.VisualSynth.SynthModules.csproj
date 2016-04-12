@@ -134,11 +134,8 @@
     <Compile Include="Views\Modifiers\OscillatorView.xaml.cs">
       <DependentUpon>OscillatorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ShapeGenerators\RectangleGeneratorView.xaml.cs">
-      <DependentUpon>RectangleGeneratorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ShapeGenerators\TriangleGeneratorView.xaml.cs">
-      <DependentUpon>TriangleGeneratorView.xaml</DependentUpon>
+    <Compile Include="Views\ShapeGenerators\ShapeGeneratorView.xaml.cs">
+      <DependentUpon>ShapeGeneratorView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -156,11 +153,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ShapeGenerators\RectangleGeneratorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ShapeGenerators\TriangleGeneratorView.xaml">
+    <Page Include="Views\ShapeGenerators\ShapeGeneratorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
