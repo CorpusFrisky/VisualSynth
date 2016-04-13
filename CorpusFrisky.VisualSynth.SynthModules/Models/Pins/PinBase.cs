@@ -1,9 +1,8 @@
-﻿using System;
+﻿using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
+using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Documents;
-using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
-using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
 {
@@ -27,7 +26,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
             get { throw new NotImplementedException(); }
         }
 
-        public PinTypeEnum PinType { get; set; }
+        public virtual PinTypeEnum PinType { get; set; }
 
         public virtual Point PinDesignPos
         {

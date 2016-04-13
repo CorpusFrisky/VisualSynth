@@ -1,9 +1,17 @@
-﻿using System;
+﻿using CorpusFrisky.VisualSynth.Common;
+using System.Drawing;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
 {
     public abstract class OutputPin : PinBase
     {
-        public abstract Func<double> GetValue_Function { get; set; }
+        public override Point PinDesignPos
+        {
+            get
+            {
+                return new Point(DesignConstants.ModuleBodyWidth + DesignConstants.PinWidth, DesignConstants.PinsPadding + (PinIndex * (DesignConstants.PinHeight + DesignConstants.PinMargin)));
+            }
+        }
+
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
+﻿using CorpusFrisky.VisualSynth.Common;
+using System.Drawing;
+
+namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
 {
     public class InputPin : PinBase
     {
@@ -21,6 +24,14 @@
             pin.ConnectedPins.Remove(this);
 
             Module.DisconnectSynthModule(this, pin);
-        } 
+        }
+
+        public override Point PinDesignPos
+        {
+            get
+            {
+                return new Point(0, DesignConstants.PinsPadding + (PinIndex * (DesignConstants.PinHeight + DesignConstants.PinMargin)));
+            }
+        }
     }
 }

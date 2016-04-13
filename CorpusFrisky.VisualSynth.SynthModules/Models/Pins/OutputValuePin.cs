@@ -1,6 +1,4 @@
-﻿using CorpusFrisky.VisualSynth.Common;
-using System;
-using System.Drawing;
+﻿using System;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
 {
@@ -8,14 +6,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
     {
         public override bool IsInput { get { return false; } }
 
-        public override Point PinDesignPos
-        {
-            get
-            {
-                return new Point(DesignConstants.ModuleBodyWidth + DesignConstants.PinWidth, DesignConstants.PinsPadding + (PinIndex * (DesignConstants.PinHeight + DesignConstants.PinMargin)));
-            }
-        }
-
-        public override Func<double> GetValue_Function { get; set; }
+        public Func<double> GetValue_Function { get; set; }
     }
 }

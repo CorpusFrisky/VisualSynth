@@ -43,7 +43,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
             base.Initialize();
 
             SetupPins();
-
         }
 
         public static void InitOscillatorTables()

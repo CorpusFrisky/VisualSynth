@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Windows.Forms;
-using CorpusFrisky.VisualSynth.Common;
+﻿using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.Events;
-using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
-using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using OpenTK;
 using OpenTK.Graphics;
+using System;
+using System.Collections.ObjectModel;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 {
@@ -28,9 +23,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
             Center = new Vector3(0);
             Vertices = new ObservableCollection<VertexModel>();
-            
-            
-
             ConstructionValidated = false;
         }
 
@@ -123,7 +115,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
                     PinType = PinTypeEnum.Value,
                     TargetObject = vertex,
                     TargetType = PinTargetTypeEnum.Vertex,
-                    TargetProperty = PinTagetPropertyEnum.Color
+                    TargetProperty = PinTargetPropertyEnum.Color
                 });
 
                 inputPinIndex++;
@@ -136,7 +128,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
                     PinType = PinTypeEnum.Value,
                     TargetObject = vertex,
                     TargetType = PinTargetTypeEnum.Vertex,
-                    TargetProperty = PinTagetPropertyEnum.Position
+                    TargetProperty = PinTargetPropertyEnum.Position
                 });
 
                 inputPinIndex++;
@@ -204,8 +196,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
             SetupPins();
         }
 
-        
-
         protected override void ToggleConnectedModule(PinConnection pinConnection, bool adding)
         {
             var pin = pinConnection.InputPin;
@@ -217,7 +207,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
                     ToggleInputValueModule(pinConnection, adding);
                    
                 }
-                else if (pin.PinType == PinTypeEnum.Frame)
+                else if (pin.PinType == PinTypeEnum.Image)
                 {
                     
                 }

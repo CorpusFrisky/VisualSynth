@@ -3,7 +3,9 @@
     public enum PinTypeEnum
     {
         Value,
-        Frame
+        Image,
+        CommandList,
+        Hybrid
     }
 
     public enum PinTargetTypeEnum
@@ -11,7 +13,7 @@
         Vertex
     }
 
-    public enum PinTagetPropertyEnum
+    public enum PinTargetPropertyEnum
     {
         Color,
         Position,
