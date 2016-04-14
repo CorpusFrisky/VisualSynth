@@ -1,7 +1,9 @@
 ﻿using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.Models;
+using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
 using Microsoft.Practices.Prism.Commands;
@@ -53,6 +55,19 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             _connectionsFromActivelyDisconnectingPin = new List<ConnectionWire>();
 
             SubscribeToEvents();
+
+            SetupOutputModule();
+           
+        }
+
+        private void SetupOutputModule()
+        {
+            //TODO: put control window dimensions in design constants
+            //TODO: handle window resizing
+            var pos = new Point(350, 450);
+            var outputViewModel = new OutputViewModel(_eventAggregator);
+
+            AddAndInitializeModule(outputViewModel, pos);
         }
 
         private void SubscribeToEvents()
@@ -190,17 +205,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
                            };
 
-            SynthComponents.Add(new SynthComponentModel
-                                {
-                                    DesignPos = CurrentDesignPos,
-                                    Module = triangle
-                                });
-            triangle.Initialize();
-
-            _eventAggregator.GetEvent<ModuleAddedOrClickedEvent>().Publish(new ModuleAddedOrClickedEventArgs
-                                                                  {
-                                                                      Module = triangle
-                                                                  });
+            AddAndInitializeModule(triangle);
         }
 
         private void AddRectangle()
@@ -211,17 +216,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                                 Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
                             };
 
-            SynthComponents.Add(new SynthComponentModel
-                                {
-                                    DesignPos = CurrentDesignPos,
-                                    Module = rectangle
-                                });
-            rectangle.Initialize();
-
-            _eventAggregator.GetEvent<ModuleAddedOrClickedEvent>().Publish(new ModuleAddedOrClickedEventArgs
-                                                                  {
-                                                                      Module = rectangle
-                                                                  });
+            AddAndInitializeModule(rectangle);
         }
 
         private void AddOscillator()
@@ -231,17 +226,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                 Rate = 1.0,
             };
 
-            SynthComponents.Add(new SynthComponentModel
-            {
-                DesignPos = CurrentDesignPos,
-                Module = oscillator
-            });
-            oscillator.Initialize();
-
-            _eventAggregator.GetEvent<ModuleAddedOrClickedEvent>().Publish(new ModuleAddedOrClickedEventArgs
-            {
-                Module = oscillator
-            });
+            AddAndInitializeModule(oscillator);
         }
 
         private void HandleModuleLeftClick(SynthComponentModel componentModel)
@@ -362,6 +347,24 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         #endregion
 
         #region Helper Methods
+
+        void AddAndInitializeModule(ISynthModule module, Point? position = null)
+        {
+            SynthComponents.Add(new SynthComponentModel()
+            {
+                DesignPos = position ?? CurrentDesignPos,
+                Module = module
+            });
+
+            //TODO: C'mon, man
+            //Init has to be called afterwards...can't really remember why.
+            module.Initialize();
+
+            _eventAggregator.GetEvent<ModuleAddedOrClickedEvent>().Publish(new ModuleAddedOrClickedEventArgs
+            {
+                Module = module
+            });
+        }
 
         Point GetPinCenterPos(PinBase pin)
         {

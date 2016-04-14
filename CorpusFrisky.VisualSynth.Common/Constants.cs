@@ -10,6 +10,8 @@
 
     public enum SynthModuleType
     {
+        Output,
+
         TriangleGenerator,
         RectangleGenerator,
 

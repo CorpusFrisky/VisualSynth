@@ -7,6 +7,7 @@ using Microsoft.Practices.Prism.PubSubEvents;
 using OpenTK;
 using OpenTK.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
@@ -134,6 +135,12 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
                 inputPinIndex++;
                 vertexNumber++;
             }
+
+            OutputPins.Add(new OutputHybridPin()
+            {
+                CommandListOutput = new List<Action>() { Render },
+                IsOutputRendered = false
+            });
 
             EventAggregator.GetEvent<PinSetupCompleteEvent>().Publish(new PinSetupCompleteEventArgs
             {

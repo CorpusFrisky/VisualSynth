@@ -1,9 +1,8 @@
-﻿using System;
-using System.Drawing;
-using CorpusFrisky.VisualSynth.Common;
-using CorpusFrisky.VisualSynth.SynthModules;
+﻿using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using Microsoft.Practices.Prism.Mvvm;
+using System;
+using System.Drawing;
 
 namespace CorpusFrisky.VisualSynth.Models
 {

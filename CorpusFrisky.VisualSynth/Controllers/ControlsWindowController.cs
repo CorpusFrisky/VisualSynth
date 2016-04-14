@@ -14,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
 using CorpusFrisky.VisualSynth.SynthModules.Views.Modifiers;
@@ -73,6 +74,10 @@ namespace CorpusFrisky.VisualSynth.Controllers
             UserControl view = null;
             switch (module.ModuleType)
             {
+                case SynthModuleType.Output:
+                    view = ComponentContext.Resolve<OutputView>();
+                    view.DataContext = module as OutputViewModel;
+                    break;
                 case SynthModuleType.TriangleGenerator:
                     view = ComponentContext.Resolve<ShapeGeneratorView>();
                     view.DataContext = module as TriangleGeneratorViewModel;

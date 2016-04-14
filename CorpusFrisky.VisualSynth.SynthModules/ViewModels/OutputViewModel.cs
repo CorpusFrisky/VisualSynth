@@ -4,12 +4,13 @@ using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System.Collections.ObjectModel;
+using CorpusFrisky.VisualSynth.Common;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 {
-    public class OutputModuleViewModel : SynthModuleBaseViewModel
+    public class OutputViewModel : SynthModuleBaseViewModel
     {
-        public OutputModuleViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        public OutputViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
             InputPins = new ObservableCollection<PinBase>();
             OutputPins = new ObservableCollection<PinBase>();
@@ -21,6 +22,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 
             SetupPins();
         }
+
+        
 
         protected override void SetupPins()
         {
@@ -39,12 +42,34 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 
         public OutputHybridPin RenderSource { get; set; }
 
+        public override SynthModuleType ModuleType { get { return SynthModuleType.Output; } }
+
+        public override void PreRender()
+        {
+        }
+
         public override void Render()
         {
+            if (RenderSource == null)
+            {
+                return;
+            }
+
             if (RenderSource.IsOutputRendered)
             {
                 
             }
+            else
+            {
+                foreach (var command in RenderSource.CommandListOutput)
+                {
+                    command.Invoke();
+                }
+            }
+        }
+
+        public override void PostRender()
+        {
         }
 
         protected override void ToggleConnectedModule(PinConnection pinConnection, bool adding)

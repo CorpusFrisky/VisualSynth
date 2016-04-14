@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using CorpusFrisky.VisualSynth.Common;
+using CorpusFrisky.VisualSynth.Models;
+using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels;
+using CorpusFrisky.VisualSynth.ViewModels;
+using OpenTK.Graphics.OpenGL;
+using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Forms;
-using CorpusFrisky.VisualSynth.Common;
-using CorpusFrisky.VisualSynth.Models;
-using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
-using CorpusFrisky.VisualSynth.ViewModels;
-using OpenTK.Graphics.OpenGL;
 using Timer = System.Timers.Timer;
 
 namespace CorpusFrisky.VisualSynth.Views.Windows
@@ -51,10 +52,7 @@ namespace CorpusFrisky.VisualSynth.Views.Windows
 
             PreRenderModules(synthComponenets);
 
-            foreach (var component in _designViewModel.SynthComponents)
-            {
-                component.Module.Render();
-            }
+            RenderModules(synthComponenets);
 
             foreach (var component in _designViewModel.SynthComponents)
             {
@@ -79,6 +77,13 @@ namespace CorpusFrisky.VisualSynth.Views.Windows
             {
                 module.PreRender();
             }
+        }
+
+        private void RenderModules(List<SynthComponentModel> synthComponenets)
+        {
+            //Let's try recursive rendering from output module, see how it works.
+            var outputModule = (synthComponenets.First(x => x.Module is OutputViewModel).Module) as OutputViewModel;
+            outputModule.Render();
         }
     }
 }

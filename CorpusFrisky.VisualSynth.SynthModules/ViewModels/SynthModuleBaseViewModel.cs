@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
-using CorpusFrisky.VisualSynth.Common;
+﻿using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 {
@@ -32,7 +31,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 
         #region Properties 
 
-        public IEventAggregator EventAggregator { get; private set; }
+        protected IEventAggregator EventAggregator { get; private set; }
 
         public virtual SynthModuleType ModuleType { get { return SynthModuleType.Unknown; } }
         public ObservableCollection<PinBase> InputPins { get; set; }
@@ -46,25 +45,13 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 
         #endregion
 
-        protected virtual void SetupPins()
-        {
-            throw new System.NotImplementedException();
-        }
+        protected abstract void SetupPins();
 
-        public virtual void PreRender()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract void PreRender();
 
-        public virtual void Render()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract void Render();
 
-        public virtual void PostRender()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract void PostRender();
 
         public virtual bool ConnectSynthModule(InputPin inputPin, OutputPin outputPin)
         {
