@@ -82,7 +82,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
                 {
 
                 }
-                else if (pin.PinType == PinTypeEnum.Hybrid)
+                else if (pin.PinType == PinTypeEnum.Hybrid ||
+                    pin.PinType == PinTypeEnum.CommandList ||
+                    pin.PinType == PinTypeEnum.Image)
                 {
                     ToggleInputImageModule(pinConnection, adding);
                 }
@@ -91,6 +93,12 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 
         private void ToggleInputImageModule(PinConnection pinConnection, bool adding)
         {
+            if (!adding)
+            {
+                RenderSource = null;
+                return;
+            }
+
             var inputPin = pinConnection.InputPin as InputHybridPin;
             var outputPin = pinConnection.OutputPin as OutputHybridPin;
 

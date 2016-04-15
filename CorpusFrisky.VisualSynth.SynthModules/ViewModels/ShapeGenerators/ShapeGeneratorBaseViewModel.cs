@@ -138,6 +138,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
 
             OutputPins.Add(new OutputHybridPin()
             {
+                Module = this,
                 CommandListOutput = new List<Action>() { Render },
                 IsOutputRendered = false
             });
