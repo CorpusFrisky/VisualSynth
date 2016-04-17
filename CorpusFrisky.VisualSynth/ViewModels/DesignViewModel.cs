@@ -5,7 +5,6 @@ using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
-using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -15,6 +14,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators;
 
 namespace CorpusFrisky.VisualSynth.ViewModels
 {

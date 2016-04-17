@@ -130,17 +130,18 @@
     <Compile Include="Models\VertexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\OutputViewModel.cs" />
-    <Compile Include="ViewModels\ShapeGenerators\ShapeGeneratorBaseViewModel.cs" />
-    <Compile Include="ViewModels\ShapeGenerators\RectangleGeneratorViewModel.cs" />
-    <Compile Include="ViewModels\ShapeGenerators\TriangleGeneratorViewModel.cs" />
+    <Compile Include="ViewModels\Generators\ShapeGeneratorBaseViewModel.cs" />
+    <Compile Include="ViewModels\Generators\RectangleGeneratorViewModel.cs" />
+    <Compile Include="ViewModels\Generators\TriangleGeneratorViewModel.cs" />
     <Compile Include="ViewModels\SynthModuleBaseViewModel.cs" />
+    <Compile Include="ViewModels\Utility\SummerViewModel.cs" />
     <Compile Include="Views\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Modifiers\OscillatorView.xaml.cs">
       <DependentUpon>OscillatorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ShapeGenerators\ShapeGeneratorView.xaml.cs">
+    <Compile Include="Views\Generators\ShapeGeneratorView.xaml.cs">
       <DependentUpon>ShapeGeneratorView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -163,7 +164,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ShapeGenerators\ShapeGeneratorView.xaml">
+    <Page Include="Views\Generators\ShapeGeneratorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
-using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Views.Modifiers
 {

@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
-using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
+using CorpusFrisky.VisualSynth.SynthModules.Views.Generators;
 using CorpusFrisky.VisualSynth.SynthModules.Views.Modifiers;
-using CorpusFrisky.VisualSynth.SynthModules.Views.ShapeGenerators;
-using TriangleGeneratorViewModel = CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators.TriangleGeneratorViewModel;
+using TriangleGeneratorViewModel = CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators.TriangleGeneratorViewModel;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.DependencyInjection
 {

@@ -1,4 +1,7 @@
-﻿using CorpusFrisky.VisualSynth.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
@@ -6,11 +9,8 @@ using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using Microsoft.Practices.Prism.PubSubEvents;
 using OpenTK;
 using OpenTK.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
-namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
+namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators
 {
     public class ShapeGeneratorBaseViewModel : SynthModuleBaseViewModel
     {
@@ -132,7 +132,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
                     TargetProperty = PinTargetPropertyEnum.Position
                 });
 
-                inputPinIndex++;
+                inputPinIndex++;    
                 vertexNumber++;
             }
 

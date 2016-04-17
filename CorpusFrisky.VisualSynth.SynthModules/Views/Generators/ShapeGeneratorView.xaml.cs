@@ -1,8 +1,7 @@
-﻿using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
-using System.Windows.Controls;
-using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
+﻿using System.Windows.Controls;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators;
 
-namespace CorpusFrisky.VisualSynth.SynthModules.Views.ShapeGenerators
+namespace CorpusFrisky.VisualSynth.SynthModules.Views.Generators
 {
     public partial class ShapeGeneratorView : UserControl
     {

@@ -1,10 +1,10 @@
-﻿using CorpusFrisky.VisualSynth.Events;
+﻿using CorpusFrisky.VisualSynth.Common;
+using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System.Collections.ObjectModel;
-using CorpusFrisky.VisualSynth.Common;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 {
@@ -31,7 +31,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
             {
                 Module = this,
                 PinIndex = 0,
-                Label = "Input"
+                Label = "Input",
+                PinType = PinTypeEnum.Hybrid
             });
 
             EventAggregator.GetEvent<PinSetupCompleteEvent>().Publish(new PinSetupCompleteEventArgs
@@ -76,35 +77,23 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
         {
             var pin = pinConnection.InputPin;
 
-            if (pin.IsInput)
+            if (pin.PinType == PinTypeEnum.Value)
             {
-                if (pin.PinType == PinTypeEnum.Value)
-                {
 
-                }
-                else if (pin.PinType == PinTypeEnum.Hybrid ||
-                    pin.PinType == PinTypeEnum.CommandList ||
-                    pin.PinType == PinTypeEnum.Image)
-                {
-                    ToggleInputImageModule(pinConnection, adding);
-                }
+            }
+            else if (pin.PinType == PinTypeEnum.Hybrid ||
+                     pin.PinType == PinTypeEnum.CommandList ||
+                     pin.PinType == PinTypeEnum.Image)
+            {
+                ToggleInputImageModule(pinConnection.OutputPin as OutputHybridPin, adding);
             }
         }
 
-        private void ToggleInputImageModule(PinConnection pinConnection, bool adding)
+        private void ToggleInputImageModule(OutputHybridPin outputPin, bool adding)
         {
             if (!adding)
             {
                 RenderSource = null;
-                return;
-            }
-
-            var inputPin = pinConnection.InputPin as InputHybridPin;
-            var outputPin = pinConnection.OutputPin as OutputHybridPin;
-
-            if (inputPin == null)
-            {
-                // TODO: log a message
                 return;
             }
 

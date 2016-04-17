@@ -5,7 +5,6 @@ using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.Controllers.Interfaces;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.SynthModules;
-using CorpusFrisky.VisualSynth.SynthModules.Views.ShapeGenerators;
 using CorpusFrisky.VisualSynth.Views.ControlViews;
 using CorpusFrisky.VisualSynth.Views.Windows;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -15,8 +14,9 @@ using System.Reflection;
 using System.Windows.Controls;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
-using CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators;
+using CorpusFrisky.VisualSynth.SynthModules.Views.Generators;
 using CorpusFrisky.VisualSynth.SynthModules.Views.Modifiers;
 
 namespace CorpusFrisky.VisualSynth.Controllers

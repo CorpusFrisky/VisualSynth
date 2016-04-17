@@ -34,8 +34,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
         public OscillatorViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
             _index = 0;
-            InputPins = new ObservableCollection<PinBase>();
-            OutputPins = new ObservableCollection<PinBase>();
         }
 
         public override void Initialize()

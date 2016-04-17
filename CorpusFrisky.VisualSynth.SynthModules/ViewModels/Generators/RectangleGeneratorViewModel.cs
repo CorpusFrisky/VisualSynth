@@ -1,12 +1,11 @@
 ﻿using CorpusFrisky.VisualSynth.Common;
-using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
 using Microsoft.Practices.Prism.PubSubEvents;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
-namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.ShapeGenerators
+namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators
 {
     public class RectangleGeneratorViewModel : ShapeGeneratorBaseViewModel
     {
