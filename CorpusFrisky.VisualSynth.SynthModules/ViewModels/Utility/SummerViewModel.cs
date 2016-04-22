@@ -5,6 +5,7 @@ using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CorpusFrisky.VisualSynth.Common;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Utility
 {
@@ -42,6 +43,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Utility
 
             OutputPins.Add(PrimaryOutputPin);
         }
+
+        public override SynthModuleType ModuleType { get { return SynthModuleType.Summer; } }
 
         private List<OutputHybridPin> SourcePins { get; set; }
 

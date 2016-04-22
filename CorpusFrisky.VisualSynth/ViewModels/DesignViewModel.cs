@@ -4,7 +4,9 @@ using CorpusFrisky.VisualSynth.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Utility;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -14,7 +16,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
-using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators;
 
 namespace CorpusFrisky.VisualSynth.ViewModels
 {
@@ -26,6 +27,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
 
         private DelegateCommand _addTriangleCommand;
         private DelegateCommand _addRectangleCommand;
+        private DelegateCommand _addSummerCommand;
         private DelegateCommand _addOscillatorCommand;
         private DelegateCommand<SynthComponentModel> _handleModuleLeftClick;
         private DelegateCommand<PinBase> _pinLeftClickedCommand;
@@ -162,6 +164,11 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             get { return _addRectangleCommand ?? (_addRectangleCommand = new DelegateCommand(AddRectangle)); }
         }
 
+        public DelegateCommand AddSummerCommand
+        {
+            get { return _addSummerCommand ?? (_addSummerCommand = new DelegateCommand(AddSummer)); }
+        }
+
         public DelegateCommand AddOscillatorCommand
         {
             get { return _addOscillatorCommand ?? (_addOscillatorCommand = new DelegateCommand(AddOscillator)); }
@@ -217,6 +224,13 @@ namespace CorpusFrisky.VisualSynth.ViewModels
                             };
 
             AddAndInitializeModule(rectangle);
+        }
+
+        private void AddSummer()
+        {
+            var summer = new SummerViewModel(_eventAggregator);
+
+            AddAndInitializeModule(summer);
         }
 
         private void AddOscillator()

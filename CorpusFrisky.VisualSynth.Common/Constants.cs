@@ -15,6 +15,8 @@
         TriangleGenerator,
         RectangleGenerator,
 
+        Summer,
+
         Oscillator,
 
         Unknown

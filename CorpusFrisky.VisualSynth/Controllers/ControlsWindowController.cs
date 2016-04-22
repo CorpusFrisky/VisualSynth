@@ -1,23 +1,23 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using Autofac.Core;
 using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.Controllers.Interfaces;
 using CorpusFrisky.VisualSynth.Events;
-using CorpusFrisky.VisualSynth.SynthModules;
-using CorpusFrisky.VisualSynth.Views.ControlViews;
-using CorpusFrisky.VisualSynth.Views.Windows;
-using Microsoft.Practices.Prism.PubSubEvents;
-using Microsoft.Practices.Prism.Regions;
-using System.Linq;
-using System.Reflection;
-using System.Windows.Controls;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Utility;
 using CorpusFrisky.VisualSynth.SynthModules.Views.Generators;
 using CorpusFrisky.VisualSynth.SynthModules.Views.Modifiers;
+using CorpusFrisky.VisualSynth.Views.ControlViews;
+using CorpusFrisky.VisualSynth.Views.Windows;
+using Microsoft.Practices.Prism.PubSubEvents;
+using Microsoft.Practices.Prism.Regions;
+using System;
+using System.Linq;
+using System.Windows.Controls;
+using CorpusFrisky.VisualSynth.SynthModules.Views.Utility;
 
 namespace CorpusFrisky.VisualSynth.Controllers
 {
@@ -85,6 +85,10 @@ namespace CorpusFrisky.VisualSynth.Controllers
                 case SynthModuleType.RectangleGenerator:
                     view = ComponentContext.Resolve<ShapeGeneratorView>();
                     view.DataContext = module as RectangleGeneratorViewModel;
+                    break;
+                case SynthModuleType.Summer:
+                    view = ComponentContext.Resolve<SummerView>();
+                    view.DataContext = module as SummerViewModel;
                     break;
                 case SynthModuleType.Oscillator:
                     view = ComponentContext.Resolve<OscillatorView>();

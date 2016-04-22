@@ -113,7 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ColorConverters.cs" />
-    <Compile Include="DependencyInjection\SynthModulesDI.cs" />
+    <Compile Include="Bootstrapper\SynthModulesBootstrapper.cs" />
     <Compile Include="Events\PinSetupCompleteEvent.cs" />
     <Compile Include="Interfaces\IModifierModule.cs" />
     <Compile Include="Interfaces\ISynthModule.cs" />
@@ -144,6 +144,9 @@
     <Compile Include="Views\Generators\ShapeGeneratorView.xaml.cs">
       <DependentUpon>ShapeGeneratorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Utility\SummerView.xaml.cs">
+      <DependentUpon>SummerView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -167,6 +170,10 @@
     <Page Include="Views\Generators\ShapeGeneratorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Utility\SummerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup />

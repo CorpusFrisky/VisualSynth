@@ -2,9 +2,9 @@
 using CorpusFrisky.VisualSynth.Controllers;
 using CorpusFrisky.VisualSynth.Controllers.Interfaces;
 
-namespace CorpusFrisky.VisualSynth.DependencyInjection
+namespace CorpusFrisky.VisualSynth.Bootstrapper
 {
-    class DisplayDI : Module
+    class DisplayBootstrapper : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

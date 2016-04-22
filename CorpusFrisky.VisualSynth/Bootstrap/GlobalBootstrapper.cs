@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using Autofac;
 using CorpusFrisky.VisualSynth.Controllers;
-using CorpusFrisky.VisualSynth.DependencyInjection;
-using CorpusFrisky.VisualSynth.SynthModules.DependencyInjection;
+using CorpusFrisky.VisualSynth.Bootstrapper;
+using CorpusFrisky.VisualSynth.SynthModules.Bootstrapper;
 using CorpusFrisky.VisualSynth.Views.Windows;
 using Prism.AutofacExtension;
 
@@ -14,9 +14,9 @@ namespace CorpusFrisky.VisualSynth.Bootstrap
         {
             base.ConfigureContainer(builder);
 
-            builder.RegisterModule<ControlsDI>();
-            builder.RegisterModule<DisplayDI>();
-            builder.RegisterModule<SynthModulesDI>();
+            builder.RegisterModule<ControlsBootstrapper>();
+            builder.RegisterModule<DisplayBootstrapper>();
+            builder.RegisterModule<SynthModulesBootstrapper>();
 
             builder.RegisterType<ControlsWindow>().AsSelf().SingleInstance();
             builder.RegisterType<DisplayWindow>().AsSelf().SingleInstance();
