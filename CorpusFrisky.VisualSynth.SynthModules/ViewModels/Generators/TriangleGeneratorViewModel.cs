@@ -59,22 +59,26 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators
             }
         }
 
-        public override void Render()
+        public override void Render(bool fromFinalRenderCall = false)
         {
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(0.0, 1000.0, 0.0, 1000.0, 0.0, 4.0);
-            GL.Translate(Center);
+            RenderInputs();
 
-            GL.Begin(BeginMode.Triangles);//(PrimitiveType.Triangles);
-
-            foreach (var vertex in Vertices)
+            if (fromFinalRenderCall)
             {
-                GL.Color4(vertex.ModifiedColor);
-                GL.Vertex3(vertex.Position);
-            }
+                GL.PushMatrix();
+                GL.Translate(Center);
 
-            GL.End();
+                GL.Begin(BeginMode.Triangles);//(PrimitiveType.Triangles);
+
+                foreach (var vertex in Vertices)
+                {
+                    GL.Color4(vertex.ModifiedColor);
+                    GL.Vertex3(vertex.Position);
+                }
+
+                GL.End();
+                GL.PopMatrix();
+            }
         }
 
         public override void PostRender()

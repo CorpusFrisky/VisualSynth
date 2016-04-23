@@ -17,6 +17,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
 
         public uint RenderedOutputBufferId { get; set; }
 
-        public List<Action> CommandListOutput { get; set; }
+        public List<Action<bool>> CommandListOutput { get; set; }
     }
 }

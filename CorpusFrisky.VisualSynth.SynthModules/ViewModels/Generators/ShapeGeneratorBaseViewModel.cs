@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using CorpusFrisky.VisualSynth.Common;
+﻿using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.Events;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
@@ -9,6 +6,9 @@ using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using Microsoft.Practices.Prism.PubSubEvents;
 using OpenTK;
 using OpenTK.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators
 {
@@ -139,7 +139,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators
             OutputPins.Add(new OutputHybridPin()
             {
                 Module = this,
-                CommandListOutput = new List<Action>() { Render },
+                CommandListOutput = new List<Action<bool>>() { Render },
                 IsOutputRendered = false
             });
 
@@ -155,7 +155,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators
             throw new NotImplementedException();
         }
 
-        public override void Render()
+        public override void Render(bool fromFinalRenderCall = false)
         {
             throw new NotImplementedException();
         }

@@ -49,9 +49,17 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 
         public abstract void PreRender();
 
-        public abstract void Render();
+        public abstract void Render(bool fromFinalRenderCall = false);
 
         public abstract void PostRender();
+
+        public void RenderInputs()
+        {
+            foreach (var connectedPin in InputPins.SelectMany(x => x.ConnectedPins))
+            {
+                connectedPin.Module.Render();
+            }
+        }
 
         public virtual bool ConnectSynthModule(InputPin inputPin, OutputPin outputPin)
         {

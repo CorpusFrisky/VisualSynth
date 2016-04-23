@@ -95,7 +95,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers
             _index %= TableLength;
         }
 
-        public override void Render()
+        public override void Render(bool fromFinalRenderCall = false)
         {
         }
 

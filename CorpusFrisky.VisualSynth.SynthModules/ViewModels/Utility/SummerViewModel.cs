@@ -1,11 +1,11 @@
-﻿using CorpusFrisky.VisualSynth.SynthModules.Models;
+﻿using CorpusFrisky.VisualSynth.Common;
+using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CorpusFrisky.VisualSynth.Common;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Utility
 {
@@ -33,29 +33,26 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Utility
                 PinType = PinTypeEnum.Hybrid,
             });
 
-            //Need to reference this.  May add more in the future.
-            PrimaryOutputPin = new OutputHybridPin()
+            OutputPins.Add(new OutputHybridPin()
             {
                 Module = this,
-                CommandListOutput = new List<Action>(),
+                CommandListOutput = new List<Action<bool>>(),
                 IsOutputRendered = false
-            };
-
-            OutputPins.Add(PrimaryOutputPin);
+            });
         }
 
         public override SynthModuleType ModuleType { get { return SynthModuleType.Summer; } }
 
         private List<OutputHybridPin> SourcePins { get; set; }
 
-        public OutputHybridPin PrimaryOutputPin { get; set; }
-
         public override void PreRender()
         {
         }
 
-        public override void Render()
+        public override void Render(bool fromFinalRenderCall = false)
         {
+            RenderInputs();
+
             if (SourcePins.Any(x => x.IsOutputRendered))
             {
                 //Render all command list source pins
@@ -63,7 +60,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Utility
             }
             else
             {
-                PrimaryOutputPin.CommandListOutput.AddRange(SourcePins.SelectMany(x => x.CommandListOutput));
+                var outputPinAsHybrid = OutputPins[0] as OutputHybridPin;
+                outputPinAsHybrid?.CommandListOutput.Clear();
+                outputPinAsHybrid?.CommandListOutput.AddRange(SourcePins.SelectMany(x => x.CommandListOutput));
             }
         }
 

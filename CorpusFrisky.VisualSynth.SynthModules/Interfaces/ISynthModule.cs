@@ -9,7 +9,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Interfaces
     {
         void Initialize();
         void PreRender();
-        void Render();
+        void Render(bool fromFinalRenderCall = false);
         void PostRender();
 
         bool ConnectSynthModule(InputPin inputPin, OutputPin outputPin);
