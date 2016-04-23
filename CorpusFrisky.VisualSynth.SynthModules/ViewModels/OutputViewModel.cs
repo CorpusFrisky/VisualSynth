@@ -51,7 +51,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
 
         public override void Render(bool fromFinalRenderCall = false)
         {
-            RenderInputs();
+            if(!BaseBeginRender(fromFinalRenderCall)) return;;
 
             if (InputPins[0].ConnectedPins.Count != 1)
             {

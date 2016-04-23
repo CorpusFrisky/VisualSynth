@@ -1,7 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using CorpusFrisky.VisualSynth.Common;
-using CorpusFrisky.VisualSynth.SynthModules.Models;
+﻿using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
+using System.Collections.ObjectModel;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.Interfaces
 {
@@ -15,8 +14,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Interfaces
         bool ConnectSynthModule(InputPin inputPin, OutputPin outputPin);
         void DisconnectSynthModule(InputPin inputPin, OutputPin outputPin);
 
-
         SynthModuleType ModuleType { get; }
+        bool HasRenderedThisFrame { get; set; }
 
         ObservableCollection<PinBase> InputPins { get; set; } 
         ObservableCollection<PinBase> OutputPins { get; set; }

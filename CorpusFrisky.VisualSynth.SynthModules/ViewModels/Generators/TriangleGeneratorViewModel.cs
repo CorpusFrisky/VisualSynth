@@ -61,7 +61,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators
 
         public override void Render(bool fromFinalRenderCall = false)
         {
-            RenderInputs();
+            if(!BaseBeginRender(fromFinalRenderCall)) return;;
 
             if (fromFinalRenderCall)
             {

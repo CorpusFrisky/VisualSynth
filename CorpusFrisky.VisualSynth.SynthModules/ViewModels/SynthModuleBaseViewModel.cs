@@ -43,6 +43,8 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
             private set { SetProperty(ref _connectedModules, value); }
         }
 
+        public bool HasRenderedThisFrame { get; set; }
+
         #endregion
 
         protected abstract void SetupPins();
@@ -52,6 +54,24 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
         public abstract void Render(bool fromFinalRenderCall = false);
 
         public abstract void PostRender();
+
+        public bool BaseBeginRender(bool fromFinalRenderCall)
+        {
+            if (fromFinalRenderCall)
+            {
+                return true;
+            }
+
+            if (HasRenderedThisFrame)
+            {
+                return false;
+            }
+
+            HasRenderedThisFrame = true;
+            RenderInputs();
+
+            return true;
+        }
 
         public void RenderInputs()
         {

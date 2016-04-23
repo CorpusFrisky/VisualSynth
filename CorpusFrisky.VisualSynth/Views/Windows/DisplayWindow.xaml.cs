@@ -49,6 +49,10 @@ namespace CorpusFrisky.VisualSynth.Views.Windows
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             var synthComponenets = _designViewModel.SynthComponents.ToList();
+            foreach (var module in synthComponenets.Select(x => x.Module))
+            {
+                module.HasRenderedThisFrame = false;
+            }
 
             PreRenderModules(synthComponenets);
 
