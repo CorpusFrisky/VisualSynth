@@ -9,6 +9,7 @@ using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Forms;
+using OpenTK;
 using Timer = System.Timers.Timer;
 
 namespace CorpusFrisky.VisualSynth.Views.Windows
@@ -45,8 +46,23 @@ namespace CorpusFrisky.VisualSynth.Views.Windows
 
         private void Control_OnPaint(object sender, PaintEventArgs e)
         {
+            var widthAsFloat = (float) Width;
+            var heightAsFloat = (float) Height;
+            var aspectRatio = widthAsFloat/heightAsFloat;
+
+
             GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            GL.MatrixMode(MatrixMode.Projection);
+            Matrix4 perspectiveMatrix = Matrix4.CreatePerspectiveFieldOfView(
+                MathHelper.PiOver4, aspectRatio,
+                .1f, 100f);
+            GL.LoadMatrix(ref perspectiveMatrix);
+            GL.Viewport(0, 0, (int)Width, (int)Height);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
 
             var synthComponenets = _designViewModel.SynthComponents.ToList();
             foreach (var module in synthComponenets.Select(x => x.Module))
@@ -87,7 +103,7 @@ namespace CorpusFrisky.VisualSynth.Views.Windows
         {
             //Let's try recursive rendering from output module, see how it works.
             var outputModule = (synthComponenets.First(x => x.Module is OutputViewModel).Module) as OutputViewModel;
-            outputModule.Render();
+            outputModule?.Render();
         }
     }
 }

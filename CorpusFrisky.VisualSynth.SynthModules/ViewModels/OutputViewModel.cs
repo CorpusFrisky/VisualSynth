@@ -4,7 +4,6 @@ using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using Microsoft.Practices.Prism.PubSubEvents;
-using OpenTK.Graphics.OpenGL;
 using System.Collections.ObjectModel;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
@@ -67,10 +66,6 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
                 }
                 else
                 {
-                    GL.MatrixMode(MatrixMode.Projection);
-                    GL.LoadIdentity();
-                    GL.Ortho(0.0, 1000.0, 0.0, 1000.0, 0.0, 4.0);
-
                     foreach (var command in inputAsHybrid.CommandListOutput)
                     {
                         command.Invoke(true);

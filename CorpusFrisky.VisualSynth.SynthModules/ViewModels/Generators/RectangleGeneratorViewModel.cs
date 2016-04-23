@@ -19,25 +19,25 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators
             Vertices.Add(new VertexModel()
                          {
                              Color = new Color4(1.0f, 0.0f, 0.0f, 0.0f),
-                             Position = new Vector3(-100.0f, 0.0f, 0.0f)
+                             Position = new Vector3(-1.0f, 0.0f, 0.0f)
                          });
 
             Vertices.Add(new VertexModel()
                          {
                              Color = new Color4(1.0f, 1.0f, 0.0f, 0.0f),
-                             Position = new Vector3(100.0f, 0.0f, 0.0f)
+                             Position = new Vector3(1.0f, 0.0f, 0.0f)
                          });
 
             Vertices.Add(new VertexModel()
                          {
                              Color = new Color4(1.0f, 0.0f, 1.0f, 0.0f),
-                             Position = new Vector3(100.0f, 100.0f, 0.0f)
+                             Position = new Vector3(1.0f, 1.0f, 0.0f)
                          });
 
             Vertices.Add(new VertexModel()
                          {
                              Color = new Color4(1.0f, 0.0f, 1.0f, 0.0f),
-                             Position = new Vector3(-100.0f, 100.0f, 0.0f)
+                             Position = new Vector3(-1.0f, 1.0f, 0.0f)
                          });
         }
 

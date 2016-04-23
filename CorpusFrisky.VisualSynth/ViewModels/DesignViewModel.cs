@@ -209,7 +209,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             var rand = new Random();
             var triangle = new TriangleGeneratorViewModel(_eventAggregator)
                            {
-                               Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
+                               Center = new Vector3(rand.Next(10), rand.Next(10), -10.0f),
                            };
 
             AddAndInitializeModule(triangle);
@@ -220,7 +220,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             var rand = new Random();
             var rectangle = new RectangleGeneratorViewModel(_eventAggregator)
                             {
-                                Center = new Vector3(rand.Next(1000), rand.Next(1000), 0.0f),
+                                Center = new Vector3(rand.Next(10), rand.Next(10), -10.0f),
                             };
 
             AddAndInitializeModule(rectangle);
