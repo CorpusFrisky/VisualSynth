@@ -127,6 +127,7 @@
     <Compile Include="Models\Pins\OutputValuePin.cs" />
     <Compile Include="Models\Pins\InputValuePin.cs" />
     <Compile Include="ViewModels\FrameEffects\ColorInverterViewModel.cs" />
+    <Compile Include="ViewModels\FrameEffects\Shaders\Shader.cs" />
     <Compile Include="ViewModels\Modifiers\OscillatorViewModel.cs" />
     <Compile Include="Models\Pins\PinBase.cs" />
     <Compile Include="Models\VertexModel.cs" />
