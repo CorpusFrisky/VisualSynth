@@ -154,6 +154,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="ViewModels\FrameEffects\Shaders\IdentityFragmentShader.glsl" />
+    <None Include="ViewModels\FrameEffects\Shaders\IdentityVertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CorpusFrisky.VisualSynth.Common\CorpusFrisky.VisualSynth.Common.csproj">
