@@ -13,5 +13,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
             }
         }
 
+        public abstract bool IsOutputRendered { get; set; }
+
     }
 }

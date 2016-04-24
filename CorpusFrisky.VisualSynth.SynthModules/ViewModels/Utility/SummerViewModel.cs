@@ -51,7 +51,10 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Utility
 
         public override void Render(bool fromFinalRenderCall = false)
         {
-            if(!BaseBeginRender(fromFinalRenderCall)) return;;
+            if(!BaseBeginRender(fromFinalRenderCall))
+            {
+                return;
+            }
 
             if (SourcePins.Any(x => x.IsOutputRendered))
             {

@@ -11,9 +11,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
             get { return IsOutputRendered ? PinTypeEnum.Image : PinTypeEnum.CommandList; }
         }
 
-        public override bool IsInput { get { return false; } }
+        public override bool IsInput => false;
 
-        public bool IsOutputRendered { get; set; }
+        public override bool IsOutputRendered { get; set; }
 
         public uint RenderedOutputBufferId { get; set; }
 

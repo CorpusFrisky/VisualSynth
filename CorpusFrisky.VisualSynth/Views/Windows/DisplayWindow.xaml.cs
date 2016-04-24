@@ -3,13 +3,13 @@ using CorpusFrisky.VisualSynth.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels;
 using CorpusFrisky.VisualSynth.ViewModels;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Forms;
-using OpenTK;
 using Timer = System.Timers.Timer;
 
 namespace CorpusFrisky.VisualSynth.Views.Windows
@@ -31,8 +31,8 @@ namespace CorpusFrisky.VisualSynth.Views.Windows
             WinFormHost.Height = Height;
             WinFormHost.Width = Width;
 
-            GlControl1.Height = (int)Height;
-            GlControl1.Width = (int)Width;
+            GlobalValues.DisplayHeight = GlControl1.Height = (int)Height;
+            GlobalValues.DisplayWidth = GlControl1.Width = (int)Width;
 
             _repaintTimer = new Timer(1000.0 / Constants.FrameRate);
             _repaintTimer.Elapsed += Repaint;
