@@ -4,6 +4,7 @@ using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using Microsoft.Practices.Prism.PubSubEvents;
+using OpenTK.Graphics.OpenGL;
 using System.Collections.ObjectModel;
 
 namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
@@ -56,22 +57,33 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
                 return;
             }
 
-            var inputAsHybrid = InputPins[0].ConnectedPins[0] as OutputHybridPin;
-            if (inputAsHybrid != null)
+            var inputConnectionAsHybrid = InputPins[0].ConnectedPins[0] as OutputHybridPin;
+            if (inputConnectionAsHybrid != null)
             {
-                if (inputAsHybrid.IsOutputRendered)
+                if (inputConnectionAsHybrid.IsOutputRendered)
                 {
-                    //display contents of buffer with id == inputAsHybrid.RenderedOutputBufferId
+                   RenderInputBuffers(inputConnectionAsHybrid.GetColorTextureId_Function.Invoke(),
+                       inputConnectionAsHybrid.GetDepthTextureId_Function.Invoke());
                 }
                 else
                 {
-                    foreach (var command in inputAsHybrid.CommandListOutput)
+                    foreach (var command in inputConnectionAsHybrid.CommandListOutput)
                     {
                         command.Invoke(true);
                     }
-                }         
+                }
+                return;
+            }
+
+            var inputConnectionAsFrame = InputPins[0].ConnectedPins[0] as OutputFramePin;
+            if (inputConnectionAsFrame != null)
+            {
+                RenderInputBuffers(inputConnectionAsFrame.GetColorTextureId_Function.Invoke(),
+                       inputConnectionAsFrame.GetDepthTextureId_Function.Invoke());
             }
         }
+
+        
 
         public override void PostRender()
         {
@@ -97,5 +109,43 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels
         {
         }
 
+        private void RenderInputBuffers(int colorTextureId, int depthTextureId)
+        {
+            GL.PushMatrix();
+            {
+                // Draw the Color Texture
+                GL.Translate(-1.1f, 0f, 0f);
+                GL.BindTexture(TextureTarget.Texture2D, colorTextureId);
+                GL.Begin(BeginMode.Quads);
+                {
+                    GL.TexCoord2(0f, 1f);
+                    GL.Vertex2(-1.0f, 1.0f);
+                    GL.TexCoord2(0.0f, 0.0f);
+                    GL.Vertex2(-1.0f, -1.0f);
+                    GL.TexCoord2(1.0f, 0.0f);
+                    GL.Vertex2(1.0f, -1.0f);
+                    GL.TexCoord2(1.0f, 1.0f);
+                    GL.Vertex2(1.0f, 1.0f);
+                }
+                GL.End();
+
+                // Draw the Depth Texture
+                GL.Translate(+2.2f, 0f, 0f);
+                GL.BindTexture(TextureTarget.Texture2D, depthTextureId);
+                GL.Begin(BeginMode.Quads);
+                {
+                    GL.TexCoord2(0f, 1f);
+                    GL.Vertex2(-1.0f, 1.0f);
+                    GL.TexCoord2(0.0f, 0.0f);
+                    GL.Vertex2(-1.0f, -1.0f);
+                    GL.TexCoord2(1.0f, 0.0f);
+                    GL.Vertex2(1.0f, -1.0f);
+                    GL.TexCoord2(1.0f, 1.0f);
+                    GL.Vertex2(1.0f, 1.0f);
+                }
+                GL.End();
+            }
+            GL.PopMatrix();
+        }
     }
 }

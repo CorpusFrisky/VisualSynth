@@ -2,6 +2,7 @@
 using CorpusFrisky.VisualSynth.SynthModules.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects.Shaders;
 using Microsoft.Practices.Prism.PubSubEvents;
 using OpenTK.Graphics.OpenGL;
 using System;
@@ -15,8 +16,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects
 {
     public class ColorInverterViewModel : SynthModuleBaseViewModel, IDisposable
     {
-        private int _inputFramebufferId;
-        private int _outputFramebufferId;
+        private int _framebufferId;
         private int _colorTextureId;
         private int _depthTextureId;
 
@@ -37,7 +37,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects
         {
             GL.DeleteTextures(1, ref _colorTextureId);
             GL.DeleteTextures(1, ref _depthTextureId);
-            GL.Ext.DeleteFramebuffers(1, ref _inputFramebufferId);
+            GL.Ext.DeleteFramebuffers(1, ref _framebufferId);
         }
 
         protected override void SetupPins()
@@ -53,15 +53,14 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects
             OutputPins.Add(new OutputFramePin()
             {
                 Module = this,
-                GetBufferId_Function = () => FramebufferId,
+                GetColorTextureId_Function = () => _colorTextureId,
+                GetDepthTextureId_Function = () => _depthTextureId,
             });
         }
 
         public override SynthModuleType ModuleType { get { return SynthModuleType.Summer; } }
 
         private List<OutputHybridPin> SourcePins { get; set; }
-
-        private int FramebufferId => _outputFramebufferId;
 
         private bool TexturesAndBufferAreInitialized { get; set; }
 
@@ -71,7 +70,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects
 
         public override void Render(bool fromFinalRenderCall = false)
         {
-            if(!BaseBeginRender(fromFinalRenderCall))
+            if (!BaseBeginRender(fromFinalRenderCall))
             {
                 return;
             }
@@ -80,16 +79,15 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects
             {
                 InitializeTexturesAndFramebuffer();
             }
-            else
-            {
-                // Create a FBO and attach the textures
-                GL.Ext.GenFramebuffers(1, out _inputFramebufferId);
-                GL.Ext.BindFramebuffer(FramebufferTarget.FramebufferExt, _inputFramebufferId);
-                GL.Ext.FramebufferTexture2D(FramebufferTarget.FramebufferExt, FramebufferAttachment.ColorAttachment0Ext, TextureTarget.Texture2D, _colorTextureId, 0);
-                GL.Ext.FramebufferTexture2D(FramebufferTarget.FramebufferExt, FramebufferAttachment.DepthAttachmentExt, TextureTarget.Texture2D, _depthTextureId, 0);
 
-                CheckForErrorsInitializingTexturesAndFramebuffer();
-            }
+            // Create a FBO and attach the textures
+            GL.Ext.BindFramebuffer(FramebufferTarget.FramebufferExt, _framebufferId);
+            GL.Ext.FramebufferTexture2D(FramebufferTarget.FramebufferExt, FramebufferAttachment.ColorAttachment0Ext,
+                TextureTarget.Texture2D, _colorTextureId, 0);
+            GL.Ext.FramebufferTexture2D(FramebufferTarget.FramebufferExt, FramebufferAttachment.DepthAttachmentExt,
+                TextureTarget.Texture2D, _depthTextureId, 0);
+
+            CheckForErrorsInitializingTexturesAndFramebuffer();
 
             if (SourcePins.Any(x => x.IsOutputRendered))
             {
@@ -99,30 +97,27 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects
             else
             {
                 GL.PushAttrib(AttribMask.ViewportBit);
+                GL.Viewport(0, 0, GlobalValues.DisplayWidth, GlobalValues.DisplayHeight);
+                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+                Shader shader = new Shader(null,
+                    System.IO.File.ReadAllText(
+                        @"C:\Projects\VisualSynth\CorpusFrisky.VisualSynth.SynthModules\ViewModels\FrameEffects\Shaders\ColorInverterFragmentShader.glsl"));
+                Shader.Bind(shader);
+
+                //Do all the rendering leading up to this module into our inputframebuffer
+                var commandList = SourcePins.SelectMany(x => x.CommandListOutput);
+                foreach (var command in commandList)
                 {
-                    GL.Viewport(0, 0, GlobalValues.DisplayWidth, GlobalValues.DisplayHeight);
-
-                    GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-                    //Do all the rendering leading up to this module into our inputframebuffer
-                    var commandList = SourcePins.SelectMany(x => x.CommandListOutput);
-                    foreach(var command in commandList)
-                    {
-                        command.Invoke(true);
-                    }
+                    command.Invoke(true);
                 }
+
                 GL.PopAttrib();
                 GL.Ext.BindFramebuffer(FramebufferTarget.FramebufferExt, 0); // disable rendering into the FBO
 
-                GL.ClearColor(.1f, .2f, .3f, 0f);
-                GL.Color3(1f, 1f, 1f);
-
+                Shader.Bind(null);
                 GL.Enable(EnableCap.Texture2D); // enable Texture Mapping
                 GL.BindTexture(TextureTarget.Texture2D, 0); // bind default texture
-
-                //Now draw this framebuffer into the output framebuffer using the effecting shader
-
-                //The module connected to our output will then render the output framebuffer as a texture
             }
         }
 
@@ -193,12 +188,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToBorder);
 
             // Create a FBO and attach the textures
-            GL.Ext.GenFramebuffers(1, out _inputFramebufferId);
-            GL.Ext.BindFramebuffer(FramebufferTarget.FramebufferExt, _inputFramebufferId);
-            GL.Ext.FramebufferTexture2D(FramebufferTarget.FramebufferExt, FramebufferAttachment.ColorAttachment0Ext, TextureTarget.Texture2D, _colorTextureId, 0);
-            GL.Ext.FramebufferTexture2D(FramebufferTarget.FramebufferExt, FramebufferAttachment.DepthAttachmentExt, TextureTarget.Texture2D, _depthTextureId, 0);
-
-            CheckForErrorsInitializingTexturesAndFramebuffer();
+            GL.Ext.GenFramebuffers(1, out _framebufferId);
         }
 
         private void CheckForErrorsInitializingTexturesAndFramebuffer()

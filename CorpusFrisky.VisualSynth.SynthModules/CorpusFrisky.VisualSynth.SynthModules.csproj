@@ -154,7 +154,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="ViewModels\FrameEffects\Shaders\ColorInverterFragmentShader.glsl" />
     <None Include="ViewModels\FrameEffects\Shaders\IdentityFragmentShader.glsl" />
+    <None Include="ViewModels\FrameEffects\Shaders\ColorInverterVertexShader.glsl" />
     <None Include="ViewModels\FrameEffects\Shaders\IdentityVertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>

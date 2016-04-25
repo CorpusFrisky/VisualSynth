@@ -15,7 +15,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
 
         public override bool IsOutputRendered { get; set; }
 
-        public uint RenderedOutputBufferId { get; set; }
+        public Func<int> GetColorTextureId_Function { get; set; }
+
+        public Func<int> GetDepthTextureId_Function { get; set; }
 
         public List<Action<bool>> CommandListOutput { get; set; }
     }

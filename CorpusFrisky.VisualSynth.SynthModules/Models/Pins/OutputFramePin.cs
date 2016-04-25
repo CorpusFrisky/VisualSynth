@@ -6,7 +6,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Models.Pins
     {
         public override bool IsInput { get { return false; } }
 
-        public Func<int> GetBufferId_Function { get; set; }
+        public Func<int> GetColorTextureId_Function { get; set; }
+
+        public Func<int> GetDepthTextureId_Function { get; set; }
 
         public override bool IsOutputRendered
         {
