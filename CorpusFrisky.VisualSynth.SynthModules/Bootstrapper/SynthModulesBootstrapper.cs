@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Effects;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Utility;
+using CorpusFrisky.VisualSynth.SynthModules.Views.Effects;
 using CorpusFrisky.VisualSynth.SynthModules.Views.Generators;
 using CorpusFrisky.VisualSynth.SynthModules.Views.Modifiers;
 using CorpusFrisky.VisualSynth.SynthModules.Views.Utility;
@@ -25,6 +27,9 @@ namespace CorpusFrisky.VisualSynth.SynthModules.Bootstrapper
 
             builder.RegisterType<SummerViewModel>().AsSelf();
             builder.RegisterType<SummerView>().AsSelf();
+
+            builder.RegisterType<ColorInverterViewModel>().AsSelf();
+            builder.RegisterType<ColorInverterView>().AsSelf();
 
             builder.RegisterType<OscillatorViewModel>().AsSelf();
             builder.RegisterType<OscillatorView>().AsSelf();

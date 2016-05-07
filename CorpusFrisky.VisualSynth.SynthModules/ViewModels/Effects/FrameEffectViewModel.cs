@@ -1,38 +1,26 @@
 ﻿using CorpusFrisky.VisualSynth.Common;
 using CorpusFrisky.VisualSynth.SynthModules.Models;
-using CorpusFrisky.VisualSynth.SynthModules.Models.Enums;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
-using CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects.Shaders;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Effects.Shaders;
 using Microsoft.Practices.Prism.PubSubEvents;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-//This file contains code from the following online OpenTK tutorial:
-// http://www.opentk.com/node/397
-
-namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects
+namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Effects
 {
-    public class ColorInverterViewModel : SynthModuleBaseViewModel, IDisposable
+    public class FrameEffectViewModel : SynthModuleBaseViewModel, IDisposable
     {
         private int _framebufferId;
         private int _colorTextureId;
         private int _depthTextureId;
 
-        public ColorInverterViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+
+        public FrameEffectViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
-            SourcePins = new List<OutputHybridPin>();
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SetupPins();
-        }
-
-        //TODO: stick this in a base class
         public void Dispose()
         {
             GL.DeleteTextures(1, ref _colorTextureId);
@@ -40,29 +28,14 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects
             GL.Ext.DeleteFramebuffers(1, ref _framebufferId);
         }
 
-        protected override void SetupPins()
-        {
-            InputPins.Add(new InputValuePin
-            {
-                Module = this,
-                PinIndex = 0,
-                Label = "Input",
-                PinType = PinTypeEnum.Hybrid,
-            });
-
-            OutputPins.Add(new OutputFramePin()
-            {
-                Module = this,
-                GetColorTextureId_Function = () => _colorTextureId,
-                GetDepthTextureId_Function = () => _depthTextureId,
-            });
-        }
-
-        public override SynthModuleType ModuleType { get { return SynthModuleType.Summer; } }
+        private bool TexturesAndBufferAreInitialized { get; set; }
 
         private List<OutputHybridPin> SourcePins { get; set; }
 
-        private bool TexturesAndBufferAreInitialized { get; set; }
+        protected override void SetupPins()
+        {
+            throw new NotImplementedException();
+        }
 
         public override void PreRender()
         {
@@ -127,37 +100,10 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects
 
         protected override void ToggleConnectedModule(PinConnection pinConnection, bool adding)
         {
-            var pin = pinConnection.InputPin;
-
-            if (pin.PinType == PinTypeEnum.Value)
-            {
-
-            }
-            else if (pin.PinType == PinTypeEnum.Hybrid ||
-                     pin.PinType == PinTypeEnum.CommandList ||
-                     pin.PinType == PinTypeEnum.Image)
-            {
-                ToggleInputImageModule(pinConnection.OutputPin as OutputHybridPin, adding);
-            }
-        }
-
-        private void ToggleInputImageModule(OutputHybridPin outputHybridPin, bool adding)
-        {
-            if (adding &&
-                !SourcePins.Contains(outputHybridPin))
-            {
-                SourcePins.Add(outputHybridPin);
-            }
-            else if (!adding &&
-                     SourcePins.Contains(outputHybridPin))
-            {
-                SourcePins.Remove(outputHybridPin);
-            }
+            throw new NotImplementedException();
         }
 
         #region Helper Methods
-
-        //TODO: Make these inheritable by all modules that could generate frames
 
         private void InitializeTexturesAndFramebuffer()
         {
@@ -192,7 +138,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects
         }
 
         private void CheckForErrorsInitializingTexturesAndFramebuffer()
-        { 
+        {
             //TODO: log instead of console write
             switch (GL.Ext.CheckFramebufferStatus(FramebufferTarget.FramebufferExt))
             {
@@ -263,6 +209,5 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects
         }
 
         #endregion
-
     }
 }

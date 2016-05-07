@@ -1,14 +1,14 @@
-﻿using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 //Whole bunch of this taken from the following OpenTK tutorial:
 // http://www.opentk.com/node/3693
 
 //TODO: Log errors instead of writing to console
-namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.FrameEffects.Shaders
+namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Effects.Shaders
 {
     public class Shader : IDisposable
     {

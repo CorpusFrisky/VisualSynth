@@ -126,8 +126,9 @@
     <Compile Include="Models\Pins\OutputFramePin.cs" />
     <Compile Include="Models\Pins\OutputValuePin.cs" />
     <Compile Include="Models\Pins\InputValuePin.cs" />
-    <Compile Include="ViewModels\FrameEffects\ColorInverterViewModel.cs" />
-    <Compile Include="ViewModels\FrameEffects\Shaders\Shader.cs" />
+    <Compile Include="ViewModels\Effects\ColorInverterViewModel.cs" />
+    <Compile Include="ViewModels\Effects\FrameEffectViewModel.cs" />
+    <Compile Include="ViewModels\Effects\Shaders\Shader.cs" />
     <Compile Include="ViewModels\Modifiers\OscillatorViewModel.cs" />
     <Compile Include="Models\Pins\PinBase.cs" />
     <Compile Include="Models\VertexModel.cs" />
@@ -138,6 +139,9 @@
     <Compile Include="ViewModels\Generators\TriangleGeneratorViewModel.cs" />
     <Compile Include="ViewModels\SynthModuleBaseViewModel.cs" />
     <Compile Include="ViewModels\Utility\SummerViewModel.cs" />
+    <Compile Include="Views\Effects\ColorInverterView.xaml.cs">
+      <DependentUpon>ColorInverterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
@@ -154,10 +158,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="ViewModels\FrameEffects\Shaders\ColorInverterFragmentShader.glsl" />
-    <None Include="ViewModels\FrameEffects\Shaders\IdentityFragmentShader.glsl" />
-    <None Include="ViewModels\FrameEffects\Shaders\ColorInverterVertexShader.glsl" />
-    <None Include="ViewModels\FrameEffects\Shaders\IdentityVertexShader.glsl" />
+    <None Include="ViewModels\Effects\Shaders\ColorInverterFragmentShader.glsl" />
+    <None Include="ViewModels\Effects\Shaders\IdentityFragmentShader.glsl" />
+    <None Include="ViewModels\Effects\Shaders\ColorInverterVertexShader.glsl" />
+    <None Include="ViewModels\Effects\Shaders\IdentityVertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CorpusFrisky.VisualSynth.Common\CorpusFrisky.VisualSynth.Common.csproj">
@@ -166,6 +170,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Effects\ColorInverterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\OutputView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -192,6 +200,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>echo F | xcopy /y "$(ProjectDir)ViewModels\Effects\Shaders\*.glsl" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -17,6 +17,8 @@
 
         Summer,
 
+        ColorInverter,
+
         Oscillator,
 
         Unknown

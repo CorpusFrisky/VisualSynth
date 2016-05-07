@@ -43,6 +43,10 @@
                         <MenuItem x:Name="AddOscillatorMenuItem" Header="Oscillator"
                                   Command="{Binding AddOscillatorCommand}" />
                     </MenuItem>
+                    <MenuItem Header="Effect">
+                        <MenuItem x:Name="AddColorInverterMenuItem" Header="Oscillator"
+                                  Command="{Binding AddColorInverterCommand}" />
+                    </MenuItem>
                     <MenuItem Header="Utility">
                         <MenuItem x:Name="AddSummerMenuitem" Header="Summer"
                                   Command="{Binding AddSummerCommand}" />

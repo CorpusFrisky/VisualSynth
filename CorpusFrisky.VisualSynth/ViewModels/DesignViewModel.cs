@@ -4,6 +4,7 @@ using CorpusFrisky.VisualSynth.Models;
 using CorpusFrisky.VisualSynth.SynthModules.Interfaces;
 using CorpusFrisky.VisualSynth.SynthModules.Models.Pins;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels;
+using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Effects;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Generators;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Modifiers;
 using CorpusFrisky.VisualSynth.SynthModules.ViewModels.Utility;
@@ -28,6 +29,7 @@ namespace CorpusFrisky.VisualSynth.ViewModels
         private DelegateCommand _addTriangleCommand;
         private DelegateCommand _addRectangleCommand;
         private DelegateCommand _addSummerCommand;
+        private DelegateCommand _addColorInverterCommand;
         private DelegateCommand _addOscillatorCommand;
         private DelegateCommand<SynthComponentModel> _handleModuleLeftClick;
         private DelegateCommand<PinBase> _pinLeftClickedCommand;
@@ -169,6 +171,12 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             get { return _addSummerCommand ?? (_addSummerCommand = new DelegateCommand(AddSummer)); }
         }
 
+        public DelegateCommand AddColorInverterCommand
+        {
+            get { return _addColorInverterCommand ?? (_addColorInverterCommand = new DelegateCommand(AddColorInverter)); }
+        }
+
+        
         public DelegateCommand AddOscillatorCommand
         {
             get { return _addOscillatorCommand ?? (_addOscillatorCommand = new DelegateCommand(AddOscillator)); }
@@ -231,6 +239,13 @@ namespace CorpusFrisky.VisualSynth.ViewModels
             var summer = new SummerViewModel(_eventAggregator);
 
             AddAndInitializeModule(summer);
+        }
+
+        private void AddColorInverter()
+        {
+            var colorInverter = new ColorInverterViewModel(_eventAggregator);
+
+            AddAndInitializeModule(colorInverter);
         }
 
         private void AddOscillator()
