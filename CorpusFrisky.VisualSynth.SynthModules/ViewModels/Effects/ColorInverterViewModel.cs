@@ -29,7 +29,7 @@ namespace CorpusFrisky.VisualSynth.SynthModules.ViewModels.Effects
             SetupPins();
 
             var binPath =
-                System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
+                System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             Shader = new Shader(binPath + "\\ColorInverterVertexShader.glsl",
                 binPath + "\\ColorInverterFragmentShader.glsl");
         }
